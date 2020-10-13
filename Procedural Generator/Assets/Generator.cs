@@ -26,7 +26,8 @@ public class Generator : MonoBehaviour
     
     // values used to perform algorithms
     private string[] alphabet;
-    private Dictionary<string, string[,,]> words;
+    private Dictionary<String, int> letter_tile;
+    private Dictionary<string, string[][,]> words;
     private Queue<Tile> nexts;
     private System.Random rand;
     
@@ -57,9 +58,14 @@ public class Generator : MonoBehaviour
 
         int x = tile.getX(); // get the coordinates of the current tile
         int y = tile.getY();
-        
-        int idx = rand.Next() % (words[tile.getValue()].Length / 9); // select a random index for the production rule respective to the tile
-        string[,,] set = words[tile.getValue()]; // obtain the production rules
+
+        int idx = 0;
+
+        if(words[tile.getValue()].Length > 1){
+            idx = rand.Next() % words[tile.getValue()].Length; // select a random index for the production rule respective to the tile
+        }
+
+        string[][,] set = words[tile.getValue().Trim()]; // obtain the production rules
         
         for (int i = y - 1; i <= y + 1; i += 1) {
         
@@ -70,12 +76,13 @@ public class Generator : MonoBehaviour
                 
                 if (i >= 0 & j >= 0 &
                     i < width & j < height) {
-                    string newtile = words[tile.getValue()][idx, possibility_x, possibility_x]; // obtain the elements of the selected production rule 1 by 1
+                    string newtile = words[tile.getValue()][idx][possibility_x, possibility_y]; // obtain the elements of the selected production rule 1 by 1
 
                     if (tiles[i, j] == null | tiles[i, j] == alphabet[2]){ // existing is null or starting tile
-                        if (newtile != alphabet[0] & newtile != alphabet[alphabet.Length - 1]) { // non-null non-starting tile replacement
+                        if (newtile != alphabet[0] & newtile != alphabet[alphabet.Length - 1] & newtile != null) { // non-null non-starting tile replacement
                             tiles[i, j] = newtile;
                             if (i != y | j != x) {
+                                Tile enqueued_tile = new Tile(newtile, i, j);
                                 nexts.Enqueue(new Tile(newtile, i, j)); // enqueue the tile for future growth
                             }
                         }   
@@ -101,7 +108,7 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         ReadFile(); // read in alphabet and production rules
-        // initialze the random generator
+        // initialze the random generator 
         if (useSeed) {
             rand = new System.Random(seed.GetHashCode());
         }
@@ -126,15 +133,12 @@ public class Generator : MonoBehaviour
             for (int j = 0; j < height; j += 1) {
                 if (alphabet[0] != tiles[i, j] | null != tiles[i, j]) {
                     Vector4 pos = new Vector4((((float)i / (float)width) - 0.5f) * 10.0f, (((float)j / (float)height) - 0.5f)* 10.0f, -3.0f, 1.0f); // create a position for the current tile
-                    if (null != tiles[i, j] & alphabet[0] != tiles[i,j] & alphabet[1] != tiles[i,j]) {
+                    if (null != tiles[i, j]) {
                         Destroy(map[i, j]); // if the current map position already has a tile, delete it to save memory
-                        map[i, j] = Instantiate(sprites[Array.IndexOf(alphabet, tiles[i,j])], view * pos, Quaternion.identity); // create new gameobject and store it in the map
+                        map[i, j] = Instantiate(sprites[letter_tile[tiles[i,j]]], view * pos, Quaternion.identity); // create new gameobject and store it in the map
                     }
-                    else {
-                        if(null != map[i,j]){ // destroy an existing tile to save memory
-                            Destroy(map[i,j]);
-                        }
-                        map[i, j] = Instantiate(sprites[0], view * pos, Quaternion.identity); // create new null placeholder tile 
+                    else{
+                        map[i,j] = Instantiate(sprites[0], view*pos, Quaternion.identity);
                     }
                 }
             }
@@ -152,12 +156,16 @@ public class Generator : MonoBehaviour
         First line: two numbers defining the dimensions of any production rule seperated by a space. 
         E.G. 3 3 says any production rule will be 3x3
         Second line: a set of words where the first is the null placeholder, the second is the starter placeholder, and the last is the terminal (unused)
+        Third line: a mapping between letter and sprite given as a space seperated string of numbers which refer to the indices of the sprite array handed into this program.
+        E.G. If the alphabet is n s a b c t, and 4 tiles are handed in, then the input 0 0 1 2 3 0 maps n, s and t to the 0th tile, a to the first, b to the second, and c to 
+        the third.
         All following lines: words to production rule sets. Words are seperated from their production rules by a colon (:), production rules are seperated by commas (,)
         and lines of a production rule are seperated by spaces. The production rules must fit the dimensions defined in the First line
         E.G. (with the above first line) a: xxx xxx xxx, yyy yyy yyy
-    Postconditions: the alphabet set is filled, and the words dicitonary is filled, both in accordance with the above definitions.
+    @Postconditions: the alphabet set is filled, and the words dicitonary is filled, both in accordance with the above definitions.
     **/
     void ReadFile(){
+        words = new Dictionary<String, String[][,]>();
         System.String[] input = System.IO.File.ReadAllLines(rules_file_path); // read file into an array
         int size_x, size_y;
         try{
@@ -166,37 +174,52 @@ public class Generator : MonoBehaviour
             String[] sizes = input[0].Split();
             size_x = Int32.Parse(sizes[0]);
             size_y = Int32.Parse(sizes[1]);
-            print(size_x);
-            print(size_y);
         }
         catch(FormatException){
             print("Failed to parse size input");
             size_x = 0;
             size_y = 0;
         }
-        alphabet = input[1].Split(new String[] {" "}, StringSplitOptions.RemoveEmptyEntries); // obtain the alphabet
-        for(int i = 2; i < input.Length; i += 1){
+        String[] temp_alphabet = input[1].Split(new String[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+        alphabet = new String[temp_alphabet.Length]; // obtain the alphabet
+        String[] temp_letter_tile = input[2].Split(new String[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+        letter_tile = new Dictionary<String, int>();
+        for(int i = 0; i < temp_letter_tile.Length; i +=1){
+            try{
+                alphabet[i] = temp_alphabet[i];
+                int index = Int32.Parse(temp_letter_tile[i]);
+                letter_tile.Add(alphabet[i], index);
+            }
+            catch(FormatException){
+                print("Failed to parse index input for index " + i);
+            }
+        }
+
+        Array.Copy(temp_alphabet, alphabet, temp_alphabet.Length);
+        for(int i = 3; i < input.Length; i += 1){
 
             string[] line = input[i].Split(new String[]{":"}, StringSplitOptions.RemoveEmptyEntries); // splits letter from rules
 
-            string referent = line[0]; // stores letter
+            string referent = line[0].ToString().Trim(); // stores letter
             
             string[] productions = line[1].Split(new String[]{","}, StringSplitOptions.RemoveEmptyEntries); // splits different rules appart i.e. 'abc def ghi, zyx wuv tsr' -> ['abc def ghi', 'zyx wuv tsr']
-            string[,] rule = new string[size_x, size_y]; // creates array for storing rules
-            string[,,,] rules = new string[productions.Length, size_x, size_y];
-            foreach(string production in productions){ // first will be 'abc def ghi'
-                for(int x = 0; x < size_x; x += 1){ // first will be 'abc'
-                    for(int y = 0; y < size_y; y += 1){ // first will be 'a'
-                        rule[x,y] = production[(3*x) + y].ToString(); // rule[0,0] = a
+            
+            int rule_count = productions.Length;
+
+            words.Add(referent, new String[rule_count][,]);
+
+            for(int subset = 0; subset < rule_count; subset += 1){
+                words[referent][subset] = new String[size_x, size_y];
+                String[,] word_production = words[referent][subset];
+                for(int x = 0; x < size_x; x +=1){
+                    String[] rule = productions[subset].Split(new String[]{" "}, StringSplitOptions.RemoveEmptyEntries);
+                    for(int y = 0; y < size_y; y += 1){
+                        word_production[x,y] = rule[x][y].ToString();
                     }
-                    words[referent] // store total rule connecting to the referent, i.e. z: {{{a,b,c}, {d,e,f}, {g,h,i}}, {{z,y,x}, {w,u,v}, {t,s,r}}}
                 }
             }
         }
     }
-
-
-
 }
 
 /** A placeholder class for storing a tile and its coordinates**/

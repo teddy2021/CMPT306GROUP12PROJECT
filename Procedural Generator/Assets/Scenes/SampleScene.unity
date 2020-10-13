@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.19215688, g: 0.4745098, b: 0.19304104, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -238,13 +238,12 @@ MonoBehaviour:
   width: 100
   height: 100
   useSeed: 0
-  seed: Kody
+  seed: 
   sprites:
-  - {fileID: 5275678598942559470, guid: 9d15768888afe1949a52e85a6ff7e76e, type: 3}
   - {fileID: 5275678598942559470, guid: 9d15768888afe1949a52e85a6ff7e76e, type: 3}
   - {fileID: 536317620160702707, guid: d12126a65e8efa24582ba9a6a780a03b, type: 3}
   - {fileID: 2801765794511502948, guid: 14d929f1375c86445a6c7d4118de97cd, type: 3}
-  - {fileID: 5275678598942559470, guid: 9d15768888afe1949a52e85a6ff7e76e, type: 3}
+  - {fileID: 5562315150011411614, guid: a314764a4232bce4da1dcadaa3f3c572, type: 3}
   rules_file_path: Assets/Rules.txt
 --- !u!4 &1879486125
 Transform:

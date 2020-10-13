@@ -1,5 +1,7 @@
 3 3
-n s a b t
-s : nnn nan nnn, nnn nbn nnn, bab aba bab, aba bab aba
-a : nnn aaa nnn, nan nan nan, nan naa nnn, nnn naa nan, nnn aan nan, nbn bab nbn
-b : nnn bbn nnn, nbn nbn bnb, bnb nbn bnb, nan aba nan
+n s a b x t
+0 0 1 2 3 0
+s : nnn aba nnn, nnn axb nnn
+a : nnn aan nnn, nnn naa nnn, ann nan nnn, nna nan nnn, nnn nan ann, nnn nan nna
+b : nbn nbn nnn, nnn nbn nbn, bnn nbn nnn, nnn nbn nnb, nnb nbn nnn, nnn nbn bnn
+x : nxn xxx nxn
