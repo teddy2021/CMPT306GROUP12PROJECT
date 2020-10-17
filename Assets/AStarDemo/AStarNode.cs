@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AStarNode
+public class AStarNode : IComparable
 {
     public Vector3Int coords { get; private set; }
 
@@ -146,5 +147,21 @@ public class AStarNode
 
         H = h;
         G = g;
+    }
+
+    public Vector2Int ToVector2Int()
+    {
+        return new Vector2Int(coords.x, coords.y);
+    }
+
+    public int CompareTo(object obj)
+    {
+        if (obj == null) return 1;
+
+        AStarNode otherAStarNode = obj as AStarNode;
+        if (otherAStarNode != null)
+            return F.CompareTo(otherAStarNode.F);
+        else
+           throw new ArgumentException("Object is not an AStarNode");
     }
 }
