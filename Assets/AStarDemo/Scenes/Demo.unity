@@ -219,7 +219,6 @@ GameObject:
   - component: {fileID: 1395338672}
   - component: {fileID: 1395338671}
   - component: {fileID: 1395338674}
-  - component: {fileID: 1395338675}
   m_Layer: 0
   m_Name: Walkable
   m_TagString: Untagged
@@ -275,7 +274,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f324b38deddcbb41ae583617231c7d9, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1125,25 +1124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b4acc8250428b4e8f700742a3f5f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &1395338675
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1395338669}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f013b9fdfe565374cb713da982b99713, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2043215995
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,15 @@ public class AStarDemo : MonoBehaviour
         camera = Camera.main;
     }
 
+    public Vector3 CellToWorld(Vector3Int where)
+    {
+        var answer = walkMap.CellToWorld(where);
+
+        answer += walkMap.tileAnchor;
+
+        return answer;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -52,12 +61,12 @@ public class AStarDemo : MonoBehaviour
 
         if (path != null)
         {
-            var tempVec = walkMap.CellToWorld(start);
+            var tempVec = CellToWorld(start);
 
             foreach (Vector2Int node in path)
             {
                 var node3 = new Vector3Int(node.x, node.y, 0);
-                var place = walkMap.CellToWorld(node3);
+                var place = CellToWorld(node3);
 
                 Debug.DrawLine(tempVec, place);
 
