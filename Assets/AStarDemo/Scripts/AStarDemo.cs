@@ -9,9 +9,9 @@ public class AStarDemo : MonoBehaviour
     new Camera camera;
     private AStar astar;
 
-    private Vector3Int start;
     private Vector3Int goal;
-    private List<Vector2Int> path;
+
+    public GameObject obj;
 
     // Start is called before the first frame update
     void Start()
@@ -40,10 +40,13 @@ public class AStarDemo : MonoBehaviour
             Vector3Int gridPos = walkMap.WorldToCell(world);
 
             Debug.Log("start:" + gridPos);
-            start = gridPos;
+
+            goal = gridPos;
         }
 
-        if (Input.GetMouseButton(1))
+        obj.GetComponent<ScriptableMovement2D>().SetGoal(new Vector2(goal.x, goal.y));
+
+        /*if (Input.GetMouseButton(1))
         {
             Vector3 world = camera.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int gridPos = walkMap.WorldToCell(world);
@@ -72,6 +75,6 @@ public class AStarDemo : MonoBehaviour
 
                 tempVec = place;
             }
-        }
+        }*/
     }
 }
