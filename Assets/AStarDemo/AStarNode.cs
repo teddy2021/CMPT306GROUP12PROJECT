@@ -45,14 +45,14 @@ public class AStarNode : IComparable
 
     public AStarNode Parent { get; set; }
 
-    public void UpdateNeighbors (AStarNode[,] walkMap, bool isStatic, bool allowDiags = true)
+    public void UpdateNeighbors (AStarNode[,] walkMap, Vector2Int whereInMap, bool isStatic, bool allowDiags = true)
     {
         if (Neighbors != null && isStatic)
             return;
 
         Neighbors = new List<AStarNode>();
-        var x = coords.x;
-        var y = coords.y;
+        var x = whereInMap.x;
+        var y = whereInMap.y;
         var z = coords.z;
         var maxX = walkMap.GetUpperBound(0);
         var maxY = walkMap.GetUpperBound(1);

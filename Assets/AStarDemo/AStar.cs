@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStar : MonoBehaviour
+public class AStar
 {
     private AStarNode[,] nodeMap;
 
@@ -15,14 +15,14 @@ public class AStar : MonoBehaviour
 
     public bool allowDiags = true;
 
-    public enum Heuristic
+    public enum DistMode
     {
         Manhattan = 0,
         Distance = 1,
         DistanceSq = 2
     };
 
-    public Heuristic CurrentHeuristic = Heuristic.DistanceSq;
+    public DistMode CurrentDistMode = DistMode.DistanceSq;
 
     private void CreateNodeMap()
     {
@@ -54,19 +54,19 @@ public class AStar : MonoBehaviour
         }
     }
 
-    private double GetHeuristic(Vector2Int a, Vector2Int b)
+    private double GetDistance(Vector2Int a, Vector2Int b)
     {
-        switch (CurrentHeuristic)
+        switch (CurrentDistMode)
         {
-            case Heuristic.Manhattan:
+            case DistMode.Manhattan:
                 var dx = Math.Abs(a.x - b.x);
                 var dy = Math.Abs(a.y - b.y);
                 return 1 * (dx + dy);
 
-            case Heuristic.Distance:
+            case DistMode.Distance:
                 return Vector2Int.Distance(a, b);
 
-            case Heuristic.DistanceSq:
+            case DistMode.DistanceSq:
                 return (a - b).sqrMagnitude;
 
             default:
@@ -92,7 +92,7 @@ public class AStar : MonoBehaviour
             {
                 AStarNode node = nodeMap[x, y];
 
-                node.UpdateNeighbors(nodeMap, isStatic, allowDiags);
+                node.UpdateNeighbors(nodeMap, new Vector2Int(x, y), isStatic, allowDiags);
                 node.H = 0;
                 node.G = 0;
                 node.Parent = null;
@@ -120,6 +120,9 @@ public class AStar : MonoBehaviour
             AStarNode current = OpenSet.First();
             OpenSet.Remove(current);
 
+            var currentV2D = current.ToVector2Int();
+            var goalV2D = gnode.ToVector2Int();
+
             // if this is the goal node.
             if (current == gnode)
             {
@@ -141,7 +144,38 @@ public class AStar : MonoBehaviour
             // now expand on the node's neighbors
             foreach (AStarNode neighbor in current.Neighbors)
             {
+                var neighborV2D = neighbor.ToVector2Int();
 
+                // check to see if neighbor is in the closed set
+                if (ClosedSet.Contains(neighbor))
+                    continue;
+
+                //gets a temp comparison integer for seeing if a route is shorter than our current path
+                var tempG = current.G + GetDistance(currentV2D, neighborV2D);
+
+                bool newPath = false;
+
+                //Checks if the neighboor we are checking is within the openset
+                if (OpenSet.Contains(neighbor))
+                {
+                    if (tempG < neighbor.G) //The distance to the end goal from this neighboor is shorter so we need a new path
+                    {
+                        neighbor.G = tempG;
+                        newPath = true;
+                    }
+                }
+                else//if its not in openSet or closed set, then it IS a new path and we should add it too openset
+                {
+                    neighbor.G = tempG;
+                    newPath = true;
+                    OpenSet.Add(neighbor);
+                }
+
+                if (newPath)//if it is a newPath caclulate the H and F and set current to the neighboors previous
+                {
+                    neighbor.H = GetDistance(neighborV2D, goalV2D);
+                    neighbor.Parent = current;
+                }
             }
 
             // add node to closed set
