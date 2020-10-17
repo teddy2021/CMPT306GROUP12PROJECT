@@ -68,7 +68,7 @@ public class ScriptableMovement2D : MonoBehaviour
         {
             if (DistanceSquared(rb.position, goal) > distToGoal)
             {
-                rb.velocity = (goal - rb.position).normalized * MovementSpeed;
+                rb.AddForce((goal - rb.position).normalized * MovementSpeed);
             }
             else
             {
