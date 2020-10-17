@@ -10,33 +10,37 @@ public class AStarNode : IComparable
     // f is defined by F = G + H
     public double F { get; private set; }
 
+    private double _H;
+
+    private double _G;
+
     // h is the herustic
     public double H
     {
-        get { return H; }
+        get { return _H; }
 
         set
         {
             // set the value
-            H = value;
+            _H = value;
 
             // update f
-            F = G + H;
+            F = _G + H;
         }
     }
 
     // g is the cost
     public double G
     {
-        get { return G; }
+        get { return _G; }
 
         set
         {
             // set the value
-            G = value;
+            _G = value;
 
             // update f
-            F = G + H;
+            F = _G + H;
         }
     }
 
@@ -51,85 +55,67 @@ public class AStarNode : IComparable
             return;
 
         Neighbors = new List<AStarNode>();
-        var x = whereInMap.x;
-        var y = whereInMap.y;
+        var i = whereInMap.x;
+        var h = whereInMap.y;
         var z = coords.z;
-        var maxX = walkMap.GetUpperBound(0);
-        var maxY = walkMap.GetUpperBound(1);
 
-        // check -x
-        if (x > 0)
-        {
-            var nnode = walkMap[x - 1, y];
+        try {
+            var nnode = walkMap[i - 1, h];
 
             if (nnode.coords.z == z)
                 Neighbors.Add(nnode);
-        }
+        } catch { }
 
-        // check +x
-        if (x < maxX)
-        {
-            var nnode = walkMap[x + 1, y];
+        try {
+            var nnode = walkMap[i + 1, h];
 
             if (nnode.coords.z == z)
                 Neighbors.Add(nnode);
-        }
+        } catch { }
 
-        // check -y
-        if (y < 0)
-        {
-            var nnode = walkMap[x, y - 1];
+        try {
+            var nnode = walkMap[i, h - 1];
 
             if (nnode.coords.z == z)
                 Neighbors.Add(nnode);
-        }
+        } catch { }
 
-        // check +y
-        if (y < maxY)
-        {
-            var nnode = walkMap[x, y + 1];
+        try {
+            var nnode = walkMap[i, h + 1];
 
             if (nnode.coords.z == z)
                 Neighbors.Add(nnode);
-        }
+        } catch { }
 
         if (allowDiags)
         {
-            // check -x -y
-            if (x > 0 && y > 0)
-            {
-                var nnode = walkMap[x - 1, y - 1];
+            try {
+                var nnode = walkMap[i + 1, h + 1];
 
                 if (nnode.coords.z == z)
                     Neighbors.Add(nnode);
-            }
+            } catch { }
 
-            // check +x -y
-            if (x < maxX && y > 0)
-            {
-                var nnode = walkMap[x + 1, y - 1];
+            try {
+                var nnode = walkMap[i - 1, h - 1];
 
                 if (nnode.coords.z == z)
                     Neighbors.Add(nnode);
-            }
+            } catch { }
 
-            // check +x +y
-            if (x < maxX && y < maxY)
-            {
-                var nnode = walkMap[x + 1, y + 1];
+            try {
+                var nnode = walkMap[i - 1, h + 1];
 
                 if (nnode.coords.z == z)
                     Neighbors.Add(nnode);
-            }
+            } catch { }
 
-            // check -x +y
-            if (x > 0 && y < maxY)
-            {
-                var nnode = walkMap[x - 1, y + 1];
+            try {
+                var nnode = walkMap[i + 1, h - 1];
 
                 if (nnode.coords.z == z)
                     Neighbors.Add(nnode);
-            }
+            } catch { }
         }
     }
 
@@ -152,6 +138,11 @@ public class AStarNode : IComparable
     public Vector2Int ToVector2Int()
     {
         return new Vector2Int(coords.x, coords.y);
+    }
+
+    public override String ToString()
+    {
+        return String.Format("(coords:{0},f:{1},g:{2},h:{3},hasParent:{4},neighbors:{5})", coords, F, G, H, Parent!=null, Neighbors.Count);
     }
 
     public int CompareTo(object obj)

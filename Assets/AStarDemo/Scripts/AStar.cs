@@ -36,8 +36,6 @@ public class AStar : MonoBehaviour
         var columns = nodeMap.GetUpperBound(0) + 1;
         var rows = nodeMap.GetUpperBound(1) + 1;
 
-        Debug.Log(columns + " " + rows);
-
         for (int i = 0; i < columns; i++)
         {
             for (int h = 0; h < rows; h++)
@@ -69,17 +67,17 @@ public class AStar : MonoBehaviour
         // thank you https://bitbucket.org/Sniffle6/tilemaps-with-astar/src/master/Assets/GridManager.cs
         for (int x = bounds.xMin, i = 0; i < (bounds.size.x); x++, i++)
         {
-            for (int y = bounds.yMin, j = 0; j < (bounds.size.y); y++, j++)
+            for (int y = bounds.yMin, h = 0; h < (bounds.size.y); y++, h++)
             {
                 if (walkMap.HasTile(new Vector3Int(x, y, 0)))
                 {
                     // we defined the z part of the node to be '0' when the tile is walkable
-                    nodeMap[i, j] = new AStarNode(x, y, 0);
+                    nodeMap[i, h] = new AStarNode(x, y, 0);
                 }
                 else
                 {
                     // else it will be '1' when it is not walkable
-                    nodeMap[i, j] = new AStarNode(x, y, 1);
+                    nodeMap[i, h] = new AStarNode(x, y, 1);
                 }
             }
         }
@@ -105,7 +103,7 @@ public class AStar : MonoBehaviour
         }
     }
 
-    public List<Vector2Int> FindPath (Vector2Int start, Vector2Int goal)
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int goal)
     {
         List<Vector2Int> answerPath = new List<Vector2Int>();
         CreateNodeMap();
@@ -134,10 +132,12 @@ public class AStar : MonoBehaviour
                 node.G = 0;
                 node.Parent = null;
 
-                if (node.coords.x == start.x && node.coords.y == start.y)
+                var nodeV2D = node.ToVector2Int();
+
+                if (start == nodeV2D)
                     snode = node;
 
-                if (node.coords.x == goal.x && node.coords.y == goal.y)
+                if (goal == nodeV2D)
                     gnode = node;
             }
         }
@@ -149,14 +149,15 @@ public class AStar : MonoBehaviour
             return answerPath;
         }
 
-        SortedSet<AStarNode> OpenSet = new SortedSet<AStarNode>();
-        HashSet<AStarNode> ClosedSet = new HashSet<AStarNode>();
+        var OpenSet = new List<AStarNode>();
+        var ClosedSet = new HashSet<AStarNode>();
 
         OpenSet.Add(snode);
 
         while (OpenSet.Count > 0)
         {
             // pop lowest f score node
+            OpenSet.Sort();
             AStarNode current = OpenSet.First();
             OpenSet.Remove(current);
 
