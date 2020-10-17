@@ -12,6 +12,7 @@ public class AStarDemo : MonoBehaviour
     private Vector3Int goal;
 
     public GameObject obj;
+    private ScriptableMovement2D moveObj;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,13 @@ public class AStarDemo : MonoBehaviour
         astar = gameObject.GetComponent<AStar>();
 
         camera = Camera.main;
+
+        moveObj = obj.GetComponent<ScriptableMovement2D>();
+
+        moveObj.hasGoalChanged.AddListener(() =>
+        {
+            Debug.Log("done");
+        });
     }
 
     public Vector3 CellToWorld(Vector3Int where)

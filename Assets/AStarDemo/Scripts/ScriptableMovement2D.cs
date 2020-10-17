@@ -6,12 +6,10 @@ using UnityEngine.Events;
 public class ScriptableMovement2D : MonoBehaviour
 {
     public float MovementSpeed = 5.0f;
-
-    private Rigidbody2D rb;
-
+    public bool freeze = false;
 
     private bool _hasGoal = false;
-    public UnityEvent hasGoalChanged;
+    public UnityEvent hasGoalChanged { get; private set; }
 
     public bool hasGoal
     {
@@ -33,11 +31,18 @@ public class ScriptableMovement2D : MonoBehaviour
     public Vector2 goal { get; private set; }
     public double distToGoal { get; private set; }
 
+    private Rigidbody2D rb;
+
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
 
         hasGoalChanged = new UnityEvent();
+    }
+
+    private void OnDestroy()
+    {
+        hasGoalChanged.RemoveAllListeners();
     }
 
     private double DistanceSquared(Vector2 a, Vector2 b)
@@ -59,11 +64,11 @@ public class ScriptableMovement2D : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (hasGoal)
+        if (hasGoal && !freeze)
         {
             if (DistanceSquared(rb.position, goal) > distToGoal)
             {
-                rb.MovePosition(rb.position + ((goal - rb.position).normalized * MovementSpeed * Time.fixedDeltaTime));
+                rb.velocity = (goal - rb.position).normalized * MovementSpeed;
             }
             else
             {
