@@ -5,14 +5,16 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStar
+public class AStar : MonoBehaviour
 {
     private AStarNode[,] nodeMap;
 
-    public Tilemap walkMap;
+    private Tilemap walkMap;
 
+    [Tooltip("Is the Tilemap static?")]
     public bool isStatic = true;
 
+    [Tooltip("Should we allow diagonal paths?")]
     public bool allowDiags = true;
 
     public enum DistMode
@@ -22,12 +24,41 @@ public class AStar
         DistanceSq = 2
     };
 
+    [Tooltip("What type of Distance Metric should we use?")]
     public DistMode CurrentDistMode = DistMode.DistanceSq;
+
+    private void Start()
+    {
+        walkMap = gameObject.GetComponent<Tilemap>();
+
+        CreateNodeMap();
+
+        var columns = nodeMap.GetUpperBound(0) + 1;
+        var rows = nodeMap.GetUpperBound(1) + 1;
+
+        Debug.Log(columns + " " + rows);
+
+        for (int i = 0; i < columns; i++)
+        {
+            for (int h = 0; h < rows; h++)
+            {
+                AStarNode node = nodeMap[i, h];
+
+                node.UpdateNeighbors(nodeMap, new Vector2Int(i, h), isStatic, allowDiags);
+            }
+        }
+    }
 
     private void CreateNodeMap()
     {
         if (nodeMap != null && isStatic)
             return;
+
+        if (walkMap == null)
+        {
+            Debug.LogError("WalkMap was null on AStar Object");
+            return;
+        }
 
         walkMap.CompressBounds();
 
@@ -76,38 +107,47 @@ public class AStar
 
     public List<Vector2Int> FindPath (Vector2Int start, Vector2Int goal)
     {
+        List<Vector2Int> answerPath = new List<Vector2Int>();
         CreateNodeMap();
+
+        // make sure we have a nodemap
+        if (nodeMap == null)
+        {
+            Debug.LogError("NodeMap was null for AStar.");
+            return answerPath;
+        }
 
         var columns = nodeMap.GetUpperBound(0) + 1;
         var rows = nodeMap.GetUpperBound(1) + 1;
         AStarNode snode = null;
         AStarNode gnode = null;
 
-        List<Vector2Int> answerPath = new List<Vector2Int>();
-
         // init all nodes
-        for (int x = 0; x < columns; x++)
+        for (int i = 0; i < columns; i++)
         {
-            for (int y = 0; y < rows; y++)
+            for (int h = 0; h < rows; h++)
             {
-                AStarNode node = nodeMap[x, y];
+                AStarNode node = nodeMap[i, h];
 
-                node.UpdateNeighbors(nodeMap, new Vector2Int(x, y), isStatic, allowDiags);
+                node.UpdateNeighbors(nodeMap, new Vector2Int(i, h), isStatic, allowDiags);
                 node.H = 0;
                 node.G = 0;
                 node.Parent = null;
 
-                if (x == start.x && y == start.y)
+                if (node.coords.x == start.x && node.coords.y == start.y)
                     snode = node;
 
-                if (x == goal.x && y == goal.y)
+                if (node.coords.x == goal.x && node.coords.y == goal.y)
                     gnode = node;
             }
         }
 
         // we didn't find a start or goal node.
         if (snode == null || gnode == null)
+        {
+            Debug.LogError("Starting or ending node was not found for AStar.");
             return answerPath;
+        }
 
         SortedSet<AStarNode> OpenSet = new SortedSet<AStarNode>();
         HashSet<AStarNode> ClosedSet = new HashSet<AStarNode>();
