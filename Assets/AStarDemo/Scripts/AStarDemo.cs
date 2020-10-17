@@ -11,6 +11,7 @@ public class AStarDemo : MonoBehaviour
 
     private Vector3Int start;
     private Vector3Int goal;
+    private List<Vector2Int> path;
 
     // Start is called before the first frame update
     void Start()
@@ -44,9 +45,24 @@ public class AStarDemo : MonoBehaviour
 
         if (Input.GetMouseButton(2))
         {
-            List<Vector2Int> path = astar.FindPath(new Vector2Int(start.x, start.y), new Vector2Int(goal.x, goal.y));
+            path = astar.FindPath(new Vector2Int(start.x, start.y), new Vector2Int(goal.x, goal.y));
 
             Debug.Log(path.Count);
+        }
+
+        if (path != null)
+        {
+            var tempVec = walkMap.CellToWorld(start);
+
+            foreach (Vector2Int node in path)
+            {
+                var node3 = new Vector3Int(node.x, node.y, 0);
+                var place = walkMap.CellToWorld(node3);
+
+                Debug.DrawLine(tempVec, place);
+
+                tempVec = place;
+            }
         }
     }
 }

@@ -223,6 +223,7 @@ public class AStar : MonoBehaviour
             ClosedSet.Add(current);
         }
 
+        answerPath.Reverse();
         return answerPath;
     }
 }
