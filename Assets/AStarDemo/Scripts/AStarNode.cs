@@ -90,30 +90,38 @@ public class AStarNode : IComparable
         if (allowDiags)
         {
             try {
+                var node1 = walkMap[i + 1, h];
+                var node2 = walkMap[i, h + 1];
                 var nnode = walkMap[i + 1, h + 1];
 
-                if (nnode.coords.z == z)
+                if (node1.coords.z == z && node2.coords.z == z && nnode.coords.z == z)
                     Neighbors.Add(nnode);
             } catch { }
 
             try {
-                var nnode = walkMap[i - 1, h - 1];
-
-                if (nnode.coords.z == z)
-                    Neighbors.Add(nnode);
-            } catch { }
-
-            try {
+                var node1 = walkMap[i - 1, h];
+                var node2 = walkMap[i, h + 1];
                 var nnode = walkMap[i - 1, h + 1];
 
-                if (nnode.coords.z == z)
+                if (node1.coords.z == z && node2.coords.z == z && nnode.coords.z == z)
                     Neighbors.Add(nnode);
             } catch { }
 
             try {
+                var node1 = walkMap[i + 1, h];
+                var node2 = walkMap[i, h - 1];
                 var nnode = walkMap[i + 1, h - 1];
 
-                if (nnode.coords.z == z)
+                if (node1.coords.z == z && node2.coords.z == z && nnode.coords.z == z)
+                    Neighbors.Add(nnode);
+            } catch { }
+
+            try {
+                var node1 = walkMap[i - 1, h];
+                var node2 = walkMap[i, h - 1];
+                var nnode = walkMap[i - 1, h - 1];
+
+                if (node1.coords.z == z && node2.coords.z == z && nnode.coords.z == z)
                     Neighbors.Add(nnode);
             } catch { }
         }
