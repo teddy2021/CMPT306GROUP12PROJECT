@@ -23,13 +23,36 @@ public class PathWalker2D : MonoBehaviour
         astar = walkMap.GetComponent<AStar2D>();
     }
 
-    public Vector3 CellToWorld(Vector3Int where)
+    private double DistanceSquared(Vector3 a, Vector3 b)
     {
-        var answer = walkMap.CellToWorld(where);
+        return (a - b).sqrMagnitude;
+    }
 
-        answer += walkMap.tileAnchor; // we want the middle of the tile
+    public Vector3Int GetNearestValidTile(Vector3 world)
+    {
+        var ourTile = walkMap.WorldToCell(world);
 
-        return answer;
+        var closestTile = ourTile;
+        var closestDist = 99999999999.9;
+
+        foreach (var pos in walkMap.cellBounds.allPositionsWithin)
+        {
+            if (!walkMap.HasTile(pos))
+                continue;
+
+            if (pos.z != 0) // filter out bad tiles.
+                continue;
+
+            var tempDist = DistanceSquared(pos, ourTile);
+
+            if (tempDist > closestDist)
+                continue;
+
+            closestDist = tempDist;
+            closestTile = pos;
+        }
+        
+        return closestTile;
     }
 
     public void GoToLocation(Vector3 goal)
@@ -41,8 +64,8 @@ public class PathWalker2D : MonoBehaviour
     public IEnumerator GoToWorldLocation(Vector3 goal)
     {
         // get the tiles we need.
-        var goalTile = walkMap.WorldToCell(goal);
-        var startTile = walkMap.WorldToCell(transform.position);
+        var goalTile = GetNearestValidTile(goal);
+        var startTile = GetNearestValidTile(transform.position);
 
         // get the path
         var pathTiles = astar.FindPath(new Vector2Int(startTile.x, startTile.y), new Vector2Int(goalTile.x, goalTile.y));
@@ -51,7 +74,7 @@ public class PathWalker2D : MonoBehaviour
         var path = new List<Vector3>();
         foreach (var pathTile in pathTiles)
         {
-            path.Add(CellToWorld(new Vector3Int(pathTile.x, pathTile.y, 0)));
+            path.Add(walkMap.GetCellCenterWorld(new Vector3Int(pathTile.x, pathTile.y, 0)));
         }
 
         while (path.Count > 0)
@@ -66,6 +89,9 @@ public class PathWalker2D : MonoBehaviour
             yield return new WaitUntil(() => mover.hasGoal == false);
         }
 
-        yield return 1;
+
+        // now just directly to the goal
+        mover.SetGoal(goal, closeToNode);
+        yield return new WaitUntil(() => mover.hasGoal == false);
     }
 }
