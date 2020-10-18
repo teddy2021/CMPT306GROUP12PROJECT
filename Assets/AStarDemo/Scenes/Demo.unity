@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1316,6 +1316,7 @@ GameObject:
   - component: {fileID: 1013390573}
   - component: {fileID: 1013390575}
   - component: {fileID: 1013390576}
+  - component: {fileID: 1013390577}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -1482,6 +1483,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
+--- !u!114 &1013390577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013390569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445574fd138b50c49b310f67db19810d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 15
+  isFrozen: 0
 --- !u!1 &1395338669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 1
-  allowDiags: 0
+  allowDiags: 1
   CurrentDistMode: 2
 --- !u!483693784 &1395338672
 TilemapRenderer:
