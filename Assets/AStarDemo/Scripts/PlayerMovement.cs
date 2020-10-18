@@ -6,8 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private Vector2 movement;
 
+    [Tooltip("How fast are we?")]
     public float moveSpeed = 5.0f;
 
+    [Tooltip("Is our movement frozen?")]
     public bool isFrozen = false;
 
     private Rigidbody2D rb;
