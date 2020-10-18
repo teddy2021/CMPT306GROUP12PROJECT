@@ -49,7 +49,7 @@ public class AStarNode : IComparable
 
     public AStarNode Parent { get; set; }
 
-    public void UpdateNeighbors (AStarNode[,] walkMap, Vector2Int whereInMap, bool isStatic, bool allowDiags = true)
+    public void UpdateNeighbors2D(AStarNode[,] walkMap, Vector2Int whereInMap, bool isStatic, bool allowDiags = true)
     {
         if (Neighbors != null && isStatic)
             return;
@@ -138,6 +138,11 @@ public class AStarNode : IComparable
     public Vector2Int ToVector2Int()
     {
         return new Vector2Int(coords.x, coords.y);
+    }
+
+    public Vector3Int ToVector3Int()
+    {
+        return new Vector3Int(coords.x, coords.y, coords.z);
     }
 
     public override String ToString()

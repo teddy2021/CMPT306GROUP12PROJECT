@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStar : MonoBehaviour
+public class AStar2D : MonoBehaviour
 {
     private AStarNode[,] nodeMap;
 
@@ -42,7 +42,7 @@ public class AStar : MonoBehaviour
             {
                 AStarNode node = nodeMap[i, h];
 
-                node.UpdateNeighbors(nodeMap, new Vector2Int(i, h), isStatic, allowDiags);
+                node.UpdateNeighbors2D(nodeMap, new Vector2Int(i, h), isStatic, allowDiags);
             }
         }
     }
@@ -127,7 +127,7 @@ public class AStar : MonoBehaviour
             {
                 AStarNode node = nodeMap[i, h];
 
-                node.UpdateNeighbors(nodeMap, new Vector2Int(i, h), isStatic, allowDiags);
+                node.UpdateNeighbors2D(nodeMap, new Vector2Int(i, h), isStatic, allowDiags);
                 node.H = 0;
                 node.G = 0;
                 node.Parent = null;

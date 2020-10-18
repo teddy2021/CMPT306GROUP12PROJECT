@@ -5,7 +5,10 @@ using UnityEngine.Events;
 
 public class ScriptableMovement2D : MonoBehaviour
 {
+    [Tooltip("How fast is the this unit?")]
     public float MovementSpeed = 5.0f;
+
+    [Tooltip("Should we freeze the unit?")]
     public bool freeze = false;
 
     private bool _hasGoal = false;

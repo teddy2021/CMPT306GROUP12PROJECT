@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStarDemo : MonoBehaviour
+public class AStarDemo2D : MonoBehaviour
 {
     private Tilemap walkMap;
     new Camera camera;
-    private AStar astar;
+    private AStar2D astar;
 
     private Vector3Int goal;
 
@@ -18,7 +18,7 @@ public class AStarDemo : MonoBehaviour
     void Start()
     {
         walkMap = gameObject.GetComponent<Tilemap>();
-        astar = gameObject.GetComponent<AStar>();
+        astar = gameObject.GetComponent<AStar2D>();
 
         camera = Camera.main;
 
@@ -50,9 +50,11 @@ public class AStarDemo : MonoBehaviour
             Debug.Log("start:" + gridPos);
 
             goal = gridPos;
+
+            obj.GetComponent<PathWalker2D>().GoToLocation(goal);
         }
 
-        obj.GetComponent<ScriptableMovement2D>().SetGoal(new Vector2(goal.x, goal.y));
+        
 
         /*if (Input.GetMouseButton(1))
         {

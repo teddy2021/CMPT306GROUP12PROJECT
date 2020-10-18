@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 1013390570}
   - component: {fileID: 1013390574}
   - component: {fileID: 1013390573}
+  - component: {fileID: 1013390575}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -345,6 +346,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1013390575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013390569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2590b8d9ad222f145af87648af80a40a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkMap: {fileID: 1395338673}
+  closeToNode: 1
 --- !u!1 &1395338669
 GameObject:
   m_ObjectHideFlags: 0
