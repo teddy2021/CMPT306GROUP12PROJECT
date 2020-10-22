@@ -172,8 +172,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
-  far clip plane: 1000
+  near clip plane: 0.0001
+  far clip plane: 10000
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -237,13 +237,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  useSeed: 0
-  seed: 
+  useSeed: 1
+  seed: Kody
   sprites:
   - {fileID: 5275678598942559470, guid: 9d15768888afe1949a52e85a6ff7e76e, type: 3}
-  - {fileID: 536317620160702707, guid: d12126a65e8efa24582ba9a6a780a03b, type: 3}
-  - {fileID: 2801765794511502948, guid: 14d929f1375c86445a6c7d4118de97cd, type: 3}
   - {fileID: 5562315150011411614, guid: a314764a4232bce4da1dcadaa3f3c572, type: 3}
+  - {fileID: 2801765794511502948, guid: 14d929f1375c86445a6c7d4118de97cd, type: 3}
+  - {fileID: 536317620160702707, guid: d12126a65e8efa24582ba9a6a780a03b, type: 3}
   rules_file_path: Assets/Rules.txt
 --- !u!4 &1879486125
 Transform:

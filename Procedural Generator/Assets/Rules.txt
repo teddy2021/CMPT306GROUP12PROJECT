@@ -1,7 +1,8 @@
 3 3
-n s a b x t
-0 0 1 2 3 0
-s : nnn aba nnn, nnn axb nnn
-a : nnn aan nnn, nnn naa nnn, ann nan nnn, nna nan nnn, nnn nan ann, nnn nan nna
-b : nbn nbn nnn, nnn nbn nbn, bnn nbn nnn, nnn nbn nnb, nnb nbn nnn, nnn nbn bnn
-x : nxn xxx nxn
+n s a b x z t
+0 0 1 2 3 1 0
+s : n n n  n a n  n n n,  n n n  n b n  n n n,  n n n  n x n  n n n
+a : a n n  n a n  n n n,  x n n  n a n  n n n,  a a a  n a n  a a a,  z n n  n z n  n n z
+b : b n b  n b n  n n n,  a n a  n b n  n n n,  b n b  b b b  b n b,  n z n  n z n  n z n
+x : n x n  x x n  n n n,  n b n  b x n  n n n,  x n x  n x n  x x x,  n n z  n z n  z n n
+z : n a n  n b n  n x n,  n n n  n t n  n n n,  n n n  n a n  n n n
