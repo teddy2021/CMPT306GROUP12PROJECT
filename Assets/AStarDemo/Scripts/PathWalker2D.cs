@@ -66,6 +66,7 @@ public class PathWalker2D : MonoBehaviour
         // get the tiles we need.
         var goalTile = GetNearestValidTile(goal);
         var startTile = GetNearestValidTile(transform.position);
+        var startstartTile = walkMap.WorldToCell(transform.position);
 
         // get the path
         var pathTiles = astar.FindPath(new Vector2Int(startTile.x, startTile.y), new Vector2Int(goalTile.x, goalTile.y));
@@ -74,6 +75,9 @@ public class PathWalker2D : MonoBehaviour
         var path = new List<Vector3>();
         foreach (var pathTile in pathTiles)
         {
+            if (new Vector3Int(pathTile.x, pathTile.y, 0) == startstartTile) // ignore the tile we are already on
+                continue;
+
             path.Add(walkMap.GetCellCenterWorld(new Vector3Int(pathTile.x, pathTile.y, 0)));
         }
 
