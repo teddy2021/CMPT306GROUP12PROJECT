@@ -1,0 +1,5 @@
+3 3
+n s a t
+2 0 1 0
+s: n n n  n a n  n n n
+a: a a n  a a n  a a n, n a a  n a a  n a a, a a a  a a a  n n n,  n n n  a a a  a a a, a a a  a a a  a a a, a a n  a a n  n n n, n a a  n a a  n n n, n n n  a a n  a a n, n n n  n a a  n a a, n n n  n t n  n n n
