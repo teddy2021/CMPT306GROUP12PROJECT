@@ -1,5 +1,7 @@
 3 3
-n s a t
-2 0 1 0
-s: n n n  n a n  n n n
-a: a a n  a a n  a a n, n a a  n a a  n a a, a a a  a a a  n n n,  n n n  a a a  a a a, a a a  a a a  a a a, a a n  a a n  n n n, n a a  n a a  n n n, n n n  a a n  a a n, n n n  n a a  n a a, n n n  n t n  n n n
+n start ground, wall, t
+walls: wall
+floors: ground
+start: n n n  wall ground wall n n n, n n n  ground ground ground  n n n
+ground: ground ground ground  ground ground ground  ground ground ground, n n n  wall ground n  n n n, n n n  n ground wall  n n n, n wall n  n ground n  n n n, n n n  n ground n  n wall n, n n n  n t n  n n n
+wall: n wall n  n wall n  n n n, n n n  n wall wall  n n n, n n n  n wall n  n wall n, n n n  wall wall n  n n n, n n n  n t n  n n n

@@ -9,26 +9,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 using System;
 using System.Threading;
 
 public class Generator : MonoBehaviour{
 
     // handed in values from unity
-    public int width, height;
-    public bool useSeed;
-    public string seed;
-    public GameObject[] sprites;
-    public String rules_file_path;
+    [Range(10,100)]
+    [SerializeField] private int width, height;
+    [SerializeField] private bool useSeed;
+    [SerializeField] private string seed;
+    [SerializeField] private TileBase[] sprites;
+    [SerializeField] private String rules_file_path;
+    [SerializeField] private Tilemap Walls, Ground;
 
     // values used for displaying in unity
     private string[,] tiles;
-    private GameObject[,] map;
     
     // values used to perform algorithms
     private string[] alphabet;
-    private Dictionary<String, int> letter_tile;
     private Dictionary<string, string[][,]> words;
+    private Dictionary<string, string> mapping;
     private System.Random rand;
     private int r_width, r_height;
     Tree map_generator;
@@ -44,39 +46,46 @@ public class Generator : MonoBehaviour{
         else {
             rand = new System.Random();
         }
-        map = new GameObject[width, height];
-        map_generator = new Tree(0, width, 0, height, (int)(0.33f * (float)(width*height)), true, r_width, r_height);
+        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(width*height)), true, r_width, r_height);
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
+        int x = 0;
+        foreach(String s in tiles){
+            if(s == "wall" | s == "ground"){
+                x += 1;
+            }
+        }
+        print("Map has " + x + " non-null tiles out of " + (width*height) + " tiles (" + (((float)x/(float)(width*height))*100.0f) + "%)");
         Display();
     }
 
-    /**
-    A method to instantiate the tiles of the map and store them in the event they need to be destroyed.
-    @Preconditions: A set of sprites for each tile is defined, the tiles array has been filled in some way with 
-    values from the alphabet available, and map has been initialized.
-    @Postconditions: Map is filled with freshly instantiated gameobject references
-    **/
-    void Display(){
-        for (int i = 0; i < width; i += 1) {
-            for (int j = 0; j < height; j += 1) {
-                if (alphabet[0] != tiles[i, j] | null != tiles[i, j]) {
-                    Vector4 pos = new Vector4(i - (width/2), j -(height/2), 0, 0); // create a position for the current tile
-                    if (null != tiles[i, j]) {
-                        Destroy(map[i, j]); // if the current map position already has a tile, delete it to save memory
-                        map[i, j] = Instantiate(sprites[letter_tile[tiles[i,j]]], pos, Quaternion.identity); // create new gameobject and store it in the map
-                    }
-                    else{
-                        map[i,j] = Instantiate(sprites[0],pos, Quaternion.identity);
-                    }
+
+    public void Display(){
+        for(int x = 0; x < tiles.GetLength(0); x += 1){
+            for(int y = 0; y < tiles.GetLength(1); y += 1){
+                Vector3Int position = new Vector3Int(-x + width/2, -y + height/2, 0);
+                String specifier;
+                try{
+                    String referent = tiles[x,y];
+                    mapping.TryGetValue(referent, out specifier);
+                }catch(Exception e){
+                    String error = "[5]: Failed to get mapping for word at (" + x + ", " + y + ")"+
+                    "\nValue of tile array was: '" + tiles[x,y] + "'";
+                    Debug.Log(error + "\n" + e); 
+                    specifier = null;
+                }
+
+                
+                if(specifier == "Walls"){
+                    Walls.SetTile(position, sprites[0]);
+                }
+                else if(specifier == "Floors"){
+                    Ground.SetTile(position, sprites[1]);
                 }
             }
         }
     }
 
-    // Update is called once per frame
-    void Update() {        
-    }
 
     /**
     A method to read the ruleset of the grammar from a plaintext file
@@ -84,9 +93,10 @@ public class Generator : MonoBehaviour{
         First line: two numbers defining the dimensions of any production rule seperated by a space. 
         E.G. 3 3 says any production rule will be 3x3
         Second line: a set of words where the first is the null placeholder, the second is the starter placeholder, and the last is the terminal (unused)
-        Third line: a mapping between letter and sprite given as a space seperated string of numbers which refer to the indices of the sprite array handed into this program.
-        E.G. If the alphabet is n s a b c t, and 4 tiles are handed in, then the input 0 0 1 2 3 0 maps n, s and t to the 0th tile, a to the first, b to the second, and c to 
-        the third.
+        Third and Fourth lines: Listing which referents are walls and floors. These are handed in as comma seperated lists of the format
+            walls: wall_ref1, wall_ref2, etc
+            floors: floor_ref1, floor_ref2, etc
+            such that when they are read in, only the items after the colon are in the list.
         All following lines: words to production rule sets. Words are seperated from their production rules by a colon (:), production rules are seperated by commas (,)
         and lines of a production rule are seperated by spaces. The production rules must fit the dimensions defined in the First line
         E.G. (with the above first line) a: x x x  x x x  x x x, y y y  y y y  y y y
@@ -95,6 +105,9 @@ public class Generator : MonoBehaviour{
     void ReadFile(){
         words = new Dictionary<String, String[][,]>();
         System.String[] input = System.IO.File.ReadAllLines(rules_file_path); // read file into an array
+
+
+
         int size_x, size_y;
         try{
 
@@ -110,23 +123,35 @@ public class Generator : MonoBehaviour{
         }
         r_width = size_x;
         r_height = size_y;
+        
+
+
+
+        // obtain the alphabet
         String[] temp_alphabet = input[1].Split(new String[] {" "}, StringSplitOptions.RemoveEmptyEntries);
         alphabet = new String[temp_alphabet.Length]; // obtain the alphabet
-        String[] temp_letter_tile = input[2].Split(new String[] {" "}, StringSplitOptions.RemoveEmptyEntries);
-        letter_tile = new Dictionary<String, int>();
-        for(int i = 0; i < temp_letter_tile.Length; i +=1){
-            try{
-                alphabet[i] = temp_alphabet[i];
-                int index = Int32.Parse(temp_letter_tile[i]);
-                letter_tile.Add(alphabet[i], index);
-            }
-            catch(FormatException){
-                print("Failed to parse index input for index " + i);
-            }
+        Array.Copy(temp_alphabet, alphabet, temp_alphabet.Length);
+
+
+
+
+
+        // prepare and obtain the mappings for walls and floors
+        mapping = new Dictionary<string, string>();
+        String[] walls = input[2].Split(new String[] {":"}, StringSplitOptions.RemoveEmptyEntries)[1].Split(new String[]{","}, StringSplitOptions.RemoveEmptyEntries);
+        String[] floors = input[3].Split(new String[] {":"}, StringSplitOptions.RemoveEmptyEntries)[1].Split(new String[]{","}, StringSplitOptions.RemoveEmptyEntries);
+        // Add the key and value for walls
+        for(int i = 0; i < walls.Length; i += 1){
+            mapping.Add(walls[i], "Walls");
+        }
+        // Add the key and value for floors
+        for(int i = 0; i < floors.Length; i += 1){
+            mapping.Add(floors[i], "Floors");
         }
 
-        Array.Copy(temp_alphabet, alphabet, temp_alphabet.Length);
-        for(int i = 3; i < input.Length; i += 1){
+
+
+        for(int i = 4; i < input.Length; i += 1){
 
             string[] line = input[i].Split(new String[]{":"}, StringSplitOptions.RemoveEmptyEntries); // splits letter from rules
 
@@ -154,16 +179,13 @@ public class Generator : MonoBehaviour{
 
 
     void GenerateNewMap(){
-        Array.Clear(map, 0, map.Length);
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
-        Display();
     }
 
     void Regenerate(){
-        Array.Clear(map, 0, map.Length);
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         if(seed != "" & seed != null){
@@ -176,7 +198,6 @@ public class Generator : MonoBehaviour{
         }
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
-        Display();
     }
 
     void ChangeSeed(){
@@ -189,19 +210,18 @@ public class Generator : MonoBehaviour{
     public String[,] getStringMap(){
         return tiles;
     }
-
-    public GameObject[,] getObjectMap(){
-        return map;
-    }
 }
 
+
+
+
 /** A placeholder class for storing a tile and its coordinates**/
-public class Tile {
+public class Subtile {
 
     private string value;
     private int x, y;
 
-    public Tile(String value, int x, int y) {
+    public Subtile(String value, int x, int y) {
         this.x = x;
         this.y = y;
         this.value = value;
@@ -220,6 +240,9 @@ public class Tile {
     }
 }
 
+
+
+
 public class ThreadArgs{
     public string[] alphabet;
     public Dictionary<string, string[][,]> words;
@@ -232,12 +255,15 @@ public class ThreadArgs{
     }
 }
 
+
+
+
 public class Tree{
     private int left_bound, right_bound, upper_bound, lower_bound;
     private int width, height;
     private Tree[] children;
     private String[,] map;
-    private Queue<Tile> frontier;
+    private Queue<Subtile> frontier;
     private int min_width, min_height, min_area;
     private bool vertical;
     /** 
@@ -275,7 +301,7 @@ public class Tree{
         
         this.vertical = vertical;
 
-        frontier = new Queue<Tile>();
+        frontier = new Queue<Subtile>();
     }
 
 
@@ -305,7 +331,7 @@ public class Tree{
     }
 
     public bool isLeaf(){
-        return (width * height) <= min_area;
+        return (width * height) <= min_area & width > min_width & height > min_height;
     }
 
     /**
@@ -318,12 +344,12 @@ public class Tree{
     **/
     public void GenerateMap(System.Object args){
         ThreadArgs arguments = (ThreadArgs)args;
-        if(width * height > min_area & (width > min_width + 1 & height > min_height + 1) ){
+        if(!isLeaf() & min_width < width - min_width & min_height < height - min_height){
             children = new Tree[2];
             int division;
             if(vertical){
             
-                division = left_bound + (arguments.rand.Next(width));
+                division = left_bound + arguments.rand.Next(min_width, width - min_width);
                 if(division < left_bound + min_width){
                     division = left_bound + min_width;
                 }
@@ -332,7 +358,8 @@ public class Tree{
                 }
 
 
-                children[0] = new Tree(left_bound, division, upper_bound, lower_bound, min_area, false, min_width, min_height);
+
+                children[0] = new Tree(left_bound, division-1, upper_bound, lower_bound, min_area, false, min_width, min_height);
                 children[1] = new Tree(division, right_bound, upper_bound, lower_bound, min_area, false, min_width, min_height);
 
                 if(children[0].isLeaf() & children[1].isLeaf()){
@@ -353,34 +380,65 @@ public class Tree{
                 String[,] c_map_1 = children[0].getMap();
                 String[,] c_map_2 = children[1].getMap();
 
+                String val;
 
-                for(int i = 0; i < c_map_1.GetLength(0) - 1; i += 1){
-                    for(int j = 0; j < c_map_1.GetLength(1) - 1; j +=1){
+                for(int i = 0; i < c_map_1.GetLength(0); i += 1){
+                    for(int j = 0; j < c_map_1.GetLength(1); j +=1){
+                        
                         try{
-                        	map[i,j] = (c_map_1[i,j]!=null)?c_map_1[i,j]:arguments.alphabet[0];
+                            if(c_map_1[i,j] == null){
+                                val = arguments.alphabet[0];
+                            }
+                            else{
+                                val = c_map_1[i,j];
+                            }
+                        }
+                        catch (Exception e){
+                            Debug.Log("[1.1] Failed to get element from minor array at index (" + i + ", " + j + ")\n" + e);
+                            val = arguments.alphabet[0];
+                        }
+
+                        try{
+                        	map[i,j] = val;
                     	}
                     	catch (Exception E){
-                    		Debug.Log("[1] Failed to add element to array\n" + E + 
+                    		Debug.Log("[1.2] Failed to add element '" + val + "' to array\n" + E + 
                     			"\nIndex: (" + i +", " + j +")" + 
                     			"\nMajor Array goes from (" + left_bound + ", " + upper_bound +") to (" + right_bound + ", " + lower_bound +")" +
                     			" With width " + width + " and height " + height +
                     			"\nMinor array has size (" + c_map_1.GetLength(0) + ", " + c_map_1.GetLength(1) + ")" + 
-                    			"\nDivision Point: " + division);
+                    			"\nDivision Point: " + (division + left_bound));
                     	}
                     }
                 }
                 
+                int offset = c_map_1.GetLength(0) - 1;
                 
-                for(int i = 0; i < c_map_2.GetLength(0) - 1; i += 1){
-                    for(int j = 0; j < c_map_2.GetLength(1) - 1; j +=1){
+                for(int i = 0; i < c_map_2.GetLength(0); i += 1){
+                    for(int j = 0; j < c_map_2.GetLength(1); j +=1){
+
                         try{
-                        	map[i + division - 1,j] = (c_map_2[i,j]!=null)?c_map_2[i, j]:arguments.alphabet[0];
+                            if(c_map_2[i,j] == null){
+                                val = arguments.alphabet[0];
+                            }
+                            else{
+                                val = c_map_2[i,j];
+                            }
+                        }
+                        catch (Exception e){
+                            Debug.Log("[2.1] Failed to get element from minor array at index (" + i + ", " + j + ")\n" + e);
+                            val = arguments.alphabet[0];
+                        }
+
+
+                        try{
+                        	map[i + offset, j] = val;
                     	}
                     	catch (Exception E){
-                    		Debug.Log("[2]: Failed to add element to array\n" + 
+                    		Debug.Log("[2.2]: Failed to add element '"+ val +"' to array\n" + 
                     			E + 
                     		"\nIndex in Minor Array: (" + i +", " + j +")" +
-                    		"\nIndex in Major Array: (" + (i + division - 1) + ", " + j + ")" +
+                    		"\nIndex in Major Array: (" + (i + division) + ", " + j + ")" +
                     		"\nMajor Array goes from (" + left_bound + ", " + upper_bound +") to (" + right_bound + ", " + lower_bound+")" +
                     		" With width " + width + " and height " + height +
                     		"\nMinor array has size (" + c_map_2.GetLength(0) + ", " + c_map_2.GetLength(1) + ")" + 
@@ -391,7 +449,7 @@ public class Tree{
                 }
             }
             else{
-                division = upper_bound + (arguments.rand.Next(height));
+                division = upper_bound + (arguments.rand.Next(min_height, height - min_height));
                 if(division < upper_bound + min_height ){
                     division = upper_bound + min_height;
                 }
@@ -399,7 +457,7 @@ public class Tree{
                 	division = lower_bound - min_height;
                 }
             
-                children[0] = new Tree(left_bound, right_bound, upper_bound, division, min_area, true, min_width, min_height);
+                children[0] = new Tree(left_bound, right_bound, upper_bound, division-1, min_area, true, min_width, min_height);
                 children[1] = new Tree(left_bound, right_bound, division, lower_bound, min_area, true, min_width, min_height);
             
                 Thread child1 = new Thread(new ParameterizedThreadStart(children[0].GenerateMap));
@@ -414,36 +472,67 @@ public class Tree{
                 String[,] c_map_1 = children[0].getMap();
                 String[,] c_map_2 = children[1].getMap();
 
+                String val;
 
-                for(int i = 0; i < c_map_1.GetLength(0) - 1; i += 1){
-                    for(int j = 0; j < c_map_1.GetLength(1) - 1; j +=1){
-                    	//Debug.Log("i: " + i + "\tj: " + j);
+                for(int i = 0; i < c_map_1.GetLength(0); i += 1){
+                    for(int j = 0; j < c_map_1.GetLength(1); j +=1){
+
+
+                        try{
+                            if(c_map_1[i,j] == null){
+                                val = arguments.alphabet[0];
+                            }
+                            else{
+                                val = c_map_1[i,j];
+                            }
+                        }
+                        catch (Exception e){
+                            Debug.Log("[3.1] Failed to get element from minor array at index (" + i + ", " + j + ")\n" + e);
+                            val = arguments.alphabet[0];
+                        }
+
                     	try{
-                        	map[i,j] = (c_map_1[i,j]!=null)?c_map_1[i,j]:arguments.alphabet[0];
+                        	map[i,j] = val;
                     	}
                     	catch (Exception E){
-                    		Debug.Log("[3] Failed to add element to array\n" + E + 
+                    		Debug.Log("[3.2] Failed to add element '" + val +"' to array\n" + E + 
                     			"\nIndex array: (" + i +", " + j +")" + 
                     			"\nMajor Array goes from (" + left_bound + ", " + upper_bound +") to (" + right_bound + ", " + lower_bound +")" +
                     			" With width " + width + " and height " + height +
                     			"\nMinor array has size (" + c_map_1.GetLength(0) + ", " + c_map_1.GetLength(1) + ")" + 
-                    			"\nDivision Point: " + division);
+                    			"\nDivision Point: " + (division + upper_bound));
                     	}
                     }
                 }
             
 
-                
-                for(int i = 0; i < c_map_2.GetLength(0) - 1; i += 1){
-                    for(int j = 0; j < c_map_2.GetLength(1) - 1; j +=1){
+                int offset = c_map_1.GetLength(1) - 1;
+                for(int i = 0; i < c_map_2.GetLength(0); i += 1){
+                    for(int j = 0; j < c_map_2.GetLength(1); j +=1){
+
+
+                        try{
+                            if(c_map_2[i,j] == null){
+                                val = arguments.alphabet[0];
+                            }
+                            else{
+                                val = c_map_2[i,j];
+                            }
+
+                        }
+                        catch (Exception e){
+                            Debug.Log("[4.1] Failed to get element from minor array at index (" + i + ", " + j + ")\n" + e);
+                            val = arguments.alphabet[0];
+                        }
+
                     	try{
-                        	map[i,j + division - 1] = (c_map_2[i,j]!=null)?c_map_2[i,j]:arguments.alphabet[0];
+                        	map[i,j + offset] = val;
                     	}
                     	catch (Exception E){
-                    		Debug.Log("[4] Failed to add element to array\n" + 
+                    		Debug.Log("[4.2] Failed to add element '" + val + "' to array\n" + 
                     			E + 
                     		"\nIndex in Minor Array: (" + i +", " + j +")" +
-                    		"\nIndex in Major Array: (" + i + ", " + (j + division - 1) + ")" +
+                    		"\nIndex in Major Array: (" + i + ", " + (j + division) + ")" +
                     		"\nMajor Array goes from (" + left_bound + ", " + upper_bound +") to (" + right_bound + ", " + lower_bound+")" +
                     		" With Major width " + width + " and height " + height +
                     		"\nMinor array has size (" + c_map_2.GetLength(0) + ", " + c_map_2.GetLength(1) + ")" + 
@@ -476,7 +565,7 @@ public class Tree{
         	Debug.Log("Failed to create random x starting location\n" +
         	e +
         	"\nWidth: " + width);
-        	x = width - 1;
+        	x = width / 2;
         }
 	
 		try{
@@ -486,10 +575,11 @@ public class Tree{
         	Debug.Log("Failed to create random y starting location\n" + 
         	e +
         	"\nHeight: " + height);
-        	y = height - 1;
+        	y = height / 2;
         }
+        
         map[x, y] = alphabet[1]; // place a starting tile at the center of the board
-        frontier.Enqueue(new Tile(alphabet[1], x, y)); // enqueue the starting tile for use with grow
+        frontier.Enqueue(new Subtile(alphabet[1], x, y)); // enqueue the starting tile for use with grow
     }
 
     /**
@@ -504,8 +594,9 @@ public class Tree{
     void Grow(string[] alphabet, 
         Dictionary<string, string[][,]> words, 
         System.Random rand) {
+
         while (frontier.Count > 0) {
-            Tile current = frontier.Dequeue(); // obtain the oldest tile
+            Subtile current = frontier.Dequeue(); // obtain the oldest tile
             Swap(current, alphabet, words, rand); // grow that tile
         }
     }
@@ -522,7 +613,7 @@ public class Tree{
     in accordance with the production rule, adjusting for array bounds. If a tile is not a null tile, it is left alone. Finally the nexts queue has a
     new value enqueued for each newly placed tile
     **/
-    void Swap(Tile tile, string[] alphabet, 
+    void Swap(Subtile tile, string[] alphabet, 
         Dictionary<string, string[][,]> words, 
         System.Random rand) {
 
@@ -551,7 +642,7 @@ public class Tree{
                 int possibility_x = i + 1 - x;
                 int possibility_y = j + 1 - y;
                 
-                if (i > 0 & j > 0 &
+                if (i >= 0 & j >= 0 &
                     i < width & j < height) {
                     string newtile = set[possibility_x, possibility_y]; // obtain the elements of the selected production rule 1 by 1
 
@@ -561,7 +652,7 @@ public class Tree{
                             map[i, j] = newtile;
                             
                             if (i != y | j != x) {
-                                frontier.Enqueue(new Tile(newtile, i, j)); // enqueue the tile for future growth
+                                frontier.Enqueue(new Subtile(newtile, i, j)); // enqueue the tile for future growth
                             }
                         }   
                     }
