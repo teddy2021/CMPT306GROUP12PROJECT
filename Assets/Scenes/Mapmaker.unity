@@ -270,14 +270,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaf71a1b465be54a8d87937d422be44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 63
+  width: 25
   height: 25
   useSeed: 0
   seed: Kody
   sprites:
   - {fileID: 11400000, guid: be07efb6cb71cd341927dd383920615e, type: 2}
   - {fileID: 11400000, guid: ad74be0d038b2e94e90310aff7b4f4d5, type: 2}
-  rules_file_path: Assets/Scripts/MapMaking/Rules.txt
+  rules_file_path: Assets/MapMaking/Rules.txt
   Walls: {fileID: 11436041}
   Ground: {fileID: 209801065}
 --- !u!4 &174113806
