@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using Pathfinding;
 using System;
 using System.Threading;
 
@@ -112,8 +113,9 @@ public class Generator : MonoBehaviour{
                 }
             }
         }
-        Ground.RefreshAllTiles();
+
         Walls.RefreshAllTiles();
+        Ground.RefreshAllTiles();
     }
 
 

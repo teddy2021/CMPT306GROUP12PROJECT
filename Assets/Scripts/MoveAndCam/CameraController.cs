@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 	{
 		Vector3 desiredPosition = cameraTarget.position + offset;                                   // desiredPosition vector is made using the camerTarget's position and the offset vector
 		Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);  // smoothPosition is created by using lerp with the camera's current position and the desired postion
+		smoothedPosition.z = -10;
 		transform.position = smoothedPosition;                                                      // cameras transform is changed to the new smoothed position, resulting in smooth camera movement 
 	}
 
