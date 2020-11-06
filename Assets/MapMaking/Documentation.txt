@@ -8,6 +8,18 @@ Rules:
     Third line: the definition of the set of wall letters. Formated as "Walls: $[letters]"
     Fourth line: the definition of the set of ground letters. Formatted as "Ground: $[letters]"
     Fifth onwards: These lines define the production rules. Formatted as "$letter: $[rules]", where each rule is m sets of n groups of two or more letters. Best practice is to use varying numbers of spaces to differentiate between letters and rows in rules. Individual rules are seperated by commas.
+For any given production, a random rule is selected from the set of available rules, and then placed into the map without overriding non-null/starter tiles.
+So for a fresh map, the production rule of a: aaa bbb ccc is placed so that the map now has aaa bab ccc centered around the original array index of the a. If a tile 
+was already there, for example a z up and to the left of the original a, the production rule would result in zaa bab ccc.
+In a 2d view of this, the first looks like:
+. . .    a a a
+. a . -> b a b
+. . .    c c c
+and the second looks like:
+z . .    z a a
+. a . -> b a b
+. . .    c c c
+
 
 Generator:
     DisplayCustom: A method to display a given map.
