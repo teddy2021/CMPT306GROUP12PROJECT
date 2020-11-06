@@ -36,7 +36,7 @@ public abstract class Scriptable_Tile : Tile {
 			tileData.sprite = sprites[index];
 			tileData.color = Color.white;
 			tileData.flags = TileFlags.LockTransform;
-			tileData.colliderType = ColliderType.None;
+			tileData.colliderType = ColliderType.Sprite;
 		}
 	}
 

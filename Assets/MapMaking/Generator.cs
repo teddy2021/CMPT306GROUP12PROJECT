@@ -74,6 +74,46 @@ public class Generator : MonoBehaviour{
         Display();
     }
 
+    public void DisplayCustom(String[,] map){
+        for(int x = 0; x < map.GetLength(0); x += 1){
+            for(int y = 0; y < map.GetLength(1); y += 1){
+                Vector3Int position = new Vector3Int(x - width/2, y - height/2, 0);
+                String specifier, referent;
+                if(Walls.
+                try{
+                    referent = map[x,y];
+                    mapping.TryGetValue(referent, out specifier);
+                }catch(Exception e){
+                    String error = "[5]: Failed to get mapping for word at (" + x + ", " + y + ")"+
+                    "\nValue of tile array was: '" + tiles[x,y] + "'";
+                    print(error + "\n" + e); 
+                    specifier = null;
+                }
+                if(specifier == "Walls"){
+                    Walls.SetTile(position, sprites[0]);
+                    Ground.SetTile(position, sprites[1]);
+                }
+                else if(specifier == "Floors"){
+                    Ground.SetTile(position, sprites[1]);
+                }
+                else{
+                    if( x == 0 || y == 0 ||
+                        x + 1 == map.GetLength(0) ||
+                        y + 1 == map.GetLength(1)){
+                        Walls.SetTile(position, sprites[0]);
+                        Ground.SetTile(position, sprites[1]);
+                    }
+                    else if((x*x) - y >= (y*y) - x){
+                        Walls.SetTile(position, sprites[0]);
+                        Ground.SetTile(position, sprites[1]);
+                    }
+                    else{
+                        Ground.SetTile(position, sprites[1]);
+                    }
+                }
+            }
+        }
+    }
 
     public void Display(){
         for(int x = 0; x < width; x += 1){
@@ -142,7 +182,7 @@ public class Generator : MonoBehaviour{
         E.G. (with the above first line) a: x x x  x x x  x x x, y y y  y y y  y y y
     @Postconditions: the alphabet set is filled, and the words dicitonary is filled, both in accordance with the above definitions.
     **/
-    void ReadFile(){
+    private void ReadFile(){
         words = new Dictionary<String, String[][,]>();
         System.String[] input = System.IO.File.ReadAllLines(rules_file_path); // read file into an array
 
@@ -217,18 +257,17 @@ public class Generator : MonoBehaviour{
     }
 
 
-    void GenerateNewMap(){
+    public void GenerateNewMap(){
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
     }
 
-    void Regenerate(){
+    public void Regenerate(){
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         if(seed != "" & seed != null){
-            print(seed);
             rand = new System.Random(seed.GetHashCode());
         }
         else{
@@ -239,10 +278,14 @@ public class Generator : MonoBehaviour{
         tiles = map_generator.getMap();
     }
 
-    void ChangeSeed(){
+    public void ChangeSeedIndirect(){
         InputField seeder = GameObject.Find("Seeder").GetComponent(typeof(InputField)) as InputField;
         string input_value = seeder.text;
         this.seed = input_value;
+        rand = new System.Random(seed.GetHashCode());
+    }
+
+    public void ChangeSeedDirect(String seed){
         rand = new System.Random(seed.GetHashCode());
     }
 
