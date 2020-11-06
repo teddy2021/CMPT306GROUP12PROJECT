@@ -13,7 +13,7 @@ public class HeadLamp : MonoBehaviour
     {
         
     }
-
+    // My cool comment
     // Attach script to main camera
 
     void FixedUpdate()
