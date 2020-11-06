@@ -8,6 +8,7 @@ using UnityEditor;
 
 public class Wall_Tile : Scriptable_Tile {
 
+
 	public override int GetIndex(byte mask){
 		switch(mask){
 			case 0: return 0; // 0 neighbours

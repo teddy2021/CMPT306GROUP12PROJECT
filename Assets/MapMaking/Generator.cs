@@ -79,7 +79,6 @@ public class Generator : MonoBehaviour{
             for(int y = 0; y < map.GetLength(1); y += 1){
                 Vector3Int position = new Vector3Int(x - width/2, y - height/2, 0);
                 String specifier, referent;
-                if(Walls.
                 try{
                     referent = map[x,y];
                     mapping.TryGetValue(referent, out specifier);
