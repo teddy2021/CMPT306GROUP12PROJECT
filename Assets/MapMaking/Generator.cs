@@ -17,7 +17,7 @@ using System.Threading;
 public class Generator : MonoBehaviour{
 
     // handed in values from unity
-    [Range(10,100)]
+    [Range(10,500)]
     [SerializeField] private int width, height;
     [SerializeField] private bool useSeed;
     [SerializeField] private string seed;
@@ -48,7 +48,7 @@ public class Generator : MonoBehaviour{
         else {
             rand = new System.Random();
         }
-        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(width*height)), true, r_width, r_height);
+        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(r_width*r_height)), true, r_width, r_height);
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
         int x = 0;
@@ -57,6 +57,7 @@ public class Generator : MonoBehaviour{
                 x += 1;
             }
         }
+        
         float w = (float)tiles.GetLength(0);
         float h = (float)tiles.GetLength(1);
 

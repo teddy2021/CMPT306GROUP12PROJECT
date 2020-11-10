@@ -21,9 +21,14 @@ public class DeleteTileOnClick : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 world = camera.ScreenToWorldPoint(Input.mousePosition);
-
-
+            Vector3Int location = tilemap.WorldToCell(world);
             tilemap.SetTile(tilemap.WorldToCell(world), null);
+            for(int i = -1; i <= 1; i += 1){
+                for(int j = -1; j <= 1; j += 1){
+                    Vector3Int position = location + new Vector3Int(i, j, 0);
+                    tilemap.RefreshTile(position);
+                }
+            }
         }
     }
 }
