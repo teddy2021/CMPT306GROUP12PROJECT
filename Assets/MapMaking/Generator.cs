@@ -75,10 +75,19 @@ public class Generator : MonoBehaviour{
         Display();
     }
 
+
+
     public void DisplayCustom(String[,] map){
+        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[0]);
+        
+        BoundsInt area = new BoundsInt(
+            new Vector3Int(-width/2, -height/2, 0), 
+            new Vector3Int(width/2, height/2, 0));
+        
+        TileBase[] wallset = new TileBase[width * height];
+
         for(int x = 0; x < map.GetLength(0); x += 1){
             for(int y = 0; y < map.GetLength(1); y += 1){
-                Vector3Int position = new Vector3Int(x - width/2, y - height/2, 0);
                 String specifier, referent;
                 try{
                     referent = map[x,y];
@@ -90,35 +99,27 @@ public class Generator : MonoBehaviour{
                     specifier = null;
                 }
                 if(specifier == "Walls"){
-                    Walls.SetTile(position, sprites[0]);
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else if(specifier == "Floors"){
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else{
-                    if( x == 0 || y == 0 ||
-                        x + 1 == map.GetLength(0) ||
-                        y + 1 == map.GetLength(1)){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else if((x*x) - y >= (y*y) - x){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else{
-                        Ground.SetTile(position, sprites[1]);
-                    }
+                    wallset[Math.Min(width, height) * x + y] = sprites[0];
                 }
             }
         }
+
+        Walls.SetTilesBlock(area, wallset);
     }
 
+
+
     public void Display(){
-        for(int x = 0; x < width; x += 1){
-            for(int y = 0; y < height; y += 1){
-                Vector3Int position = new Vector3Int(x - width/2, y - height/2, 0);
+        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[0]);
+        
+        BoundsInt area = new BoundsInt(
+            new Vector3Int(-width/2, -height/2, 0), 
+            new Vector3Int(width/2, height/2, 0));
+        
+        TileBase[] wallset = new TileBase[width * height];
+
+        for(int x = 0; x < tiles.GetLength(0); x += 1){
+            for(int y = 0; y < tiles.GetLength(1); y += 1){
                 String specifier, referent;
                 try{
                     referent = tiles[x,y];
@@ -130,32 +131,11 @@ public class Generator : MonoBehaviour{
                     specifier = null;
                 }
                 if(specifier == "Walls"){
-                    Walls.SetTile(position, sprites[0]);
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else if(specifier == "Floors"){
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else{
-                    if( x == 0 || y == 0 ||
-                    x + 1 == tiles.GetLength(0) ||
-                    y + 1 == tiles.GetLength(1)){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else if((x*x) - y >= (y*y) - x){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else{
-                        Ground.SetTile(position, sprites[1]);
-                    }
+                    wallset[Math.Min(width, height) * x + y] = sprites[0];
                 }
             }
         }
-
-        Walls.RefreshAllTiles();
-        Ground.RefreshAllTiles();
+        Walls.SetTilesBlock(area, wallset);
     }
 
 
@@ -257,12 +237,16 @@ public class Generator : MonoBehaviour{
     }
 
 
+
     public void GenerateNewMap(){
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
     }
+
+
+
 
     public void Regenerate(){
         Array.Clear(tiles, 0, tiles.Length);
@@ -278,6 +262,9 @@ public class Generator : MonoBehaviour{
         tiles = map_generator.getMap();
     }
 
+
+
+
     public void ChangeSeedIndirect(){
         InputField seeder = GameObject.Find("Seeder").GetComponent(typeof(InputField)) as InputField;
         string input_value = seeder.text;
@@ -285,9 +272,15 @@ public class Generator : MonoBehaviour{
         rand = new System.Random(seed.GetHashCode());
     }
 
+
+
+
     public void ChangeSeedDirect(String seed){
         rand = new System.Random(seed.GetHashCode());
     }
+
+
+
 
     public String[,] getStringMap(){
         return tiles;
