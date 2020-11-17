@@ -7,7 +7,7 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> items;
+    public List<Item> items = new List<Item>[6] { };
 
     //This can be used to add an item to the inventory, every item is unique
     //An item quantity may be negative
@@ -40,5 +40,42 @@ public class Inventory : MonoBehaviour
 
     public void UpdateList(Item item)
     {
+        switch (item.name) 
+        {
+            case "coalChunk":
+                if (items[0] != null)
+                {
+                    items[0].quantity += item.quantity;
+                }
+                else
+                {
+                    else items[0] = item;
+                }
+                break;
+            case "copperChunk":
+                break;
+            case "ironChunk":
+                break;
+            case "powerPost":
+                break;
+            case "furnace":
+                break;
+            case "key":
+                break;
+            default:
+                break;
+        }
+
     }
+
+    public void CreatePowerPost()
+    {
+        //Subtract recources if enough. Update ui and inventory
+    }
+
+    public void CreateFurnace()
+    {
+        //Subtract recources if enough. Update ui and inventory
+    }
+
 }
