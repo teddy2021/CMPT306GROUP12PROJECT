@@ -63,10 +63,10 @@ public class Generator : MonoBehaviour{
 
         for(x = 0; x < tiles.GetLength(0); x += 1){
             for( int y = 0; y < tiles.GetLength(1); y += 1){
-                tiles[x,0] = "Wall";
-                tiles[0,y] = "Wall";
-                tiles[x, tiles.GetLength(1) - 4] = "Wall";
-                tiles[tiles.GetLength(0) - 4, y] = "Wall";
+                tiles[x,0] = "wall";
+                tiles[0,y] = "wall";
+                tiles[x, tiles.GetLength(1) - 1] = "wall";
+                tiles[tiles.GetLength(0) -1, y] = "wall";
             }
         }
 
@@ -78,12 +78,8 @@ public class Generator : MonoBehaviour{
 
 
     public void DisplayCustom(String[,] map){
-        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[0]);
-        
-        BoundsInt area = new BoundsInt(
-            new Vector3Int(-width/2, -height/2, 0), 
-            new Vector3Int(width/2, height/2, 0));
-        
+        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[1]);
+                
         TileBase[] wallset = new TileBase[width * height];
 
         for(int x = 0; x < map.GetLength(0); x += 1){
@@ -99,27 +95,32 @@ public class Generator : MonoBehaviour{
                     specifier = null;
                 }
                 if(specifier == "Walls"){
-                    wallset[Math.Min(width, height) * x + y] = sprites[0];
+                    wallset[(Math.Min(width, height) * x) + y] = sprites[0];
                 }
             }
         }
 
+        BoundsInt area = new BoundsInt(
+            new Vector3Int(0,0, 0), 
+            new Vector3Int(width, height, 0));
+        
         Walls.SetTilesBlock(area, wallset);
     }
 
 
 
     public void Display(){
-        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[0]);
-        
-        BoundsInt area = new BoundsInt(
-            new Vector3Int(-width/2, -height/2, 0), 
-            new Vector3Int(width/2, height/2, 0));
         
         TileBase[] wallset = new TileBase[width * height];
+        int scaler = Math.Min(width, height);
+
+        BoundsInt area = new BoundsInt(
+            new Vector3Int(-width/2, -height/2, 0), 
+            new Vector3Int(width, height, 1));
 
         for(int x = 0; x < tiles.GetLength(0); x += 1){
             for(int y = 0; y < tiles.GetLength(1); y += 1){
+                int index = x * scaler + y;
                 String specifier, referent;
                 try{
                     referent = tiles[x,y];
@@ -127,14 +128,18 @@ public class Generator : MonoBehaviour{
                 }catch(Exception e){
                     String error = "[5]: Failed to get mapping for word at (" + x + ", " + y + ")"+
                     "\nValue of tile array was: '" + tiles[x,y] + "'";
-                    print(error + "\n" + e); 
                     specifier = null;
                 }
                 if(specifier == "Walls"){
-                    wallset[Math.Min(width, height) * x + y] = sprites[0];
+                    wallset[index] = sprites[0];
                 }
             }
         }
+        Ground.FloodFill(new Vector3Int(-width/2, height/2, 0), sprites[1]);
+        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[1]);
+        Ground.FloodFill(new Vector3Int(width/2, height/2, 0), sprites[1]);
+        Ground.FloodFill(new Vector3Int(width/2, -height/2, 0), sprites[1]);
+        
         Walls.SetTilesBlock(area, wallset);
     }
 
