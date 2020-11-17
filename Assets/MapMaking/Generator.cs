@@ -39,7 +39,6 @@ public class Generator : MonoBehaviour{
     // Start is called before the first frame update
     void Start() {
 
-
         mapping = new Dictionary<String, String>();
         ReadFile(); // read in alphabet and production rules
         // initialze the random generator 

@@ -48,4 +48,6 @@ MonoBehaviour:
   - {fileID: -1481729993845341809, guid: 4cebed5ce7d8a02478aca4d84ee627fd, type: 3}
   - {fileID: -1481729993845341809, guid: 4cebed5ce7d8a02478aca4d84ee627fd, type: 3}
   preview: {fileID: -1481729993845341809, guid: 4cebed5ce7d8a02478aca4d84ee627fd, type: 3}
-  DeleteTime: 1
+  drops:
+  - {fileID: 606238398491664522, guid: 77665c50e0ef4994888e84f065f540b0, type: 3}
+  - {fileID: 1601627941111445827, guid: 234f96dbd132c7243a3a002e1205bf10, type: 3}

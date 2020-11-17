@@ -36,6 +36,7 @@ public class DeleteTileOnClick : MonoBehaviour
 		tilemap.RefreshTile(location + new Vector3Int(1, 0, 0));
 		tilemap.RefreshTile(location + new Vector3Int(0, 1, 0));
         Cursor.SetCursor(cursor_circle[17], new Vector2(8,8), CursorMode.Auto);
+        destroying = false;
         StopCoroutine(deletion);
     }
 
@@ -64,7 +65,12 @@ public class DeleteTileOnClick : MonoBehaviour
                 Input.mousePosition)), location) >= 1){
                     StopCoroutine(deletion);
                     location = tilemap.WorldToCell(camera.ScreenToWorldPoint(Input.mousePosition));
-                    deletion = StartCoroutine(Delete());
+                    if(tilemap.HasTile(location)){
+                        deletion = StartCoroutine(Delete());
+                    }
+                    else{
+                        destroying = false;
+                    }
                 }
 
         if(Input.GetMouseButtonUp(0) && destroying){ // Cancel destruction of a tile
