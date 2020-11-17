@@ -17,7 +17,7 @@ using System.Threading;
 public class Generator : MonoBehaviour{
 
     // handed in values from unity
-    [Range(10,100)]
+    [Range(10,500)]
     [SerializeField] private int width, height;
     [SerializeField] private bool useSeed;
     [SerializeField] private string seed;
@@ -48,7 +48,7 @@ public class Generator : MonoBehaviour{
         else {
             rand = new System.Random();
         }
-        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(width*height)), true, r_width, r_height);
+        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(r_width*r_height)), true, r_width, r_height);
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
         int x = 0;
@@ -57,15 +57,16 @@ public class Generator : MonoBehaviour{
                 x += 1;
             }
         }
+        
         float w = (float)tiles.GetLength(0);
         float h = (float)tiles.GetLength(1);
 
         for(x = 0; x < tiles.GetLength(0); x += 1){
             for( int y = 0; y < tiles.GetLength(1); y += 1){
-                tiles[x,0] = "Wall";
-                tiles[0,y] = "Wall";
-                tiles[x, tiles.GetLength(1) - 4] = "Wall";
-                tiles[tiles.GetLength(0) - 4, y] = "Wall";
+                tiles[x,0] = "wall";
+                tiles[0,y] = "wall";
+                tiles[x, tiles.GetLength(1) - 1] = "wall";
+                tiles[tiles.GetLength(0) -1, y] = "wall";
             }
         }
 
@@ -74,10 +75,15 @@ public class Generator : MonoBehaviour{
         Display();
     }
 
+
+
     public void DisplayCustom(String[,] map){
+        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[1]);
+                
+        TileBase[] wallset = new TileBase[width * height];
+
         for(int x = 0; x < map.GetLength(0); x += 1){
             for(int y = 0; y < map.GetLength(1); y += 1){
-                Vector3Int position = new Vector3Int(x - width/2, y - height/2, 0);
                 String specifier, referent;
                 try{
                     referent = map[x,y];
@@ -89,35 +95,32 @@ public class Generator : MonoBehaviour{
                     specifier = null;
                 }
                 if(specifier == "Walls"){
-                    Walls.SetTile(position, sprites[0]);
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else if(specifier == "Floors"){
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else{
-                    if( x == 0 || y == 0 ||
-                        x + 1 == map.GetLength(0) ||
-                        y + 1 == map.GetLength(1)){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else if((x*x) - y >= (y*y) - x){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else{
-                        Ground.SetTile(position, sprites[1]);
-                    }
+                    wallset[(Math.Min(width, height) * x) + y] = sprites[0];
                 }
             }
         }
+
+        BoundsInt area = new BoundsInt(
+            new Vector3Int(0,0, 0), 
+            new Vector3Int(width, height, 0));
+        
+        Walls.SetTilesBlock(area, wallset);
     }
 
+
+
     public void Display(){
-        for(int x = 0; x < width; x += 1){
-            for(int y = 0; y < height; y += 1){
-                Vector3Int position = new Vector3Int(x - width/2, y - height/2, 0);
+        
+        TileBase[] wallset = new TileBase[width * height];
+        int scaler = Math.Min(width, height);
+
+        BoundsInt area = new BoundsInt(
+            new Vector3Int(-width/2, -height/2, 0), 
+            new Vector3Int(width, height, 1));
+
+        for(int x = 0; x < tiles.GetLength(0); x += 1){
+            for(int y = 0; y < tiles.GetLength(1); y += 1){
+                int index = x * scaler + y;
                 String specifier, referent;
                 try{
                     referent = tiles[x,y];
@@ -125,36 +128,19 @@ public class Generator : MonoBehaviour{
                 }catch(Exception e){
                     String error = "[5]: Failed to get mapping for word at (" + x + ", " + y + ")"+
                     "\nValue of tile array was: '" + tiles[x,y] + "'";
-                    print(error + "\n" + e); 
                     specifier = null;
                 }
                 if(specifier == "Walls"){
-                    Walls.SetTile(position, sprites[0]);
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else if(specifier == "Floors"){
-                    Ground.SetTile(position, sprites[1]);
-                }
-                else{
-                    if( x == 0 || y == 0 ||
-                    x + 1 == tiles.GetLength(0) ||
-                    y + 1 == tiles.GetLength(1)){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else if((x*x) - y >= (y*y) - x){
-                        Walls.SetTile(position, sprites[0]);
-                        Ground.SetTile(position, sprites[1]);
-                    }
-                    else{
-                        Ground.SetTile(position, sprites[1]);
-                    }
+                    wallset[index] = sprites[0];
                 }
             }
         }
-
-        Walls.RefreshAllTiles();
-        Ground.RefreshAllTiles();
+        Ground.FloodFill(new Vector3Int(-width/2, height/2, 0), sprites[1]);
+        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[1]);
+        Ground.FloodFill(new Vector3Int(width/2, height/2, 0), sprites[1]);
+        Ground.FloodFill(new Vector3Int(width/2, -height/2, 0), sprites[1]);
+        
+        Walls.SetTilesBlock(area, wallset);
     }
 
 
@@ -256,12 +242,16 @@ public class Generator : MonoBehaviour{
     }
 
 
+
     public void GenerateNewMap(){
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         tiles = map_generator.getMap();
     }
+
+
+
 
     public void Regenerate(){
         Array.Clear(tiles, 0, tiles.Length);
@@ -277,6 +267,9 @@ public class Generator : MonoBehaviour{
         tiles = map_generator.getMap();
     }
 
+
+
+
     public void ChangeSeedIndirect(){
         InputField seeder = GameObject.Find("Seeder").GetComponent(typeof(InputField)) as InputField;
         string input_value = seeder.text;
@@ -284,9 +277,15 @@ public class Generator : MonoBehaviour{
         rand = new System.Random(seed.GetHashCode());
     }
 
+
+
+
     public void ChangeSeedDirect(String seed){
         rand = new System.Random(seed.GetHashCode());
     }
+
+
+
 
     public String[,] getStringMap(){
         return tiles;

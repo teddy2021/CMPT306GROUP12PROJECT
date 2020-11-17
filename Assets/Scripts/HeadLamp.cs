@@ -1,29 +1,70 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class HeadLamp : MonoBehaviour
 {
     public float smooth = 5.0f;
     Quaternion target;
     public Transform dwarfPosition;
+    public Light2D headLamp;
 
-    // Update is called once per frame
-    void Update()
+
+    public float timer = 20;
+    public float headLampTimer;
+    public bool headLampIsOn = false;
+
+
+	private void Start()
+	{
+        headLampTimer = timer;
+        headLampIsOn = true;
+	}
+
+	// Update is called once per frame
+	void Update()
     {
-        
+		if (headLampIsOn)
+		{
+            if(headLampTimer > 0)
+			{
+                headLampTimer -= Time.deltaTime;
+                headLamp.intensity -= Mathf.Lerp(0.0f,1.0f,Time.deltaTime/timer);
+			}
+			else
+			{
+                headLampTimer = 0;
+                headLampIsOn = false;
+                headLamp.intensity = 0;
+			}
+		}
+    }
+
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+
     }
     // My cool comment
     // Attach script to main camera
 
     void FixedUpdate()
     {
+        calculatePosition();
+    }
+
+
+
+
+    public void calculatePosition()
+	{
         float X = Input.GetAxisRaw("Horizontal");           // reads left and right inputs
         float Y = Input.GetAxisRaw("Vertical");             // reads up and down inputs
 
         //down
-        if(X == 0 && Y == -1)
-		{
+        if (X == 0 && Y == -1)
+        {
             target = Quaternion.Euler(0, 0, 180);
             transform.position = dwarfPosition.position + new Vector3(0.03f, 0.4f, 0);
         }

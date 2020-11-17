@@ -87,3 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smooth: 10
   dwarfPosition: {fileID: 0}
+  headLamp: {fileID: 0}
+  timer: 20
+  headLampTimer: 0
+  headLampIsOn: 0

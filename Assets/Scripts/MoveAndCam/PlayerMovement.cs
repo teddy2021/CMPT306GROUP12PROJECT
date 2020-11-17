@@ -9,14 +9,24 @@ public class PlayerMovement : MonoBehaviour
     // Then player objects rigidbody is set to the variable.
 
     public float moveSpeed;     // variable for movement speed
-    public Rigidbody2D rb;      // variable for players 2d rigibody
+    private Rigidbody2D rb;      // variable for players 2d rigibody
     private Vector2 moveDir;    // vector variable for calculating movement direction (only needs to be a 2dvector)
-    public Animator animator;
-    
-    // Update is called once per frame
-    void Update()
+    private Animator animator;
+    private SpriteRenderer sprite;
+
+	private void Start()
+	{
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+	}
+
+	// Update is called once per frame
+	void Update()
     {
+        sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y);
         Inputs();
+        
     }
 
     // FixedUpdate called every fixed-rate frame

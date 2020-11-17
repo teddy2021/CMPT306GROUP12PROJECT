@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -26,6 +27,7 @@ public class Wall_Tile : Scriptable_Tile {
 		}
 		return -1;
 	}
+
 
 	#if UNITY_EDITOR
 		[MenuItem("Assets/Scriptable Tiles/Wall_Tile")]

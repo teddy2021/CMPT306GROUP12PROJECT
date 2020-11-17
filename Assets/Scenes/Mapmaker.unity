@@ -280,7 +280,7 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1
+  m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
 --- !u!1 &14377996
 GameObject:
@@ -327,7 +327,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
+  logPathResults: 0
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -410,13 +410,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaf71a1b465be54a8d87937d422be44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 25
-  height: 25
-  useSeed: 1
+  width: 500
+  height: 500
+  useSeed: 0
   seed: Kody
   sprites:
-  - {fileID: 11400000, guid: a36587a984c91e4499a85b85f9deba9f, type: 2}
-  - {fileID: 11400000, guid: 866820b29ebb39d438f0268e40f64f2b, type: 2}
+  - {fileID: 11400000, guid: be07efb6cb71cd341927dd383920615e, type: 2}
+  - {fileID: 11400000, guid: ad74be0d038b2e94e90310aff7b4f4d5, type: 2}
   rules_file_path: Assets/MapMaking/Rules.txt
   Walls: {fileID: 11436041}
   Ground: {fileID: 209801065}
@@ -768,7 +768,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379679445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.3, y: -2.89, z: 0}
+  m_LocalPosition: {x: 9.15, y: -6.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -784,6 +784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 743218846}
   - component: {fileID: 743218845}
+  - component: {fileID: 743218848}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -819,6 +820,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1839735485 &743218848
+Tilemap:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743218844}
+  m_Enabled: 1
+  m_Tiles: {}
+  m_AnimatedTiles: {}
+  m_TileAssetArray: []
+  m_TileSpriteArray: []
+  m_TileMatrixArray: []
+  m_TileColorArray: []
+  m_TileObjectToInstantiateArray: []
+  m_AnimationFrameRate: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Origin: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0, y: 0, z: 1}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
+  m_TileOrientation: 0
+  m_TileOrientationMatrix:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
 --- !u!1 &1143069489
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +1020,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 11436041}
+  DeleteTime: 1
+  cursor_circle:
+  - {fileID: 2800000, guid: 9764f7877da1d6046a4d6e6e896f0bb4, type: 3}
+  - {fileID: 2800000, guid: 8e5de433f3198fd47bec633ead99e605, type: 3}
+  - {fileID: 2800000, guid: 52b71d465ebe1e649bc190e9ff61ec1c, type: 3}
+  - {fileID: 2800000, guid: eb5cd79c4a5633e4691e664e01b02b22, type: 3}
+  - {fileID: 2800000, guid: bca2ddff9bb6e9040b37414711f337ef, type: 3}
+  - {fileID: 2800000, guid: 0ff910cc3430cdf409513bd517eaead9, type: 3}
+  - {fileID: 2800000, guid: 470c5d55ddf771c4da327e78e0e549f6, type: 3}
+  - {fileID: 2800000, guid: 37332bbf399d55847a574a4ccb88f30f, type: 3}
+  - {fileID: 2800000, guid: 6c8f85b5bd1d9f345a6a6152a7da7554, type: 3}
+  - {fileID: 2800000, guid: 9acecbe9a29de9c429b7c8677fa99a3e, type: 3}
+  - {fileID: 2800000, guid: 084241f036bb4ba4cb0e6afdd83b3076, type: 3}
+  - {fileID: 2800000, guid: 9a3b447c9490ec144a4763e3a1cb8b42, type: 3}
+  - {fileID: 2800000, guid: d75c0f9ad70e12745857c3286b0a2736, type: 3}
+  - {fileID: 2800000, guid: 33354e73fed6e85409a2561145ffdafc, type: 3}
+  - {fileID: 2800000, guid: 6ed778b40f891b644b2c476c5acb5eb2, type: 3}
+  - {fileID: 2800000, guid: 5ba9069a0fd0c6c48a95e896fe2069ab, type: 3}
+  - {fileID: 2800000, guid: aeb30f7be65acb44782d9380ebca4b6c, type: 3}
+  - {fileID: 2800000, guid: df751fbfdd5dc7748bdda9ebd2ca92b5, type: 3}
 --- !u!1001 &1368545290
 PrefabInstance:
   m_ObjectHideFlags: 0
