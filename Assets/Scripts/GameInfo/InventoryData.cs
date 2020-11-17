@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 [System.Serializable]
 public class InventoryData
 {    
-    public List<Item> items;
+    public Item[] items = new Item[6];
 
     public InventoryData (Inventory inventory)
     {

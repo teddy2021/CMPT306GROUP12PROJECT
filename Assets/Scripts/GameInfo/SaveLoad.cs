@@ -144,7 +144,7 @@ public static class SaveLoad
             
             //No previous load state so create default objects
 
-            inventory.items = new List<Item>(){};
+            inventory.items = new Item[6];
 
             return new InventoryData(inventory);
         }
