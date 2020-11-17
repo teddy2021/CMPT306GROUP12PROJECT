@@ -15,6 +15,12 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI postNum;
     [SerializeField] private TextMeshProUGUI furnaceNum;
 
+    [SerializeField] private GameObject coalPanel;
+    [SerializeField] private GameObject copperPanel;
+    [SerializeField] private GameObject ironPanel;
+    [SerializeField] private GameObject postPanel;
+    [SerializeField] private GameObject furnacePanel;
+
     //This can be used to add an item to the inventory, every item is unique
     //An item quantity may be negative
 
@@ -125,11 +131,56 @@ public class Inventory : MonoBehaviour
     public void UpdateUI()
     {
         //Update all of the GameInfo elements ie item counters on bottom, key panel
-        coalNum.text = items[0].quantity.ToString();
-        copperNum.text = items[1].quantity.ToString();
-        ironNum.text = items[2].quantity.ToString();
-        postNum.text = items[3].quantity.ToString();
-        furnaceNum.text = items[4].quantity.ToString();
+
+        if (items[0].quantity < 1)
+        {
+            coalNum.text = items[0].quantity.ToString();
+            coalPanel.SetActive(false);
+        }
+        else
+        {
+            coalPanel.SetActive(true);
+        }
+
+        if (items[1].quantity < 1)
+        {
+            copperNum.text = items[1].quantity.ToString();
+            copperPanel.SetActive(false);
+        }
+        else
+        {
+            copperPanel.SetActive(true);
+        }
+
+        if (items[2].quantity < 1)
+        {
+            ironNum.text = items[2].quantity.ToString();
+            ironPanel.SetActive(false);
+        }
+        else
+        {
+            ironPanel.SetActive(true);
+        }
+
+        if (items[3].quantity < 1)
+        {
+            postNum.text = items[3].quantity.ToString();
+            postPanel.SetActive(false);
+        }
+        else
+        {
+            postPanel.SetActive(true);
+        }
+
+        if (items[4].quantity < 1)
+        {
+            furnaceNum.text = items[4].quantity.ToString();
+            furnacePanel.SetActive(false);
+        }
+        else
+        {
+            furnacePanel.SetActive(true);
+        }
     }
 
 }
