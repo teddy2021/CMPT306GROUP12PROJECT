@@ -4,8 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Objective_Key
   - Objective_Lift
+=======
+  - PowerGrid
+  - SafeLight
+  - PowerGenerator
+>>>>>>> 7139fae1195caa247d7a1e57474d4d0bb6b16f7a
   layers:
   - Default
   - TransparentFX

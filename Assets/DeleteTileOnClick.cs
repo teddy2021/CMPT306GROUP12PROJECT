@@ -24,16 +24,19 @@ public class DeleteTileOnClick : MonoBehaviour
     IEnumerator Delete(){
         Debug.Log("Deleting tile at " + location);
 		for(int i = 0; i < 17; i += 1){
-            Cursor.SetCursor(cursor_circle[i], new Vector2(0,0), CursorMode.Auto); // Animate cursor (has 7 frames)
+            Cursor.SetCursor(cursor_circle[i], new Vector2(16,16), CursorMode.Auto); // Animate cursor (has 7 frames)
 			yield return new WaitForSeconds(DeleteTime/17.0f); // Pause for 1/17th of desletion time
 
 		}
+        Wall_Tile tile = (Wall_Tile)tilemap.GetTile(location);
+        tile.DropItems(location);
 		tilemap.SetTile(location, null);
 		tilemap.RefreshTile(location + new Vector3Int(-1, 0, 0));
 		tilemap.RefreshTile(location + new Vector3Int(0, -1, 0));
 		tilemap.RefreshTile(location + new Vector3Int(1, 0, 0));
 		tilemap.RefreshTile(location + new Vector3Int(0, 1, 0));
         Cursor.SetCursor(cursor_circle[17], new Vector2(8,8), CursorMode.Auto);
+        destroying = false;
         StopCoroutine(deletion);
     }
 
@@ -41,7 +44,7 @@ public class DeleteTileOnClick : MonoBehaviour
     void Start()
     {
         destroying = false;
-        Cursor.SetCursor(cursor_circle[17], new Vector2(8,8), CursorMode.Auto);
+        Cursor.SetCursor(cursor_circle[17], new Vector2(16,16), CursorMode.Auto);
         camera = Camera.main;
     }
 
@@ -59,10 +62,15 @@ public class DeleteTileOnClick : MonoBehaviour
 
         if(destroying && Vector3Int.Distance(tilemap.WorldToCell( // Destroying a tile, but dragged to new tile
             camera.ScreenToWorldPoint(
-                Input.mousePosition)), location) > 0.75){
+                Input.mousePosition)), location) >= 1){
                     StopCoroutine(deletion);
                     location = tilemap.WorldToCell(camera.ScreenToWorldPoint(Input.mousePosition));
-                    deletion = StartCoroutine(Delete());
+                    if(tilemap.HasTile(location)){
+                        deletion = StartCoroutine(Delete());
+                    }
+                    else{
+                        destroying = false;
+                    }
                 }
 
         if(Input.GetMouseButtonUp(0) && destroying){ // Cancel destruction of a tile

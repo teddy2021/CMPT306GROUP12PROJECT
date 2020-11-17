@@ -9,6 +9,8 @@ using UnityEditor;
 
 public class Wall_Tile : Scriptable_Tile {
 
+	[SerializeField] private GameObject[] drops;
+
 
 	public override int GetIndex(byte mask){
 		switch(mask){
@@ -17,7 +19,7 @@ public class Wall_Tile : Scriptable_Tile {
 			case 14: return 2; // neighbours at left, right and bottom
 			case 12: return 3; // neighbours at left and bottom
 			case 7: return 4; // neighbours at right, top and bottom
-			case 13: return 5; // neighbours at left, top and bottom
+			case 13: return 5; // neighbours at left, top and bottomW
 			case 3: return 6; // neighbours at right and top
 			case 11: return 7; // neighbours at right, left, and top
 			case 9: return 8; // neighbours at left and top
@@ -28,6 +30,12 @@ public class Wall_Tile : Scriptable_Tile {
 		return -1;
 	}
 
+	public void DropItems(Vector3Int location){
+		for(int i = 0; i < Random.Range(0,3); i += 1){
+			Vector3 position = new Vector3(location.x, location.y, 1);
+			Instantiate(drops[Random.Range(0, drops.Length)], position , Quaternion.identity);
+		}
+	}
 
 	#if UNITY_EDITOR
 		[MenuItem("Assets/Scriptable Tiles/Wall_Tile")]
