@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 using UnityEngine.Tilemaps;
 using Pathfinding;
 using System;
@@ -27,7 +28,6 @@ public class Generator : MonoBehaviour{
 
     // values used for displaying in unity
     private string[,] tiles;
-    
     // values used to perform algorithms
     private string[] alphabet;
     private Dictionary<string, string[][,]> words;
@@ -38,6 +38,8 @@ public class Generator : MonoBehaviour{
     
     // Start is called before the first frame update
     void Start() {
+
+
         mapping = new Dictionary<String, String>();
         ReadFile(); // read in alphabet and production rules
         // initialze the random generator 

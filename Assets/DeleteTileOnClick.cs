@@ -28,6 +28,8 @@ public class DeleteTileOnClick : MonoBehaviour
 			yield return new WaitForSeconds(DeleteTime/17.0f); // Pause for 1/17th of desletion time
 
 		}
+        Wall_Tile tile = (Wall_Tile)tilemap.GetTile(location);
+        tile.DropItems(location);
 		tilemap.SetTile(location, null);
 		tilemap.RefreshTile(location + new Vector3Int(-1, 0, 0));
 		tilemap.RefreshTile(location + new Vector3Int(0, -1, 0));
