@@ -13,12 +13,34 @@ public class Slime : MonoBehaviour
     private Transform player;
     private AIPath aIPath;
     private AIDestinationSetter ai;
+    private GameObject roamDest;
 
+    [Tooltip("When the slime collides with the player.")]
     public UnityEvent OnCollidePlayer;
+
+    [Tooltip("When the slime is damged.")]
     public UnityEvent OnDamaged;
+
+    [Tooltip("When the slime dies.")]
     public UnityEvent OnDeath;
+
+    [Tooltip("How much health does the slime have?")]
     public int health = 100;
-    public float chaseDist = 100f;
+
+    [Tooltip("How close does the player need to be before it starts chasing")]
+    public float chaseDist = 20f;
+
+    [Tooltip("How far will the slime roam from its current position")]
+    public float roamDist = 5f;
+
+    [Tooltip("How often will the slime roam to a new location?")]
+    public float roamChangeRate = 10f;
+
+    [Tooltip("How fast the slime is when chasing a player")]
+    public float chaseSpeed = 5f;
+
+    [Tooltip("How fast the slime is when roaming")]
+    public float roamSpeed = 2.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +63,20 @@ public class Slime : MonoBehaviour
         aIPath = GetComponent<AIPath>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        roamDest = new GameObject();
+
+        InvokeRepeating("UpdateRoamDest", 0f, roamChangeRate);
+    }
+
+    void UpdateRoamDest()
+    {
+        roamDest.transform.Translate(
+            new Vector2(
+                transform.position.x + Random.Range(-roamDist, roamDist),
+                transform.position.y + Random.Range(-roamDist, roamDist)
+            )
+        );
     }
 
     // Update is called once per frame
@@ -49,11 +85,14 @@ public class Slime : MonoBehaviour
         // check if the player is close enough to the slime for it to path find
         if (Vector2.Distance(transform.position, player.position) > chaseDist || health <= 0)
         {
-            ai.target = null;
+            aIPath.maxSpeed = roamSpeed;
+            ai.target = roamDest.transform;
         }
         else
         {
+            aIPath.maxSpeed = chaseSpeed;
             ai.target = player;
+            roamDest.transform.Translate(player.position);
         }
 
         // check if we need to flip the enemie's sprite depending on which way it wants to move
