@@ -8,7 +8,7 @@ public class PowerSourceUnit : MonoBehaviour
     private Animator animator;
 
     //for determining inventory
-    public GameObject player;               // player
+    private GameObject player;               // player
     private Inventory inventory;            // player inventory
     public Item[] coal = new Item[1];       //coal stored in furnace
 
@@ -29,6 +29,7 @@ public class PowerSourceUnit : MonoBehaviour
         camera = Camera.main;
         power = false;
         animator = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player");
         inventory = player.GetComponent<Inventory>();
 
     }
@@ -68,21 +69,25 @@ public class PowerSourceUnit : MonoBehaviour
         }
     }
 
-	private void OnMouseEnter()
-	{
-		Cursor.SetCursor(furnaceCursor, new Vector2(8, 8), cursorMode);
-	}
+	
 	void OnMouseOver()
 	{
-        
-		if (Input.GetMouseButtonUp(0))
+		if (Input.GetKey(KeyCode.LeftControl))
 		{
-            if(inventory.items[0].quantity > 0)
-			{
-                coal[0].quantity += 1;
-                inventory.items[0].quantity -= 1;
-			}
+            Cursor.SetCursor(furnaceCursor, new Vector2(8, 8), cursorMode);
+            if (Input.GetMouseButtonUp(0))
+		    {
+                if(inventory.items[0].quantity > 0)
+			    {
+                    coal[0].quantity += 1;
+                    inventory.items[0].quantity -= 1;
+			    }
             
+            }
+		}
+		else
+		{
+            Cursor.SetCursor(defaultCursor, Vector2.zero, cursorMode);
         }
 	}
 	private void OnMouseExit()
