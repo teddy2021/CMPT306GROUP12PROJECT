@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MileStone2.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MainGame/StartMenu.unity
+    guid: 1feec7dddc77f074b84ab71a6f504a6d
+  - enabled: 1
+    path: Assets/Scenes/MainGame/Game.unity
+    guid: 9cadb2182a2f63141a918b4e31d1cf3a
+  - enabled: 1
+    path: Assets/Scenes/MainGame/EndMenu.unity
+    guid: 9a16a488292c87441887b857ca7aba33
   m_configObjects: {}
