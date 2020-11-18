@@ -36,7 +36,8 @@ public class Generator : MonoBehaviour{
     private Dictionary<string, string> mapping;
     private System.Random rand;
     private int r_width, r_height;
-    Tree map_generator;
+    private Tree map_generator;
+    private int start_x, start_y; 
     
     // Start is called before the first frame update
     void Start() {
@@ -86,15 +87,17 @@ public class Generator : MonoBehaviour{
             tiles[tiles.GetLength(0)-1, y] = "wall";
         } 
 
-        int startx = rand.Next(r_width, width - r_width);
-        int starty = rand.Next(r_height, height - r_height);
+        start_x = rand.Next(r_width, width - r_width);
+        start_y = rand.Next(r_height, height - r_height);
         for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
             for(int j = -3 * r_height/4; j < 3 * r_height/4; j += 1){
-                tiles[startx + i, starty + j] = "n";
+                tiles[start_x + i, start_y + j] = "n";
             }
         }
-        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3Int(startx - (r_width), starty - (r_height), 1)), Quaternion.identity);
-        Camera.main.GetComponent<CameraController>().cameraTarget = Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3Int(startx, starty, 1)), Quaternion.identity).transform;
+        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x - (r_width) + 1, start_y - (r_height) + 1, 1)), Quaternion.identity);
+        GameObject p = Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x, start_y, 1)), Quaternion.identity);
+        Camera.main.GetComponent<CameraController>().cameraTarget = p.transform;
+        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = p;
     }
 
     void SecondPassCustom(String[,] tileset){
@@ -108,16 +111,17 @@ public class Generator : MonoBehaviour{
             tiles[tiles.GetLength(0)-1, y] = "wall";
         } 
 
-        int startx = rand.Next(r_width, width - r_width);
-        int starty = rand.Next(r_height, height - r_height);
+        start_x = rand.Next(r_width, width - r_width);
+        start_y = rand.Next(r_height, height - r_height);
         for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
             for(int j = -3 * r_height/4; j < 3 * r_height/4; j += 1){
-                tiles[startx + i, starty + j] = "n";
+                tiles[start_x + i, start_y + j] = "n";
             }
         }
-        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3Int(startx - (r_width), starty - (r_height), 1)), Quaternion.identity);
-        Camera.main.GetComponent<CameraController>().cameraTarget = Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3Int(startx, starty, 1)), Quaternion.identity).transform;
-        
+        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x - (r_width) + 1, start_y - (r_height) + 1, 1)), Quaternion.identity);
+        GameObject p = Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x, start_y, 1)), Quaternion.identity);
+        Camera.main.GetComponent<CameraController>().cameraTarget = p.transform;
+        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = p;
     }
 
 
@@ -216,7 +220,7 @@ public class Generator : MonoBehaviour{
 
         Walls.SetTilesBlock(
             new BoundsInt(
-                new Vector3Int(-width, height, 0),
+                new Vector3Int(-width, height/2, 0),
                 new Vector3Int(2*width, height/2, 1)
             ),
             wallset
@@ -224,7 +228,7 @@ public class Generator : MonoBehaviour{
 
         Walls.SetTilesBlock(
             new BoundsInt(
-                new Vector3Int(width, -height, 0),
+                new Vector3Int(width/2, -height, 0),
                 new Vector3Int(width/2, 2*height, 1)
             ),
             wallset
@@ -234,6 +238,12 @@ public class Generator : MonoBehaviour{
         Ground.FloodFill(new Vector3Int(-width, height, 0), sprites[1]);
         Ground.FloodFill(new Vector3Int(width, height, 0), sprites[1]);
         Ground.FloodFill(new Vector3Int(width, -height, 0), sprites[1]);
+
+        for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
+            for(int j = -3 * r_height/4; j < 3 * r_height/4; j += 1){
+                Walls.SetTile(new Vector3Int(i + start_x, j + start_y, 0), null);
+            }
+        }
         
     }
 
