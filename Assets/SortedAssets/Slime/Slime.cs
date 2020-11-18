@@ -15,6 +15,8 @@ public class Slime : MonoBehaviour
     private AIDestinationSetter ai;
 
     public UnityEvent OnCollidePlayer;
+    public UnityEvent OnDamaged;
+    public UnityEvent OnDeath;
     public int health = 100;
     public float chaseDist = 100f;
 
@@ -28,6 +30,12 @@ public class Slime : MonoBehaviour
 
         if (OnCollidePlayer == null)
             OnCollidePlayer = new UnityEvent();
+
+        if (OnDamaged == null)
+            OnDamaged = new UnityEvent();
+
+        if (OnDeath == null)
+            OnDeath = new UnityEvent();
 
         ai = GetComponent<AIDestinationSetter>();
         aIPath = GetComponent<AIPath>();
@@ -75,6 +83,8 @@ public class Slime : MonoBehaviour
 
         health = 0;
 
+        OnDeath.Invoke();
+
         animator.Play("Slime_Death");
     }
 
@@ -82,6 +92,8 @@ public class Slime : MonoBehaviour
     {
         // inflict damage to the slime, check if it should be dead
         health -= amount;
+
+        OnDamaged.Invoke();
 
         if (health <= 0)
             Death();

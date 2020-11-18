@@ -520,6 +520,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8039ed7b75bf7354e991e781ed3b9a69, type: 3}
+--- !u!114 &903546629 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2639997704606941930, guid: 8039ed7b75bf7354e991e781ed3b9a69, type: 3}
+  m_PrefabInstance: {fileID: 903546628}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a45228b74fd72244bcf3b8b9792fbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1026054567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -790,6 +801,14 @@ PrefabInstance:
     - target: {fileID: 1675469000179335404, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675469000179335406, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: OnLiftCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 903546629}
+    - target: {fileID: 1675469000179335406, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: OnLiftCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}

@@ -14,6 +14,6 @@ public class GameController : MonoBehaviour
 
     public static void EndGame(string reason)
     {
-        SceneManager.LoadScene("Scenes/MainGame/EndGame");
+        SceneManager.LoadScene("Scenes/MainGame/EndMenu");
     }
 }
