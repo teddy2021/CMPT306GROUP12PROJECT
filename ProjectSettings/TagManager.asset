@@ -4,14 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - Objective_Key
-  - Objective_Lift
-=======
   - PowerGrid
   - SafeLight
   - PowerGenerator
->>>>>>> 7139fae1195caa247d7a1e57474d4d0bb6b16f7a
+  - Objective_Key
+  - Objective_Lift
   layers:
   - Default
   - TransparentFX
@@ -21,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - Obstacle
+  - Ground
   - 
   - 
   - 
@@ -48,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GroundLayer
+    uniqueID: 780089681
     locked: 0
