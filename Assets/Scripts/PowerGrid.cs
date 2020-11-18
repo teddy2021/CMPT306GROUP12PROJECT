@@ -19,7 +19,7 @@ public class PowerGrid : MonoBehaviour
     void Start()
     {
 		sprite = GetComponent<SpriteRenderer>();
-		sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y - 1);      //for drawing the powerline in the correct sort order (so player appears behind it)
+		sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y);      //for drawing the powerline in the correct sort order (so player appears behind it)
 
 		power = false;
 		safeZoneLight = GetComponentInChildren<Light2D>();

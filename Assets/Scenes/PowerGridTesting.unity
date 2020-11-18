@@ -1710,13 +1710,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - name: 
-    quantity: 0
+    quantity: 5
   - name: 
     quantity: 0
   - name: 
     quantity: 0
   - name: 
-    quantity: 0
+    quantity: 4
   - name: 
     quantity: 0
   coalNum: {fileID: 777217776}
@@ -3813,7 +3813,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -15
+  m_SortingOrder: -500
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -4487,11 +4487,11 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 084241f036bb4ba4cb0e6afdd83b3076, type: 3}
   - {fileID: 2800000, guid: 9a3b447c9490ec144a4763e3a1cb8b42, type: 3}
   - {fileID: 2800000, guid: d75c0f9ad70e12745857c3286b0a2736, type: 3}
-  - {fileID: 0}
   - {fileID: 2800000, guid: 33354e73fed6e85409a2561145ffdafc, type: 3}
   - {fileID: 2800000, guid: 6ed778b40f891b644b2c476c5acb5eb2, type: 3}
   - {fileID: 2800000, guid: 5ba9069a0fd0c6c48a95e896fe2069ab, type: 3}
   - {fileID: 2800000, guid: aeb30f7be65acb44782d9380ebca4b6c, type: 3}
+  - {fileID: 2800000, guid: df751fbfdd5dc7748bdda9ebd2ca92b5, type: 3}
 --- !u!114 &1906941587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4506,6 +4506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powergrid: {fileID: 8118767507158080277, guid: 71cbe328bc64d3f40bf654083f4c9d30, type: 3}
   grid: {fileID: 71500414}
+  player: {fileID: 798067894}
 --- !u!1 &1921679247
 GameObject:
   m_ObjectHideFlags: 0
@@ -5136,7 +5137,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbbac7d0c7931849885884071917198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 798067894}
+  coal:
+  - name: 
+    quantity: 0
   power: 0
+  timer: 30
+  coalTimer: 0
+  furnaceCursor: {fileID: 2800000, guid: a5411e88531fdfc43b2a1ce9094a8d93, type: 3}
+  defaultCursor: {fileID: 2800000, guid: df751fbfdd5dc7748bdda9ebd2ca92b5, type: 3}
+  cursorMode: 0
+  hotSpot: {x: 0, y: 0}
 --- !u!4 &2088228835
 Transform:
   m_ObjectHideFlags: 0
