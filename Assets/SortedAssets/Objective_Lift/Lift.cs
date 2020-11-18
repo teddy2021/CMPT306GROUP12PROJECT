@@ -7,9 +7,11 @@ public class Lift : MonoBehaviour
 {
     public UnityEvent OnLiftCompleted;
     public UnityEvent OnLiftFailed;
+    private bool power;
 
     private void Start()
     {
+        power = GetComponent<PowerGrid>().power;
         if (OnLiftCompleted == null)
             OnLiftCompleted = new UnityEvent();
 
@@ -34,7 +36,7 @@ public class Lift : MonoBehaviour
             }
 
             // now check if they have the key or not
-            if (hasAllKeys)
+            if (hasAllKeys && power)
             {
                 OnLiftCompleted.Invoke();
             }
