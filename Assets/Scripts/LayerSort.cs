@@ -10,7 +10,7 @@ public class LayerSort : MonoBehaviour
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
-        sprite.sortingOrder -= Mathf.RoundToInt(transform.position.y);
+        sprite.sortingOrder -= Mathf.RoundToInt(transform.position.y+1);
     }
 
 }
