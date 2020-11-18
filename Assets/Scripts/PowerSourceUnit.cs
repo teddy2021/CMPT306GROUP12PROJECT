@@ -6,6 +6,8 @@ public class PowerSourceUnit : MonoBehaviour
 {
     new Camera camera;
     private Animator animator;
+
+    //for determining inventory
     public GameObject player;               // player
     private Inventory inventory;            // player inventory
     public Item[] coal = new Item[1];       //coal stored in furnace

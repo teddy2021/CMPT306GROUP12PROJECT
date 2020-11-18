@@ -1710,13 +1710,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - name: 
-    quantity: 0
+    quantity: 5
   - name: 
     quantity: 0
   - name: 
     quantity: 0
   - name: 
-    quantity: 0
+    quantity: 4
   - name: 
     quantity: 0
   coalNum: {fileID: 777217776}
@@ -3813,7 +3813,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -15
+  m_SortingOrder: -500
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -4506,6 +4506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powergrid: {fileID: 8118767507158080277, guid: 71cbe328bc64d3f40bf654083f4c9d30, type: 3}
   grid: {fileID: 71500414}
+  player: {fileID: 798067894}
 --- !u!1 &1921679247
 GameObject:
   m_ObjectHideFlags: 0
