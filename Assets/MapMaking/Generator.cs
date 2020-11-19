@@ -22,11 +22,21 @@ public class Generator : MonoBehaviour{
     [SerializeField] private int width, height;
     [SerializeField] private bool useSeed;
     [SerializeField] private string seed;
-    [SerializeField] private TileBase[] sprites;
-    [SerializeField] private GameObject generator;
-    [SerializeField] public GameObject player;
     [SerializeField] private String rules_file_path;
+    
+    
+    [SerializeField] public GameObject generator;
+    [SerializeField] public GameObject player;
+    [SerializeField] public GameObject key;
+    [SerializeField] public GameObject enemy;
+    [SerializeField] public GameObject lift;
+    [Range(2,100)]
+    [SerializeField] private int MaxStartingEnemies;
+    [Range(1,10)]
+    [SerializeField] private int MaxKeys;
+
     [SerializeField] private Tilemap Walls, Ground;
+    [SerializeField] private TileBase[] sprites;
 
     // values used for displaying in unity
     private string[,] tiles;
@@ -38,6 +48,7 @@ public class Generator : MonoBehaviour{
     private int r_width, r_height;
     private Tree map_generator;
     private int start_x, start_y; 
+    private GameObject local_player;
     
     // Start is called before the first frame update
     void Start() {
@@ -79,7 +90,7 @@ public class Generator : MonoBehaviour{
     int Normalize(int initial, int min, int max){
         int numerator = initial - min;
         int denominator = max - min;
-        return numerator/denominator;
+        return ((numerator/denominator)*denominator) + min;
     }
 
     void SecondPass(){
@@ -99,9 +110,9 @@ public class Generator : MonoBehaviour{
         Instantiate(generator, 
             center + new Vector3(-r_width/2, -r_height/2, 0),
             Quaternion.identity);
-        GameObject p = Instantiate(player, center, Quaternion.identity);
-        Camera.main.GetComponent<CameraController>().cameraTarget = p.transform;
-        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = p;
+        local_player = Instantiate(player, center, Quaternion.identity);
+        Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
+        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
     }
 
     void SecondPassCustom(String[,] tileset){
@@ -117,9 +128,9 @@ public class Generator : MonoBehaviour{
         Instantiate(generator, 
             center + new Vector3(-r_width/2, -r_height/2, 0),
             Quaternion.identity);
-        GameObject p = Instantiate(player, center, Quaternion.identity);
-        Camera.main.GetComponent<CameraController>().cameraTarget = p.transform;
-        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = p;
+        local_player = Instantiate(player, center, Quaternion.identity);
+        Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
+        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
     }
 
 
@@ -243,7 +254,75 @@ public class Generator : MonoBehaviour{
                 Walls.SetTile(new Vector3Int(i + start_x, j + start_y, 0), null);
             }
         }
+
+        PlaceKeys();
+        PlaceEnemies();
+        PlaceLift();
         
+    }
+
+
+    private void PlaceKeys(){
+        for(int i = 0; i < rand.Next(1, MaxKeys); i +=1){
+            
+            int center_x = rand.Next(r_width, width - r_width);
+            int center_y = rand.Next(r_height, height - r_height);
+            while(center_x == local_player.transform.position.x & center_y == local_player.transform.position.y){
+                center_x = rand.Next(r_width, width - r_width);
+                center_y = rand.Next(r_height, height - r_height);
+            }
+            Vector3Int location = new Vector3Int(
+                Normalize(center_x, -width/2 + r_width, height/2 - r_width),
+                Normalize(center_y, -height/2 + r_height, height/2 - r_height),
+                0
+            );
+
+            Vector3 position = Walls.CellToWorld(location);
+            Walls.SetTile(location, null);
+            Instantiate(key, position, Quaternion.identity);
+        }
+    }
+
+    private void PlaceEnemies(){
+        for(int i = 0; i < rand.Next(2, MaxStartingEnemies); i += 1){
+            int center_x = rand.Next(r_width, width - r_width);
+            int center_y = rand.Next(r_height, height - r_height);
+
+            while(center_x == local_player.transform.position.x & center_y == local_player.transform.position.y){
+                center_x = rand.Next(r_width, width - r_width);
+                center_y = rand.Next(r_height, height - r_height);
+            }
+
+            Vector3Int location = new Vector3Int(
+                Normalize(center_x, -width/2 + r_width, height/2 - r_width),
+                Normalize(center_y, -height/2 + r_height, height/2 - r_height),
+                0
+            );
+
+            Vector3 position = Walls.CellToWorld(location);
+            Walls.SetTile(location, null);
+            Instantiate(enemy, position, Quaternion.identity);
+        }
+    }
+
+
+    private void PlaceLift(){
+        int center_x = rand.Next(r_width, width - r_width);
+        int center_y = rand.Next(r_height, height - r_height);
+
+        while(center_x == local_player.transform.position.x & center_y == local_player.transform.position.y){
+                center_x = rand.Next(r_width, width - r_width);
+                center_y = rand.Next(r_height, height - r_height);
+            }
+        Vector3Int location = new Vector3Int(
+            Normalize(center_x, -width/2 + r_width, height/2 - r_width),
+            Normalize(center_y, -height/2 + r_height, height/2 - r_height),
+            0
+        );
+
+        Vector3 position = Walls.CellToWorld(location);
+        Walls.SetTile(location, null);
+        Instantiate(lift, position, Quaternion.identity);
     }
 
 
