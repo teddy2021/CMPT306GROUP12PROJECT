@@ -18,14 +18,18 @@ public class PowerGrid : MonoBehaviour
 
     void Start()
     {
+		if (this.tag != "Objective_Lift")
+		{
+			safeZoneLight = GetComponentInChildren<Light2D>();
+			safeZoneCollider = GetComponentInChildren<CircleCollider2D>();
+			safeZoneLight.intensity = GloabalLight.GetComponent<Light2D>().intensity;
+			safeZoneCollider.enabled = false;
+		}
 		sprite = GetComponent<SpriteRenderer>();
 		sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y);      //for drawing the powerline in the correct sort order (so player appears behind it)
 
 		power = false;
-		safeZoneLight = GetComponentInChildren<Light2D>();
-		safeZoneCollider = GetComponentInChildren<CircleCollider2D>();
-		safeZoneLight.intensity = GloabalLight.GetComponent<Light2D>().intensity;
-		safeZoneCollider.enabled = false;
+		
 
 		//Set values for powerLine 
 		powerLine = this.gameObject.AddComponent<LineRenderer>();
@@ -132,16 +136,20 @@ public class PowerGrid : MonoBehaviour
 
 	private void safeLight()
 	{
-		if (power)
+		if(this.tag != "Objective_Lift")
 		{
-			safeZoneLight.intensity = 0.8f;
-			safeZoneCollider.enabled = true;
+			if (power)
+			{
+				safeZoneLight.intensity = 0.8f;
+				safeZoneCollider.enabled = true;
+			}
+			else
+			{
+				safeZoneLight.intensity = GloabalLight.GetComponent<Light2D>().intensity;
+				safeZoneCollider.enabled = false;
+			}
 		}
-		else
-		{
-			safeZoneLight.intensity = GloabalLight.GetComponent<Light2D>().intensity;
-			safeZoneCollider.enabled = false;
-		}
+
 	}
 
 	private void OnTriggerStay2D(Collider2D collision)
