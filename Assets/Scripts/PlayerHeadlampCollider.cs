@@ -21,7 +21,7 @@ public class PlayerHeadlampCollider : MonoBehaviour
     {
         if (!headLampObject.headLampIsOn && damage.health >0)
         {
-            damage.tryDoDamage(25, new Vector2(0, 0));
+            damage.tryDoDamage(10, new Vector2(0, 0));
         }
 
     }
