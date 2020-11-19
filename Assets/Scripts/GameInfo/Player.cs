@@ -8,14 +8,12 @@ public class Player : MonoBehaviour
 {
     public int health;
     public new string name;
-    public int floor;
     public int gold;
 
-    public Player(string playerName = "Darvin", int playerHealth = 100, int currentFloor = 1)
+    public Player(string playerName = "Darvin", int playerHealth = 100)
     {
         health = playerHealth;
         name = playerName;
-        floor = currentFloor;
         gold = 0;
     }
 
@@ -33,19 +31,9 @@ public class Player : MonoBehaviour
         Player player = GameObject.Find("Player").GetComponent<Player>();
         name = data.playerName;
         health = data.playerHealth;
-        floor = data.currentFloor;
         gold = data.gold;
 
         Debug.Log(name);
-
-        Text floorText = GetTextObjectByName("CurrentFloorText");
-        floorText.text = floor.ToString();
-
-        Text healthText = GetTextObjectByName("HealthText");
-        healthText.text = health.ToString();
-
-        Text goldText = GetTextObjectByName("GoldText");
-        goldText.text = gold.ToString();    
     }
 
     private Text GetTextObjectByName(string name)
@@ -59,22 +47,6 @@ public class Player : MonoBehaviour
 
     public void ChangeFloor(int amount)
     {
-        if ((floor > 1) || (amount > 0))
-        {
-            floor += amount;
-            Text floorText = GetTextObjectByName("CurrentFloorText");
-            floorText.text = floor.ToString();
-
-            
-        }
-        if (amount > 0)
-        {
-            State state = GameObject.Find("State").GetComponent<State>();
-            if (floor > state.floorsExplored)
-            {
-                state.AddFloor(1);
-            }
-        }
 
     }
 

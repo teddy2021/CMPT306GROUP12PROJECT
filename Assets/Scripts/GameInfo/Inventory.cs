@@ -23,6 +23,11 @@ public class Inventory : MonoBehaviour
 
     //This can be used to add an item to the inventory, every item is unique
     //An item quantity may be negative
+    void Start()
+    {
+        UpdateUI();
+    }
+
 
     public void SaveInventory()
     {
@@ -134,51 +139,56 @@ public class Inventory : MonoBehaviour
 
         if (items[0].quantity < 1)
         {
-            coalNum.text = items[0].quantity.ToString();
+            coalNum.text = "";
             coalPanel.SetActive(false);
         }
         else
         {
+            coalNum.text = items[0].quantity.ToString();
             coalPanel.SetActive(true);
         }
 
         if (items[1].quantity < 1)
         {
-            copperNum.text = items[1].quantity.ToString();
+            copperNum.text = "";
             copperPanel.SetActive(false);
         }
         else
         {
+            copperNum.text = items[1].quantity.ToString();
             copperPanel.SetActive(true);
         }
 
         if (items[2].quantity < 1)
         {
-            ironNum.text = items[2].quantity.ToString();
+            ironNum.text = "";
             ironPanel.SetActive(false);
         }
         else
         {
+            ironNum.text = items[2].quantity.ToString();
             ironPanel.SetActive(true);
         }
 
         if (items[3].quantity < 1)
         {
-            postNum.text = items[3].quantity.ToString();
+            postNum.text = "";
             postPanel.SetActive(false);
         }
         else
         {
+            postNum.text = items[3].quantity.ToString();
             postPanel.SetActive(true);
         }
 
         if (items[4].quantity < 1)
         {
-            furnaceNum.text = items[4].quantity.ToString();
+            furnaceNum.text = "";
             furnacePanel.SetActive(false);
         }
         else
         {
+            furnaceNum.text = items[4].quantity.ToString();
             furnacePanel.SetActive(true);
         }
     }

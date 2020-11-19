@@ -10,12 +10,10 @@ public class PlayerData
 
     public int playerHealth;
     public string playerName;
-    public int currentFloor;
     public int gold;
 
     public PlayerData (Player player)
     {
-        currentFloor = player.floor;
 
         playerHealth = player.health;
         playerName = player.name;

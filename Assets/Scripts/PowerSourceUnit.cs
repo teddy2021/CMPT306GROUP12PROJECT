@@ -76,7 +76,7 @@ public class PowerSourceUnit : MonoBehaviour
 	
 	void OnMouseOver()
 	{
-		if (Input.GetKey(KeyCode.LeftControl))
+		if (Input.GetKey(KeyCode.LeftControl) && !GameController.GameIsPaused)
 		{
             Cursor.SetCursor(furnaceCursor, new Vector2(8, 8), cursorMode);
             if (Input.GetMouseButtonUp(0))
@@ -85,6 +85,7 @@ public class PowerSourceUnit : MonoBehaviour
 			    {
                     coal[0].quantity += 1;
                     inventory.items[0].quantity -= 1;
+                    inventory.UpdateUI();
 			    }
             
             }

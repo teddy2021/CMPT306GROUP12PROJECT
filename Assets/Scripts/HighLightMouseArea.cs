@@ -58,7 +58,7 @@ public class HighLightMouseArea : MonoBehaviour
             lineArea.SetPosition(1, TopRight);
             lineArea.SetPosition(2, BottomRight);
             lineArea.SetPosition(3, BottomLeft);
-            TopLeft = new Vector3(mousePos.x + (center.x - size.x), mousePos.y + (center.y + size.y)+0.025f, mousePos.z);// to adjust for small error on final line position
+            TopLeft = new Vector3(mousePos.x + (center.x - size.x), mousePos.y + (center.y + size.y) + 0.025f, mousePos.z);// to adjust for small error on final line position
             lineArea.SetPosition(4, TopLeft);
         }
         else
