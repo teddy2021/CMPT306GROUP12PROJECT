@@ -76,16 +76,13 @@ public class Generator : MonoBehaviour{
     }
 
 
+    int Normalize(int initial, int min, int max){
+        int numerator = initial - min;
+        int denominator = max - min;
+        return numerator/denominator;
+    }
+
     void SecondPass(){
-        for(int x = 0; x < tiles.GetLength(0); x += 1){
-            tiles[x,0] = "wall";
-            tiles[x, tiles.GetLength(1)-1] = "wall";
-        }
-        
-        for( int y = 0; y < tiles.GetLength(1); y += 1){
-            tiles[0,y] = "wall";
-            tiles[tiles.GetLength(0)-1, y] = "wall";
-        } 
 
         start_x = rand.Next(r_width, width - r_width);
         start_y = rand.Next(r_height, height - r_height);
@@ -94,6 +91,10 @@ public class Generator : MonoBehaviour{
                 tiles[start_x + i, start_y + j] = "n";
             }
         }
+
+        start_x = Normalize(start_x, -width/2 + r_width, width/2 - r_width);
+        start_y = Normalize(start_y, -height/2 + r_height, height/2 - r_height);
+
         Vector3 center = (Walls.CellToWorld(new Vector3Int(start_x, start_y, 0)));
         Instantiate(generator, 
             center + new Vector3(-r_width/2, -r_height/2, 0),
@@ -104,16 +105,7 @@ public class Generator : MonoBehaviour{
     }
 
     void SecondPassCustom(String[,] tileset){
-        for(int x = 0; x < tiles.GetLength(0); x += 1){
-            tiles[x,0] = "wall";
-            tiles[x, tiles.GetLength(1)-1] = "wall";
-        }
         
-        for( int y = 0; y < tiles.GetLength(1); y += 1){
-            tiles[0,y] = "wall";
-            tiles[tiles.GetLength(0)-1, y] = "wall";
-        } 
-
         start_x = rand.Next(r_width, width - r_width);
         start_y = rand.Next(r_height, height - r_height);
         for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
