@@ -46,7 +46,7 @@ public class PlayerDamage : MonoBehaviour
     {
         health = 0;
 
-        GetComponent<CircleCollider2D>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
         OnDeath.Invoke();
@@ -59,6 +59,7 @@ public class PlayerDamage : MonoBehaviour
         health -= amount;
 
         GetComponent<Rigidbody2D>().AddForce(knockback);
+        GetComponent<Animator>().Play("Player_Damage");
 
         OnDamaged.Invoke();
 
