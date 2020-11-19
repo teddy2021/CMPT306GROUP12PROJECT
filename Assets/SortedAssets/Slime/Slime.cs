@@ -14,6 +14,7 @@ public class Slime : MonoBehaviour
     private AIPath aIPath;
     private AIDestinationSetter ai;
     private GameObject roamDest;
+    public HealthBarSlime hb;
 
     [Tooltip("When the slime collides with the player.")]
     public UnityEvent OnCollidePlayer;
@@ -67,6 +68,8 @@ public class Slime : MonoBehaviour
         roamDest = new GameObject();
 
         InvokeRepeating("UpdateRoamDest", 0f, roamChangeRate);
+
+        hb.SetMaxHealth(health);
     }
 
     void UpdateRoamDest()
@@ -99,10 +102,12 @@ public class Slime : MonoBehaviour
         if (aIPath.desiredVelocity.x > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
+            hb.transform.localScale = new Vector3(0.01f, 0.01f, 1);
         }
         else
         {
             transform.localScale = new Vector3(-1, 1, 1);
+            hb.transform.localScale = new Vector3(-0.01f, 0.01f, 1);
         }
     }
 
@@ -121,16 +126,22 @@ public class Slime : MonoBehaviour
         cc.enabled = false;
 
         health = 0;
+        hb.SetHealth(health);
 
         OnDeath.Invoke();
 
         animator.Play("Slime_Death");
     }
 
-    public void doDamage(int amount)
+    public void doDamage(int amount, Vector2 knockback)
     {
         // inflict damage to the slime, check if it should be dead
         health -= amount;
+        hb.SetHealth(health);
+
+        animator.Play("Slime_Damage");
+
+        rb.AddForce(knockback);
 
         OnDamaged.Invoke();
 

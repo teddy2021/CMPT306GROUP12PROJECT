@@ -9,6 +9,7 @@ TagManager:
   - PowerGenerator
   - Objective_Key
   - Objective_Lift
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - 
   - Ground
   - 
-  - 
-  - 
+  - Obstacle
+  - Enemies
   - 
   - 
   - 
