@@ -184,6 +184,7 @@ public class Generator : MonoBehaviour{
 
     public void Display(){
         
+        SecondPass();
         TileBase[] wallset = new TileBase[width * height];
         int scaler = Math.Min(width, height);
 
@@ -269,15 +270,15 @@ public class Generator : MonoBehaviour{
     private void PlaceKeys(){
         for(int i = 0; i < rand.Next(1, MaxKeys); i +=1){
             
-            int center_x = rand.Next(r_width, width - r_width);
-            int center_y = rand.Next(r_height, height - r_height);
+            int center_x = rand.Next(-width/2 + r_width, width/2 - r_width);
+            int center_y = rand.Next(-height/2 + r_height, height/2 - r_height);
             while(center_x == player.transform.position.x & center_y == player.transform.position.y){
-                center_x = rand.Next(r_width, width - r_width);
-                center_y = rand.Next(r_height, height - r_height);
+                center_x = rand.Next(-width/2 + r_width, width/2 - r_width);
+                center_y = rand.Next(-height/2 + r_height, height/2 - r_height);
             }
             Vector3Int location = new Vector3Int(
-                Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-                Normalize(center_y, -height/2 + r_height, height/2 - r_height),
+                center_x,
+                center_y,
                 0
             );
 
@@ -290,30 +291,17 @@ public class Generator : MonoBehaviour{
     private void PlaceEnemies(){
         for(int i = 0; i < rand.Next(2, MaxStartingEnemies); i += 1){
             
-            int center_x = rand.Next(r_width, width - r_width);
-            int center_y = rand.Next(r_height, height - r_height);
-            
+            int center_x = rand.Next(-width/2 + r_width, width/2 - r_width);
+            int center_y = rand.Next(-height/2 + r_height, height/2 - r_height);
+            while(center_x == player.transform.position.x & center_y == player.transform.position.y){
+                center_x = rand.Next(-width/2 + r_width, width/2 - r_width);
+                center_y = rand.Next(-height/2 + r_height, height/2 - r_height);
+            }
             Vector3Int location = new Vector3Int(
-                Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-                Normalize(center_y, -height/2 + r_height, height/2 - r_height),
+                center_x,
+                center_y,
                 0
             );
-
-            Vector3Int player_position = new Vector3Int(
-                (int)player.transform.position.x,
-                (int)player.transform.position.y,
-                (int)player.transform.position.z
-            );
-
-            while(Vector3Int.Distance(location, player_position) < 5){
-                center_x = rand.Next(r_width, width - r_width);
-                center_y = rand.Next(r_height, height - r_height);
-                location = new Vector3Int(
-                    Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-                    Normalize(center_y, -height/2 + r_height, height/2 - r_height),
-                    0
-                );
-            }
 
             Vector3 position = Walls.CellToWorld(location);
             Walls.SetTile(location, null);
@@ -323,20 +311,17 @@ public class Generator : MonoBehaviour{
 
 
     private void PlaceLift(){
-        int center_x = rand.Next(r_width, width - r_width);
-        int center_y = rand.Next(r_height, height - r_height);
-
-        Vector3Int player_position = new Vector3Int(
-                (int)player.transform.position.x,
-                (int)player.transform.position.y,
-                (int)player.transform.position.z
+        int center_x = rand.Next(-width/2 + r_width, width/2 - r_width);
+            int center_y = rand.Next(-height/2 + r_height, height/2 - r_height);
+            while(center_x == player.transform.position.x & center_y == player.transform.position.y){
+                center_x = rand.Next(-width/2 + r_width, width/2 - r_width);
+                center_y = rand.Next(-height/2 + r_height, height/2 - r_height);
+            }
+            Vector3Int location = new Vector3Int(
+                center_x,
+                center_y,
+                0
             );
-
-        Vector3Int location = new Vector3Int(
-            Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-            Normalize(center_y, -height/2 + r_height, height/2 - r_height),
-            0
-        );
 
         Vector3 position = Walls.CellToWorld(location);
         Walls.SetTile(location, null);
@@ -450,8 +435,8 @@ public class Generator : MonoBehaviour{
         Array.Clear(tiles, 0, tiles.Length);
         map_generator.Clear();
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
-        return map_generator.getMap();
-        
+        tiles =  map_generator.getMap();
+        return tiles;
     }
 
 
