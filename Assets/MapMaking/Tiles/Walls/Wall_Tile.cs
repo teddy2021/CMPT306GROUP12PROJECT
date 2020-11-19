@@ -31,7 +31,7 @@ public class Wall_Tile : Scriptable_Tile {
 
 	public void DropItems(Vector3Int location){
 		for(int i = 0; i < Random.Range(0,3); i += 1){
-			Vector3 position = new Vector3(location.x, location.y, 1);
+			Vector3 position = new Vector3(Random.Range(location.x-.5f, location.x+.5f), Random.Range(location.y-.5f, location.y+.5f), 1);
 			Instantiate(drops[Random.Range(0, drops.Length)], position , Quaternion.identity);
 		}
 	}
