@@ -267,7 +267,19 @@ MonoBehaviour:
       m_Calls: []
   OnDeathAnimComplete:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2639997704606941930, guid: 8039ed7b75bf7354e991e781ed3b9a69, type: 3}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: EndGame
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Death
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!58 &5080305451744698942
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -112,7 +112,7 @@ public class Generator : MonoBehaviour{
             Quaternion.identity);
         local_player = Instantiate(player, center, Quaternion.identity);
         Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
-        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
+       // Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
     }
 
     void SecondPassCustom(String[,] tileset){
@@ -129,6 +129,9 @@ public class Generator : MonoBehaviour{
             center + new Vector3(-r_width/2, -r_height/2, 0),
             Quaternion.identity);
         local_player = Instantiate(player, center, Quaternion.identity);
+        
+        local_player.GetComponent<MouseInteractor>().tilemap = Walls;
+
         Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
         Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
     }
@@ -285,12 +288,13 @@ public class Generator : MonoBehaviour{
 
     private void PlaceEnemies(){
         for(int i = 0; i < rand.Next(2, MaxStartingEnemies); i += 1){
+            
             int center_x = rand.Next(r_width, width - r_width);
             int center_y = rand.Next(r_height, height - r_height);
-
-            while(center_x == local_player.transform.position.x & center_y == local_player.transform.position.y){
-                center_x = rand.Next(r_width, width - r_width);
+            while(center_x >= start_x - r_width && center_x <= start_x + r_width &&
+            center_y >= start_y - r_height && center_y <= start_y + r_width){
                 center_y = rand.Next(r_height, height - r_height);
+                center_x = rand.Next(r_width, width - r_width);
             }
 
             Vector3Int location = new Vector3Int(
@@ -452,8 +456,6 @@ public class Generator : MonoBehaviour{
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
         return map_generator.getMap();
     }
-
-
 
 
     public void ChangeSeedIndirect(){
