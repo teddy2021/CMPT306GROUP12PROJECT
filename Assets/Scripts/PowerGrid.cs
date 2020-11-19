@@ -146,18 +146,24 @@ public class PowerGrid : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
-		if (collision.tag == "PowerGenerator")
-		{
-			source = collision.gameObject;
-		}
-		if (collision.tag == "PowerGrid")
-		{
-			if (collision.gameObject.GetComponent<PowerGrid>().power && !power)
+		
+			if (collision.tag == "PowerGenerator")
 			{
-				source = collision.gameObject;
+				if(collision.gameObject.GetComponent<PowerSourceUnit>().power && !power)
+				{
+					source = collision.gameObject;
+				}
+				
 			}
+			if (collision.tag == "PowerGrid")
+			{
+				if (collision.gameObject.GetComponent<PowerGrid>().power && !power)
+				{
+					source = collision.gameObject;
+				}
 			
-		}
+			}
+		
 	}
 
 
