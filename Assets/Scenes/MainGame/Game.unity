@@ -1721,50 +1721,68 @@ RectTransform:
   m_Father: {fileID: 1973449557}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -77.073, y: 36.807}
-  m_SizeDelta: {x: 76.90576, y: 72.97989}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &495002968
-MonoBehaviour:
+--- !u!1001 &1686489978
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495002966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 333577eebe3cf2649a6c7f3d299dceba, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &495002969
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495002966}
-  m_CullTransparentMesh: 0
---- !u!1001 &498179208
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 9096569670730676837, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 1140193719}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676838, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096569670730676859, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+      propertyPath: m_Name
+      value: StaticMouseArea
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 175941b3fbd00804bb540f4b225e5d58, type: 3}
+--- !u!1001 &1840897243
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
