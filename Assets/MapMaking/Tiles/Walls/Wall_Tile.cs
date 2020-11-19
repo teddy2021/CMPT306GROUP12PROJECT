@@ -10,81 +10,18 @@ using UnityEditor;
 public class Wall_Tile : Scriptable_Tile {
 
 	[SerializeField] private GameObject[] drops;
-	public Sprite[] Top_Corners;
-	public Sprite[] Sides;
-	public Sprite[] Centers;
-
-	public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData){
-		int mask = HasTile(tilemap, position + new Vector3Int(0, 1, 0)) ? 1 : 0; // bottom
-		mask += HasTile(tilemap, position + new Vector3Int(1, 0, 0)) ? 2 : 0; // right
-		mask += HasTile(tilemap, position + new Vector3Int(0, -1, 0)) ? 4 : 0; // top
-		mask += HasTile(tilemap, position + new Vector3Int(-1, 0, 0)) ? 8 : 0; // left
-		int index = GetIndex((byte)mask);
-		int idx;
-		if (index == 0){
-			tileData.sprite = Centers[Random.Range(0, Centers.Length -1)];
-		}
-		else if (index == 9){
-			tileData.sprite = Centers[Random.Range(0, (Centers.Length - 1))];
-		}
-		else if(index == 6 ){ // top left
-			idx = Random.Range(0, Top_Corners.Length - 1);
-			if(idx != 0 & idx % 2 == 0){
-				idx -= 1;
-			}
-			tileData.sprite = Top_Corners[idx];
-		}
-		else if(index == 8){ // top right
-			idx = Random.Range(0, Top_Corners.Length - 1);
-			if(idx % 2 == 0){
-				if(idx == 0){
-					idx += 1;
-				}
-				else{
-					idx -= 1;
-				}
-			}
-			tileData.sprite = Top_Corners[idx];
-		}
-		else if (index == 4){  // left side
-			idx = Random.Range(0, Sides.Length - 1);
-			if(idx!= 0 & idx %2 != 0){
-				idx -= 1;
-			}
-			tileData.sprite = Sides[idx];
-		}
-		else if (index == 5){
-			idx = Random.Range(0, Sides.Length - 1);
-			if(idx %2 == 0){
-				if(idx == 0){
-					idx += 1;
-				}
-				else{
-					idx -= 1;
-				}
-				tileData.sprite = Sides[idx];
-			}
-		}
-
-		else if(index >= 0 & index < sprites.Length - 4){
-			tileData.sprite = sprites[index];
-		}
-			tileData.color = Color.white;
-			tileData.flags = TileFlags.LockTransform;
-			tileData.colliderType = ColliderType.Sprite;
-	}
 
 	public override int GetIndex(byte mask){
 		switch(mask){
 			case 0: return 0; // 0 neighbours
-			case 6: return 1; // neighbours at		right and 	top
+			case 6: return 1; // neighbours at		right and 	bottom
 			case 11: return 2; // neighbours at		left, 		right and 	bottom
-			case 12: return 3; // neighbours at		left and 	top
+			case 12: return 3; // neighbours at		left and 	bottom
 			case 7: return 4; // neighbours at		right, 		top and 	bottom
 			case 13: return 5; // neighbours at		left, 		top and 	bottom
-			case 3: return 6; // neighbours at		right and 	bottom
+			case 3: return 6; // neighbours at		right and 	top
 			case 14: return 7; // neighbours at		right, 		left, and 	top
-			case 9: return 8; // neighbours at		left and 	bottom
+			case 9: return 8; // neighbours at		left and 	top
 			case 15: return 9; // neighbours at		on all sides
 			case 5: return 10; // neighbours at		top and 	bottom
 			case 10: return 11; // neighbours at	left and 	right
