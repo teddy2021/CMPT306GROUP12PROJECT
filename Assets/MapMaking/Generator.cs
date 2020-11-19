@@ -340,7 +340,7 @@ public class Generator : MonoBehaviour{
 
         Vector3 position = Walls.CellToWorld(location);
         Walls.SetTile(location, null);
-        Instantiate(lift, position, Quaternion.identity);
+        lift.transform.position = position;
     }
 
 

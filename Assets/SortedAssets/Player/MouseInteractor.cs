@@ -28,25 +28,29 @@ public class MouseInteractor : MonoBehaviour
 
     IEnumerator Delete()
     {
-        Debug.Log("Deleting tile at " + location);
-        for (int i = 0; i < 17; i += 1)
+        if (!GameController.GameIsPaused)
         {
-            Cursor.SetCursor(cursor_circle[i], new Vector2(16, 16), CursorMode.Auto); // Animate cursor (has 7 frames)
-            yield return new WaitForSeconds(DeleteTime / 17.0f); // Pause for 1/17th of desletion time
 
-        }
+            Debug.Log("Deleting tile at " + location);
+            for (int i = 0; i < 17; i += 1)
+            {
+                Cursor.SetCursor(cursor_circle[i], new Vector2(16, 16), CursorMode.Auto); // Animate cursor (has 7 frames)
+                yield return new WaitForSeconds(DeleteTime / 17.0f); // Pause for 1/17th of desletion time
 
-        try
-        {
-            Wall_Tile tile = (Wall_Tile)tilemap.GetTile(location);
-            tile.DropItems(location);
-            tilemap.SetTile(location, null);
-            tilemap.RefreshTile(location + new Vector3Int(-1, 0, 0));
-            tilemap.RefreshTile(location + new Vector3Int(0, -1, 0));
-            tilemap.RefreshTile(location + new Vector3Int(1, 0, 0));
-            tilemap.RefreshTile(location + new Vector3Int(0, 1, 0));
+            }
+
+            try
+            {
+                Wall_Tile tile = (Wall_Tile)tilemap.GetTile(location);
+                tile.DropItems(location);
+                tilemap.SetTile(location, null);
+                tilemap.RefreshTile(location + new Vector3Int(-1, 0, 0));
+                tilemap.RefreshTile(location + new Vector3Int(0, -1, 0));
+                tilemap.RefreshTile(location + new Vector3Int(1, 0, 0));
+                tilemap.RefreshTile(location + new Vector3Int(0, 1, 0));
+            }
+            catch { }
         }
-        catch { }
 
         Cursor.SetCursor(cursor_circle[17], new Vector2(8, 8), CursorMode.Auto);
         destroying = false;
