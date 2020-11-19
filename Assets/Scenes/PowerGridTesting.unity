@@ -2222,7 +2222,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1471916674868715233, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: CraftFurnace
         m_Mode: 1
@@ -74781,7 +74781,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1471916674868715233, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: CraftPowerPost
         m_Mode: 1
