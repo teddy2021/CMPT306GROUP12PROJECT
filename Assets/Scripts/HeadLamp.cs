@@ -117,7 +117,7 @@ public class HeadLamp : MonoBehaviour
 
     public void IncreaseTimer(float amount = 0)
     {
-        timer += amount;
+        headLampTimer += amount;
         GameController.StartGame("next floor");
     }
 }

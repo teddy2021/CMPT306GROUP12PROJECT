@@ -13,6 +13,8 @@ TagManager:
   - Iron
   - Copper
   - Coal
+  - Key_Ratio
+  - Key_Panel
   layers:
   - Default
   - TransparentFX

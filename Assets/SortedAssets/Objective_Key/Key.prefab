@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09099a8517673fa4a8aacc62edfe3387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keysRatio: {fileID: 0}
   grabbed: 0
 --- !u!1 &4667833865878385445
 GameObject:

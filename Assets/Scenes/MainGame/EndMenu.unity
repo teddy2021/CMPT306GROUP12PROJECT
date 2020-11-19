@@ -317,8 +317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: -51.59}
-  m_SizeDelta: {x: 628.4663, y: 103.17952}
+  m_AnchoredPosition: {x: 0.000011444, y: -114.3}
+  m_SizeDelta: {x: 670.5737, y: 142.34918}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &890999282
 MonoBehaviour:
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Have Fun QUITTING
+  m_text: Have Fun in darkness
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -550,8 +550,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.3, y: 117.4}
-  m_SizeDelta: {x: 334.29523, y: 54.883484}
+  m_AnchoredPosition: {x: 0, y: 103.06}
+  m_SizeDelta: {x: 663.7297, y: 206.12384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1792337342
 MonoBehaviour:
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You Lost!
+  m_text: You fell down the lift! Try lighting the way next time.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
