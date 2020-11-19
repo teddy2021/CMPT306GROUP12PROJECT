@@ -10,9 +10,6 @@ TagManager:
   - Objective_Key
   - Objective_Lift
   - Enemy
-  - Iron
-  - Copper
-  - Coal
   layers:
   - Default
   - TransparentFX

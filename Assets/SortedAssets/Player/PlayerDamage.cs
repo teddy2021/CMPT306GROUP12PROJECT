@@ -39,7 +39,6 @@ public class PlayerDamage : MonoBehaviour
 
     void OnDeathAnimationComplete()
     {
-        gameObject.SetActive(false);
         OnDeathAnimComplete.Invoke();
     }
 

@@ -49,8 +49,5 @@ MonoBehaviour:
   - {fileID: -1481729993845341809, guid: 4cebed5ce7d8a02478aca4d84ee627fd, type: 3}
   preview: {fileID: -1481729993845341809, guid: 4cebed5ce7d8a02478aca4d84ee627fd, type: 3}
   drops:
-  - {fileID: 1408631682462127286, guid: 4ce950a4fda43c543ad367a21be22fc8, type: 3}
-  - {fileID: 7951073366528039751, guid: 8c6a6005436ba9e47b81e1b58cc08d61, type: 3}
-  - {fileID: 6280622162592494779, guid: efd8c932b0eca2e42bc5deb92adb87f3, type: 3}
   - {fileID: 606238398491664522, guid: 77665c50e0ef4994888e84f065f540b0, type: 3}
   - {fileID: 1601627941111445827, guid: 234f96dbd132c7243a3a002e1205bf10, type: 3}
