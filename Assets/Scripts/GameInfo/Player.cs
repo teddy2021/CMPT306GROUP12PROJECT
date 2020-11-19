@@ -7,14 +7,12 @@ using System.Linq;
 public class Player : MonoBehaviour
 {
     public int health;
-    public int maximum_health;
     public new string name;
     public int gold;
 
     public Player(string playerName = "Darvin", int playerHealth = 100)
     {
         health = playerHealth;
-        maximum_health = playerHealth;
         name = playerName;
         gold = 0;
     }
@@ -82,12 +80,6 @@ public class Player : MonoBehaviour
     public void DeletePlayer()
     {
         SaveLoad.DeletePlayer();
-    }
-
-    public void increaseMaximumHealth(int amount=0)
-    {
-        health += amount;
-        maximum_health += amount;
     }
 
 }
