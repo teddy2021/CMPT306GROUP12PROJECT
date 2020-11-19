@@ -40,6 +40,7 @@ public class PickupOres : MonoBehaviour
                 inventory.items[2].quantity += 1;
                 Destroy(this.gameObject);
             }
+            inventory.UpdateUI();
         }
 	}
 }

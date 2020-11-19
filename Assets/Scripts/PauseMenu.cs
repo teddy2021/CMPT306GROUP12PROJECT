@@ -8,7 +8,7 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
 
-    public TextMeshProUGUI floorText;
+    //public TextMeshProUGUI floorText;
 
     // Update is called once per frame
     void Update()
@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
             }
             
         }
-        floorText.text = GameController.FloorLevel.ToString();
+        //floorText.text = GameController.FloorLevel.ToString();
     }
 
     public void Resume ()
