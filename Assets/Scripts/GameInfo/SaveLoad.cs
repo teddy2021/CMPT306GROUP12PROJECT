@@ -113,7 +113,6 @@ public static class SaveLoad
             
             //No previous load state so create default objects
 
-            player.floor = 1;
             player.name = "Darvin";
             player.health = 100;
             player.gold = 0;

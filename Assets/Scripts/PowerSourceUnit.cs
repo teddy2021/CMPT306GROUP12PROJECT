@@ -21,10 +21,14 @@ public class PowerSourceUnit : MonoBehaviour
     public Texture2D defaultCursor;
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
+    private SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y + 20);
+
         coalTimer = timer;
         camera = Camera.main;
         power = false;
@@ -72,7 +76,7 @@ public class PowerSourceUnit : MonoBehaviour
 	
 	void OnMouseOver()
 	{
-		if (Input.GetKey(KeyCode.LeftControl))
+		if (Input.GetKey(KeyCode.LeftControl) && !GameController.GameIsPaused)
 		{
             Cursor.SetCursor(furnaceCursor, new Vector2(8, 8), cursorMode);
             if (Input.GetMouseButtonUp(0))
@@ -81,6 +85,7 @@ public class PowerSourceUnit : MonoBehaviour
 			    {
                     coal[0].quantity += 1;
                     inventory.items[0].quantity -= 1;
+                    inventory.UpdateUI();
 			    }
             
             }

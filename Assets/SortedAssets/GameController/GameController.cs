@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static int FloorLevel = 0;
+    public static bool GameIsPaused = false;
 
     public static void StartGame(string reason)
     {

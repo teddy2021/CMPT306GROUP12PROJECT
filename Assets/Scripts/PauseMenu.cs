@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
-
     public GameObject pauseMenuUI;
+
+    public TextMeshProUGUI floorText;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused)
+            if (GameController.GameIsPaused)
             {
                 Resume();
             } else
@@ -23,20 +24,21 @@ public class PauseMenu : MonoBehaviour
             }
             
         }
+        floorText.text = GameController.FloorLevel.ToString();
     }
 
     public void Resume ()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        GameIsPaused = false;
+        GameController.GameIsPaused = false;
     }
 
     void Pause ()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        GameIsPaused = true;
+        GameController.GameIsPaused = true;
     }
 
     public void LoadMenu (string sceneName="MainMenu")

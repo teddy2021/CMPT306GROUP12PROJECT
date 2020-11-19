@@ -9,16 +9,39 @@ public class Slime : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
-    private CircleCollider2D cc;
+    private Collider2D cc;
     private Transform player;
     private AIPath aIPath;
     private AIDestinationSetter ai;
+    private GameObject roamDest;
+    public HealthBar hb;
 
-    public UnityEvent OnCollidePlayer;
+    [Tooltip("When the slime is damged.")]
     public UnityEvent OnDamaged;
+
+    [Tooltip("When the slime dies.")]
     public UnityEvent OnDeath;
+
+    [Tooltip("How much health does the slime have?")]
     public int health = 100;
-    public float chaseDist = 100f;
+
+    [Tooltip("How close does the player need to be before it starts chasing")]
+    public float chaseDist = 20f;
+
+    [Tooltip("How far will the slime roam from its current position")]
+    public float roamDist = 5f;
+
+    [Tooltip("How often will the slime roam to a new location?")]
+    public float roamChangeRate = 10f;
+
+    [Tooltip("How fast the slime is when chasing a player")]
+    public float chaseSpeed = 5f;
+
+    [Tooltip("How fast the slime is when roaming")]
+    public float roamSpeed = 2.5f;
+
+    public int damageAmount = 20;
+    public float knockBackAmount = 1000f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +49,7 @@ public class Slime : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        cc = GetComponent<CircleCollider2D>();
-
-        if (OnCollidePlayer == null)
-            OnCollidePlayer = new UnityEvent();
+        cc = GetComponent<Collider2D>();
 
         if (OnDamaged == null)
             OnDamaged = new UnityEvent();
@@ -41,6 +61,22 @@ public class Slime : MonoBehaviour
         aIPath = GetComponent<AIPath>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        roamDest = new GameObject();
+
+        InvokeRepeating("UpdateRoamDest", 0f, roamChangeRate);
+
+        hb.SetMaxHealth(health);
+    }
+
+    void UpdateRoamDest()
+    {
+        roamDest.transform.Translate(
+            new Vector2(
+                transform.position.x + Random.Range(-roamDist, roamDist),
+                transform.position.y + Random.Range(-roamDist, roamDist)
+            )
+        );
     }
 
     // Update is called once per frame
@@ -49,21 +85,26 @@ public class Slime : MonoBehaviour
         // check if the player is close enough to the slime for it to path find
         if (Vector2.Distance(transform.position, player.position) > chaseDist || health <= 0)
         {
-            ai.target = null;
+            aIPath.maxSpeed = roamSpeed;
+            ai.target = roamDest.transform;
         }
         else
         {
+            aIPath.maxSpeed = chaseSpeed;
             ai.target = player;
+            roamDest.transform.Translate(player.position);
         }
 
         // check if we need to flip the enemie's sprite depending on which way it wants to move
         if (aIPath.desiredVelocity.x > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
+            hb.transform.localScale = new Vector3(0.01f, 0.01f, 1);
         }
         else
         {
             transform.localScale = new Vector3(-1, 1, 1);
+            hb.transform.localScale = new Vector3(-0.01f, 0.01f, 1);
         }
     }
 
@@ -82,16 +123,22 @@ public class Slime : MonoBehaviour
         cc.enabled = false;
 
         health = 0;
+        hb.SetHealth(health);
 
         OnDeath.Invoke();
 
         animator.Play("Slime_Death");
     }
 
-    public void doDamage(int amount)
+    public void doDamage(int amount, Vector2 knockback)
     {
         // inflict damage to the slime, check if it should be dead
         health -= amount;
+        hb.SetHealth(health);
+
+        animator.Play("Slime_Damage");
+
+        rb.AddForce(knockback);
 
         OnDamaged.Invoke();
 
@@ -105,7 +152,10 @@ public class Slime : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            OnCollidePlayer.Invoke();
+            Vector2 playerPos = collision.gameObject.transform.position;
+            Vector2 slimePos = transform.position;
+
+            collision.gameObject.GetComponent<PlayerDamage>().tryDoDamage(damageAmount, (playerPos - slimePos).normalized * knockBackAmount);
         }
     }
 }

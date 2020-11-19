@@ -33,53 +33,62 @@ public class Place_PowerPole_Furnace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (!GameController.GameIsPaused)
         {
-            itemSelected = "PowerPoles";
-            currentCursor = powerPoleCursor;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            itemSelected = "furnaces";
-            currentCursor = furnaceCursor;
-        }
-
-        if (Input.GetKey("space"))
-        {
-            Cursor.SetCursor(currentCursor, new Vector2(8, 8), cursorMode);
-            if (Input.GetMouseButtonUp(1))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                switch (itemSelected)
-                {
-                    case "PowerPoles":
-                        if (inventory.items[3].quantity > 0)
-                        {
-                            Vector3 mousePos = new Vector3();
-                            mousePos.x = camera.ScreenToWorldPoint(Input.mousePosition).x;
-                            mousePos.y = camera.ScreenToWorldPoint(Input.mousePosition).y;
-                            mousePos.z = 0;
-                            Vector3 cellPostion = grid.LocalToCell(mousePos);
-                            Instantiate(powergrid, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity);
-                            inventory.items[3].quantity -= 1;
-                        }
-                        break;
+                itemSelected = "PowerPoles";
+                currentCursor = powerPoleCursor;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                itemSelected = "furnaces";
+                currentCursor = furnaceCursor;
+            }
 
-                    case "furnaces":
-                        if (inventory.items[4].quantity > 0)
-                        {
-                            Vector3 mousePos = new Vector3();
-                            mousePos.x = camera.ScreenToWorldPoint(Input.mousePosition).x;
-                            mousePos.y = camera.ScreenToWorldPoint(Input.mousePosition).y;
-                            mousePos.z = 0;
-                            Vector3 cellPostion = grid.LocalToCell(mousePos);
-                            Instantiate(furnace, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity);
-                            inventory.items[4].quantity -= 1;
-                        }
-                        break;
+            if (Input.GetKey("space"))
+            {
+                Cursor.SetCursor(currentCursor, new Vector2(8, 8), cursorMode);
+                if (Input.GetMouseButtonUp(1))
+                {
+                    switch (itemSelected)
+                    {
+                        case "PowerPoles":
+                            if (inventory.items[3].quantity > 0)
+                            {
+                                Vector3 mousePos = new Vector3();
+                                mousePos.x = camera.ScreenToWorldPoint(Input.mousePosition).x;
+                                mousePos.y = camera.ScreenToWorldPoint(Input.mousePosition).y;
+                                mousePos.z = 0;
+                                Vector3 cellPostion = grid.LocalToCell(mousePos);
+                                Instantiate(powergrid, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity);
+                                inventory.items[3].quantity -= 1;
+                                inventory.UpdateUI();
+                            }
+                            break;
+
+                        case "furnaces":
+                            if (inventory.items[4].quantity > 0)
+                            {
+                                Vector3 mousePos = new Vector3();
+                                mousePos.x = camera.ScreenToWorldPoint(Input.mousePosition).x;
+                                mousePos.y = camera.ScreenToWorldPoint(Input.mousePosition).y;
+                                mousePos.z = 0;
+                                Vector3 cellPostion = grid.LocalToCell(mousePos);
+                                Instantiate(furnace, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity);
+                                inventory.items[4].quantity -= 1;
+                                inventory.UpdateUI();
+                            }
+                            break;
+                    }
                 }
             }
         }
         if (Input.GetKeyUp("space"))
+        {
+            Cursor.SetCursor(defaultCursor, Vector2.zero, cursorMode);
+        }
+        else
         {
             Cursor.SetCursor(defaultCursor, Vector2.zero, cursorMode);
         }
