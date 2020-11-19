@@ -9,7 +9,7 @@ public class Slime : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
-    private CircleCollider2D cc;
+    private Collider2D cc;
     private Transform player;
     private AIPath aIPath;
     private AIDestinationSetter ai;
@@ -49,7 +49,7 @@ public class Slime : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        cc = GetComponent<CircleCollider2D>();
+        cc = GetComponent<Collider2D>();
 
         if (OnCollidePlayer == null)
             OnCollidePlayer = new UnityEvent();
