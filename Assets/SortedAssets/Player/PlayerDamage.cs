@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class PlayerDamage : MonoBehaviour
 {
     public int health = 100;
+    public int maxHealth;
     public float invisibilityTime = 1.0f;
 
     private float lastDamagedTime = 0f;
@@ -18,6 +19,8 @@ public class PlayerDamage : MonoBehaviour
 
     [Tooltip("When the player dies.")]
     public UnityEvent OnDeathAnimComplete;
+
+    public HealthBar hb;
 
     private void Start()
     {
@@ -35,6 +38,10 @@ public class PlayerDamage : MonoBehaviour
         {
             OnDeathAnimComplete = new UnityEvent();
         }
+
+        hb.SetMaxHealth(health);
+
+        maxHealth = health;
     }
 
     void OnDeathAnimationComplete()
@@ -46,6 +53,7 @@ public class PlayerDamage : MonoBehaviour
     void doDeath()
     {
         health = 0;
+        hb.SetHealth(health);
 
         GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -58,6 +66,7 @@ public class PlayerDamage : MonoBehaviour
     public void doDamage(int amount, Vector2 knockback)
     {
         health -= amount;
+        hb.SetHealth(health);
 
         GetComponent<Rigidbody2D>().AddForce(knockback);
         GetComponent<Animator>().Play("Player_Damage");
@@ -81,6 +90,8 @@ public class PlayerDamage : MonoBehaviour
     public void IncreaseHealth(int amount = 0)
     {
         health += amount;
+        maxHealth += amount;
+
         GameController.StartGame("next floor");
     }
 }
