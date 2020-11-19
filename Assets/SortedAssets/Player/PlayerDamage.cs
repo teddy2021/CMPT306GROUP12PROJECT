@@ -77,4 +77,9 @@ public class PlayerDamage : MonoBehaviour
 
         doDamage(amount, knockback);
     }
+
+    public void IncreaseHealth(int amount = 0)
+    {
+        health += amount;
+    }
 }

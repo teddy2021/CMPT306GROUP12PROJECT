@@ -114,4 +114,9 @@ public class HeadLamp : MonoBehaviour
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
     }
+
+    public void IncreaseTimer(float amount = 0)
+    {
+        timer += amount;
+    }
 }

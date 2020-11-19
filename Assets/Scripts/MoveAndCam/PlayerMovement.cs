@@ -112,4 +112,9 @@ public class PlayerMovement : MonoBehaviour
         
 
     }
+
+    public void IncreaseSpeed (float percentIncrease = 1)
+    {
+        moveSpeed = moveSpeed * percentIncrease;
+    }
 }
