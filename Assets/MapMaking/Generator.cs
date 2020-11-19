@@ -128,9 +128,8 @@ public class Generator : MonoBehaviour{
         Instantiate(generator, 
             center + new Vector3(-r_width/2, -r_height/2, 0),
             Quaternion.identity);
-        local_player = Instantiate(player, center, Quaternion.identity);
         
-        local_player.GetComponent<MouseInteractor>().tilemap = Walls;
+        player.transform.position = center;
 
         Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
         Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
