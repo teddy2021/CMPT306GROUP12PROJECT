@@ -110,8 +110,10 @@ public class Generator : MonoBehaviour{
         Instantiate(generator, 
             center + new Vector3(-r_width/2, -r_height/2, 0),
             Quaternion.identity);
-        local_player = Instantiate(player, center, Quaternion.identity);
-        Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
+        
+        player.transform.position = center;
+        //Camera.main.GetComponent<CameraController>().cameraTarget = player.transform;
+
        // Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
     }
 
@@ -121,7 +123,7 @@ public class Generator : MonoBehaviour{
         start_y = rand.Next(r_height, height - r_height);
         for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
             for(int j = -3 * r_height/4; j < 3 * r_height/4; j += 1){
-                tiles[start_x + i, start_y + j] = "n";
+                tileset[start_x + i, start_y + j] = "n";
             }
         }
         Vector3 center =(Walls.CellToWorld(new Vector3Int(start_x, start_y, 0)));
@@ -132,12 +134,12 @@ public class Generator : MonoBehaviour{
         player.transform.position = center;
 
         Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
-        Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
+        //Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
     }
 
 
 
-    public void DisplayCustom(String[,] map){
+    /**public void DisplayCustom(String[,] map){
         SecondPassCustom(map);
         Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[1]);
                 
@@ -176,7 +178,7 @@ public class Generator : MonoBehaviour{
         Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3(startx, starty, 1)), Quaternion.identity);
         Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3(startx - r_width/2, starty - r_height/2, 1)), Quaternion.identity);
 
-    }
+    }**/
 
 
 
@@ -269,7 +271,7 @@ public class Generator : MonoBehaviour{
             
             int center_x = rand.Next(r_width, width - r_width);
             int center_y = rand.Next(r_height, height - r_height);
-            while(center_x == local_player.transform.position.x & center_y == local_player.transform.position.y){
+            while(center_x == player.transform.position.x & center_y == player.transform.position.y){
                 center_x = rand.Next(r_width, width - r_width);
                 center_y = rand.Next(r_height, height - r_height);
             }
@@ -290,17 +292,28 @@ public class Generator : MonoBehaviour{
             
             int center_x = rand.Next(r_width, width - r_width);
             int center_y = rand.Next(r_height, height - r_height);
-            while(center_x >= start_x - r_width && center_x <= start_x + r_width &&
-            center_y >= start_y - r_height && center_y <= start_y + r_width){
-                center_y = rand.Next(r_height, height - r_height);
-                center_x = rand.Next(r_width, width - r_width);
-            }
-
+            
             Vector3Int location = new Vector3Int(
                 Normalize(center_x, -width/2 + r_width, height/2 - r_width),
                 Normalize(center_y, -height/2 + r_height, height/2 - r_height),
                 0
             );
+
+            Vector3Int player_position = new Vector3Int(
+                (int)player.transform.position.x,
+                (int)player.transform.position.y,
+                (int)player.transform.position.z
+            );
+
+            while(Vector3Int.Distance(location, player_position) < 5){
+                center_x = rand.Next(r_width, width - r_width);
+                center_y = rand.Next(r_height, height - r_height);
+                location = new Vector3Int(
+                    Normalize(center_x, -width/2 + r_width, height/2 - r_width),
+                    Normalize(center_y, -height/2 + r_height, height/2 - r_height),
+                    0
+                );
+            }
 
             Vector3 position = Walls.CellToWorld(location);
             Walls.SetTile(location, null);
@@ -313,10 +326,12 @@ public class Generator : MonoBehaviour{
         int center_x = rand.Next(r_width, width - r_width);
         int center_y = rand.Next(r_height, height - r_height);
 
-        while(center_x == local_player.transform.position.x & center_y == local_player.transform.position.y){
-                center_x = rand.Next(r_width, width - r_width);
-                center_y = rand.Next(r_height, height - r_height);
-            }
+        Vector3Int player_position = new Vector3Int(
+                (int)player.transform.position.x,
+                (int)player.transform.position.y,
+                (int)player.transform.position.z
+            );
+
         Vector3Int location = new Vector3Int(
             Normalize(center_x, -width/2 + r_width, height/2 - r_width),
             Normalize(center_y, -height/2 + r_height, height/2 - r_height),
