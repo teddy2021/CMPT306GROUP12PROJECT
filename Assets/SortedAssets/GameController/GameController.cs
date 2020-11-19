@@ -9,7 +9,10 @@ public class GameController : MonoBehaviour
     public static void StartGame(string reason)
     {
         FloorLevel++;
-
+        if (reason == "beginning")
+        {
+            FloorLevel = 1;
+        }
         SceneManager.LoadScene("Scenes/MainGame/Game");
     }
 
