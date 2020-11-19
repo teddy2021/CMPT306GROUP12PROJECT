@@ -17,6 +17,8 @@ public class Lift : MonoBehaviour
 
         if (OnLiftFailed == null)
             OnLiftFailed = new UnityEvent();
+
+        this.HasAllKeys();
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -26,14 +28,8 @@ public class Lift : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             // check all keys to see if they are grabbed
-            bool hasAllKeys = true;
-            foreach (var keyObj in GameObject.FindGameObjectsWithTag("Objective_Key"))
-            {
-                var keyComp = keyObj.GetComponent<Key>();
-
-                if (!keyComp.grabbed)
-                    hasAllKeys = false;
-            }
+            bool hasAllKeys = HasAllKeys();
+            
 
             // now check if they have the key or not
             if (hasAllKeys && powerGrid.power)
@@ -44,6 +40,33 @@ public class Lift : MonoBehaviour
             {
                 OnLiftFailed.Invoke();
             }
+        }
+    }
+
+    private bool HasAllKeys()
+    {
+        int keysFound = 0;
+        int allKeys = 0;
+        foreach (var keyObj in GameObject.FindGameObjectsWithTag("Objective_Key"))
+        {
+            var keyComp = keyObj.GetComponent<Key>();
+
+            if (keyComp.grabbed)
+            {
+                keysFound++;
+            }
+            allKeys++;
+        }
+
+        GameController.KeysCollected = keysFound;
+        GameController.KeysCollected = allKeys;
+
+        if (keysFound == allKeys)
+        {
+            return true;
+        } else
+        {
+            return false;
         }
     }
 }

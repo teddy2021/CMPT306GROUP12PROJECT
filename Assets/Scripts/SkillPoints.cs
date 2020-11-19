@@ -8,7 +8,7 @@ public class SkillPoints : MonoBehaviour
 {
     public GameObject skillPointsUI;
 
-    void LoadMenu()
+    public void LoadMenu()
     {
         skillPointsUI.SetActive(true);
     }

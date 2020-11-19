@@ -81,5 +81,6 @@ public class PlayerDamage : MonoBehaviour
     public void IncreaseHealth(int amount = 0)
     {
         health += amount;
+        GameController.StartGame("next floor");
     }
 }
