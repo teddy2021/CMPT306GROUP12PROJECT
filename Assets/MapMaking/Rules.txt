@@ -1,7 +1,7 @@
 3 3
-n start ground, wall, t
-walls: wall
-floors: ground
+n start ground wall t
+Walls: wall
+Floors: ground
 start: ground ground ground  ground ground ground  ground ground ground, wall wall wall ground ground ground  wall wall wall
 ground: ground ground ground  ground ground ground  ground ground ground, wall ground wall  ground ground ground  wall ground wall, wall wall wall  ground ground ground  wall wall wall, wall ground wall  wall ground wall  wall ground wall, wall ground wall  wall ground ground  wall wall wall,  wall ground wall  ground ground wall  wall wall wall, wall wall wall  ground ground wall  wall ground wall, wall wall wall wall ground ground  wall ground wall, wall wall wall  ground ground wall  wall wall wall, wall ground wall  wall ground wall  wall wall wall, wall wall wall  wall ground ground  wall wall wall, wall wall wall  wall ground wall  wall ground wall,  n n n  n t n  n n n
 wall:  wall wall ground   wall wall ground   wall wall ground, wall ground wall  wall ground wall  wall ground wall, ground wall wall  ground wall wall  ground wall wall, ground ground ground  wall wall wall  wall wall wall, wall wall wall  ground ground ground  wall wall wall, wall wall wall  wall wall wall  ground ground ground, wall wall wall  ground wall wall  ground wall wall,  wall wall wall   wall wall ground   wall wall ground,  wall wall ground   wall wall ground   wall wall wall, ground wall wall  ground wall wall   wall wall wall,  n n n  n t n  n n n

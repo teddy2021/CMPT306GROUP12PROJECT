@@ -21,10 +21,14 @@ public class PowerSourceUnit : MonoBehaviour
     public Texture2D defaultCursor;
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
+    private SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
+        sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y + 20);
+
         coalTimer = timer;
         camera = Camera.main;
         power = false;

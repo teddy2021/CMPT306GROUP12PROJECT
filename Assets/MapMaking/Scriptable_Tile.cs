@@ -27,10 +27,10 @@ public abstract class Scriptable_Tile : Tile {
 	}
 
 	public virtual void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData){
-		int mask = HasTile(tilemap, position + new Vector3Int(0, 1, 0)) ? 1 : 0;
-		mask += HasTile(tilemap, position + new Vector3Int(1, 0, 0)) ? 2 : 0;
-		mask += HasTile(tilemap, position + new Vector3Int(0, -1, 0)) ? 4 : 0;
-		mask += HasTile(tilemap, position + new Vector3Int(-1, 0, 0)) ? 8 : 0;
+		int mask = HasTile(tilemap, position + new Vector3Int(0, 1, 0)) ? 1 : 0; // bottom
+		mask += HasTile(tilemap, position + new Vector3Int(1, 0, 0)) ? 2 : 0; // right
+		mask += HasTile(tilemap, position + new Vector3Int(0, -1, 0)) ? 4 : 0; // top
+		mask += HasTile(tilemap, position + new Vector3Int(-1, 0, 0)) ? 8 : 0; // left
 		int index = GetIndex((byte)mask);
 		if(index >= 0 & index < sprites.Length){
 			tileData.sprite = sprites[index];

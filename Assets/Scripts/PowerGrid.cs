@@ -12,7 +12,7 @@ public class PowerGrid : MonoBehaviour
 	private GameObject source = null;
 	private Light2D safeZoneLight;
 	private CircleCollider2D safeZoneCollider;
-	private bool power = false;
+	public bool power = false;
 	private LineRenderer powerLine;
 	private SpriteRenderer sprite;
 
@@ -64,7 +64,15 @@ public class PowerGrid : MonoBehaviour
 				powerLine.SetPosition(0, this.transform.position + offset);
 				powerLine.SetPosition(1, source.transform.position + offset2);
 			}
-			if(powerLine.GetPosition(0).y < powerLine.GetPosition(1).y)
+			if (source.tag == "Objective_Lift")
+			{
+				Vector3 offset = new Vector3(-0.1f, 0.9084f, 0);
+				Vector3 offset2 = new Vector3(0.05f, 0.5f, 0);
+				powerLine.positionCount = 2;
+				powerLine.SetPosition(0, this.transform.position + offset);
+				powerLine.SetPosition(1, source.transform.position + offset2);
+			}
+			if (powerLine.GetPosition(0).y < powerLine.GetPosition(1).y)
 			{
 				powerLine.sortingOrder = -Mathf.RoundToInt(transform.position.y);	//for drawing the powerline in the correct sort order (so player appears behind it)
 			}
@@ -104,6 +112,17 @@ public class PowerGrid : MonoBehaviour
 					power = false;
 				}
 			}
+			if (source.tag == "Objective_Lift")
+			{
+				if (source.GetComponent<PowerGrid>().power)
+				{
+					power = true;
+				}
+				else
+				{
+					power = false;
+				}
+			}
 		}
 		else
 		{
@@ -127,18 +146,24 @@ public class PowerGrid : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
-		if (collision.tag == "PowerGenerator")
-		{
-			source = collision.gameObject;
-		}
-		if (collision.tag == "PowerGrid")
-		{
-			if (collision.gameObject.GetComponent<PowerGrid>().power && !power)
+		
+			if (collision.tag == "PowerGenerator")
 			{
-				source = collision.gameObject;
+				if(collision.gameObject.GetComponent<PowerSourceUnit>().power && !power)
+				{
+					source = collision.gameObject;
+				}
+				
 			}
+			if (collision.tag == "PowerGrid")
+			{
+				if (collision.gameObject.GetComponent<PowerGrid>().power && !power)
+				{
+					source = collision.gameObject;
+				}
 			
-		}
+			}
+		
 	}
 
 
