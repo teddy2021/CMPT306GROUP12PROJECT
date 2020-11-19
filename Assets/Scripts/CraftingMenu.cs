@@ -10,15 +10,18 @@ public class CraftingMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.I))
+        if (!GameController.GameIsPaused)
         {
-            if (crafting)
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.I))
             {
-                Resume();
-            }
-            else
-            {
-                Craft();
+                if (crafting)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Craft();
+                }
             }
         }
     }
