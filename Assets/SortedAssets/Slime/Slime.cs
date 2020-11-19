@@ -14,10 +14,7 @@ public class Slime : MonoBehaviour
     private AIPath aIPath;
     private AIDestinationSetter ai;
     private GameObject roamDest;
-    public HealthBarSlime hb;
-
-    [Tooltip("When the slime collides with the player.")]
-    public UnityEvent OnCollidePlayer;
+    public HealthBar hb;
 
     [Tooltip("When the slime is damged.")]
     public UnityEvent OnDamaged;
@@ -43,6 +40,9 @@ public class Slime : MonoBehaviour
     [Tooltip("How fast the slime is when roaming")]
     public float roamSpeed = 2.5f;
 
+    public int damageAmount = 20;
+    public float knockBackAmount = 1000f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,9 +50,6 @@ public class Slime : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         cc = GetComponent<CircleCollider2D>();
-
-        if (OnCollidePlayer == null)
-            OnCollidePlayer = new UnityEvent();
 
         if (OnDamaged == null)
             OnDamaged = new UnityEvent();
@@ -155,7 +152,10 @@ public class Slime : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            OnCollidePlayer.Invoke();
+            Vector2 playerPos = collision.gameObject.transform.position;
+            Vector2 slimePos = transform.position;
+
+            collision.gameObject.GetComponent<PlayerDamage>().tryDoDamage(damageAmount, (playerPos - slimePos).normalized * knockBackAmount);
         }
     }
 }

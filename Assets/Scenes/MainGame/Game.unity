@@ -138,6 +138,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6797850695541908004, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797850695541908004, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793913666930159461, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+      propertyPath: knockBackAmount
+      value: 2500
+      objectReference: {fileID: 0}
     - target: {fileID: 8491618857169892178, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.81
@@ -269,6 +281,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135014412197348593, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797850695541908004, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797850695541908004, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -802,6 +822,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -614934869301039262, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: power
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.12
@@ -28906,6 +28930,29 @@ MonoBehaviour:
   enemiesLayer:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &2025531930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025531922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1aabf23da5596446a52866163d50ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  invisibilityTime: 1
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathAnimComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2095117991
 PrefabInstance:
   m_ObjectHideFlags: 0
