@@ -88,9 +88,5 @@ public class Place_PowerPole_Furnace : MonoBehaviour
         {
             Cursor.SetCursor(defaultCursor, Vector2.zero, cursorMode);
         }
-        else
-        {
-            Cursor.SetCursor(defaultCursor, Vector2.zero, cursorMode);
-        }
     }
 }
