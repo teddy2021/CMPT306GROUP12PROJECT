@@ -94,8 +94,11 @@ public class Generator : MonoBehaviour{
                 tiles[start_x + i, start_y + j] = "n";
             }
         }
-        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x - (r_width) + 1, start_y - (r_height) + 1, 1)), Quaternion.identity);
-        GameObject p = Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x, start_y, 1)), Quaternion.identity);
+        Vector3 center = (Walls.CellToWorld(new Vector3Int(start_x, start_y, 0)));
+        Instantiate(generator, 
+            center + new Vector3(-r_width/2, -r_height/2, 0),
+            Quaternion.identity);
+        GameObject p = Instantiate(player, center, Quaternion.identity);
         Camera.main.GetComponent<CameraController>().cameraTarget = p.transform;
         Camera.main.GetComponent<Place_PowerPole_Furnace>().player = p;
     }
@@ -118,8 +121,11 @@ public class Generator : MonoBehaviour{
                 tiles[start_x + i, start_y + j] = "n";
             }
         }
-        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x - (r_width) + 1, start_y - (r_height) + 1, 1)), Quaternion.identity);
-        GameObject p = Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3Int(start_x, start_y, 1)), Quaternion.identity);
+        Vector3 center =(Walls.CellToWorld(new Vector3Int(start_x, start_y, 0)));
+        Instantiate(generator, 
+            center + new Vector3(-r_width/2, -r_height/2, 0),
+            Quaternion.identity);
+        GameObject p = Instantiate(player, center, Quaternion.identity);
         Camera.main.GetComponent<CameraController>().cameraTarget = p.transform;
         Camera.main.GetComponent<Place_PowerPole_Furnace>().player = p;
     }
@@ -164,6 +170,7 @@ public class Generator : MonoBehaviour{
         }
         Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3(startx, starty, 1)), Quaternion.identity);
         Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3(startx - r_width/2, starty - r_height/2, 1)), Quaternion.identity);
+
     }
 
 
