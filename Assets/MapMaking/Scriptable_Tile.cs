@@ -23,7 +23,7 @@ public abstract class Scriptable_Tile : Tile {
 	}
 
 	public virtual bool HasTile(ITilemap tilemap, Vector3Int position){
-		return tilemap.GetTile(position) == this;
+		return tilemap.GetTile(position) == this & tilemap.GetTile(position) != null;
 	}
 
 	public virtual void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData){
