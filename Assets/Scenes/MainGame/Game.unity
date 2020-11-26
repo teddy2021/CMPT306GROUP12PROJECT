@@ -2134,7 +2134,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
+  logPathResults: 0
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -2153,7 +2153,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   euclideanEmbedding:
@@ -2161,7 +2161,7 @@ MonoBehaviour:
     seed: 0
     pivotPointRoot: {fileID: 0}
     spreadOutCount: 1
-  showGraphs: 1
+  showGraphs: 0
 --- !u!114 &454567014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5306,10 +5306,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335401, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ff568d630c630ca43b20180bde4be681, type: 3}
+      objectReference: {fileID: 21300000, guid: c8e3e9061c2f2ff4f88d26acac0daa4c, type: 3}
     - target: {fileID: 1675469000179335401, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -5325,6 +5333,14 @@ PrefabInstance:
     - target: {fileID: 1675469000179335401, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_Color.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675469000179335401, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675469000179335401, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335404, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_Name
@@ -7806,7 +7822,7 @@ PrefabInstance:
       objectReference: {fileID: 297144414}
     - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: DeleteTime
-      value: 0.15
+      value: 1.02
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1471916674868715233, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
