@@ -37,7 +37,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private TileBase[] sprites;
 
     private Vector2 sampleRegionSize;
-
+    private List<GameObject> spawnedItems;
 
     public void init(){
         genny.width = this.width;
@@ -50,6 +50,7 @@ public class MapCreator : MonoBehaviour
         genny.sprites = this.sprites;
         genny.init();
         sampleRegionSize = new Vector2(width, height);
+        spawnedItems = new List<GameObject>();
     }
 
     void Start(){
@@ -58,56 +59,103 @@ public class MapCreator : MonoBehaviour
     }
 
 
+    public void reinit(){
+        genny.width = this.width;
+        genny.height = this.height;
+        genny.useSeed = this.useSeed;
+        genny.seed = this.seed;
+        sampleRegionSize = new Vector2(width, height);
+    }
+
+    private void OnApplicationQuit() {
+        clear();
+    }
+
     public void generate(){
         genny.Generate();
         List<Vector2> locations = ObjectPlacer.GeneratePoints(radius, new Vector2(width, height), maxSamples);
+        locations = VerifyLocations(locations);
         placeObjects(locations);
     }
 
     public void regenerate(){
+        clear();
         genny.GenerateNewMap();
         List<Vector2> locations = ObjectPlacer.GeneratePoints(radius, new Vector2(width, height), maxSamples);
+        locations = VerifyLocations(locations);
         placeObjects(locations);
+    }
+
+
+
+    public List<Vector2> VerifyLocations(List<Vector2> locations){
+        List<Vector2> newLocations = new List<Vector2>();
+        foreach(Vector2 point in locations){
+            Vector3Int cellPoint = Walls.WorldToCell(new Vector3(point.x, point.y, 0));
+            if(!Walls.HasTile(cellPoint)){
+                newLocations.Add(point);
+            }
+        }
+        return newLocations;
+    }
+
+    private Vector3 FindGoodLocation(Vector3 center){
+        for(int i = -1; i <= 1; i += 1){
+            for(int j = -1; j <= 1; j += 1){
+                Vector3 translation = new Vector3(i, j, 0);
+                Vector3Int cellPosition = Walls.WorldToCell(center + translation);
+                if(!Walls.HasTile(cellPosition) && center + translation != center){
+                    return center + translation;
+                }
+            }
+        }
+        return center;
     }
 
     private void placeObjects(List<Vector2> locations){
         if(locations.Count > 3){
-            Vector2 position;
-
-            int player_location = Random.Range(0, locations.Count);
-            position = locations[player_location];
-            player.transform.position = new Vector3(position.x, position.y, 0);
+            
+            int player_location = 0;
+            Vector2 position = locations[player_location];
+            Vector3 world_position = new Vector3(position.x, position.y, 0);
+            Vector3 campfire_location = FindGoodLocation(world_position);
+            while(campfire_location == world_position){
+                player_location = Mathf.Min(player_location + 1, locations.Count - 1);
+                world_position = new Vector3(position.x, position.y, 0);
+                campfire_location = FindGoodLocation(world_position);
+                if(locations.Count - 1 == player_location){
+                    break;
+                }
+            }
+            player.transform.position = world_position;
+            campfire.transform.position = campfire_location;
             locations.RemoveAt(player_location);
-            if(position.x == -width/2){
-                if(position.y == -height/2){
-                    campfire.transform.position = new Vector3(position.x +2, position.y + 2, 0);
-                }
-                else{
-                    campfire.transform.position = new Vector3(position.x + 2, position.y - 2, 0);
-                }
-            }
-            else{
-                if(position.y == -height/2){
-                    campfire.transform.position = new Vector3(position.x - 2, position.y + 2, 0);
-                }
-                else{
-                    campfire.transform.position = new Vector3(position.x - 2, position.y - 2, 0);
-                }
-            }
 
             for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                int index = Random.Range(0, locations.Count);
+                int index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
-                Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
+                GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
+                spawnedItems.Add(obj);
                 locations.RemoveAt(index);
             }
 
             for(int i = 0; i < Random.Range(1, MaxStartingEnemies + 1); i += 1){
-                int index = Random.Range(0, locations.Count);
+                int index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
-                Instantiate(enemy, new Vector3(position.x, position.y, 0), Quaternion.identity);
+                spawnedItems.Add(Instantiate(enemy, new Vector3(position.x, position.y, 0), Quaternion.identity));
                 locations.RemoveAt(index);
             }
         }
     }
+
+
+    void clear(){
+        while(spawnedItems.Count > 0){
+            Destroy(spawnedItems[0]);
+            spawnedItems.RemoveAt(0);
+        }
+        Walls.ClearAllTiles();
+        Ground.ClearAllTiles();
+    }
+
 }

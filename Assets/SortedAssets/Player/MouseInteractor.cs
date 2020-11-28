@@ -33,7 +33,6 @@ public class MouseInteractor : MonoBehaviour
         if (!GameController.GameIsPaused)
         {
 
-            Debug.Log("Deleting tile at " + location);
             for (int i = 0; i < 17; i += 1)
             {
                 Cursor.SetCursor(cursor_circle[i], new Vector2(16, 16), CursorMode.Auto); // Animate cursor (has 7 frames)
