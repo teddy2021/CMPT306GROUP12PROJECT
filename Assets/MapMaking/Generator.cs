@@ -18,25 +18,13 @@ using System.Threading;
 public class Generator : MonoBehaviour{
 
     // handed in values from unity
-    [Range(10,500)]
-    [SerializeField] private int width, height;
-    [SerializeField] private bool useSeed;
-    [SerializeField] private string seed;
-    [SerializeField] private String rules_file_path;
-    
-    
-    [SerializeField] public GameObject generator;
-    [SerializeField] public GameObject player;
-    [SerializeField] public GameObject key;
-    [SerializeField] public GameObject enemy;
-    [SerializeField] public GameObject lift;
-    [Range(2,100)]
-    [SerializeField] private int MaxStartingEnemies;
-    [Range(1,10)]
-    [SerializeField] private int MaxKeys;
+    public int width, height;
+    public bool useSeed;
+    public string seed;
+    public String rules_file_path;
 
-    [SerializeField] private Tilemap Walls, Ground;
-    [SerializeField] private TileBase[] sprites;
+    public Tilemap Walls, Ground, Boundries;
+    public TileBase[] sprites;
 
     // values used for displaying in unity
     private string[,] tiles;
@@ -49,12 +37,17 @@ public class Generator : MonoBehaviour{
     private Tree map_generator;
     private int start_x, start_y; 
     private GameObject local_player;
+
+    private bool regen = false;
     
     // Start is called before the first frame update
-    void Start() {
 
+    public void init(){
         mapping = new Dictionary<String, String>();
-        ReadFile(); // read in alphabet and production rules
+        if(! regen){
+            ReadFile(); // read in alphabet and production rules
+            regen = true;
+        }
         // initialze the random generator 
        
         if (useSeed) {
@@ -64,27 +57,8 @@ public class Generator : MonoBehaviour{
             rand = new System.Random();
         }
         map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(r_width*r_height)), true, r_width, r_height);
-        map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
-        tiles = map_generator.getMap();
-        int x = 0;
-        foreach(String s in tiles){
-            if(s == "wall" | s == "ground"){
-                x += 1;
-            }
-        }
-        
-        float w = (float)tiles.GetLength(0);
-        float h = (float)tiles.GetLength(1);
-
-
-
-        print("Map has " + w + " width and " + h + " height and " + x + " non-null tiles out of " + (w*h) + " tiles (" + ((float)x/(w*h)*100.0f) + "%)");
-        
-        SecondPass();
-        Display();
-        Walls.RefreshAllTiles();
-        Ground.RefreshAllTiles();
     }
+
 
 
     int Normalize(int initial, int min, int max){
@@ -92,93 +66,6 @@ public class Generator : MonoBehaviour{
         int denominator = max - min;
         return ((numerator/denominator)*denominator) + min;
     }
-
-    void SecondPass(){
-
-        start_x = rand.Next(r_width, width - r_width);
-        start_y = rand.Next(r_height, height - r_height);
-        for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
-            for(int j = -3 * r_height/4; j < 3 * r_height/4; j += 1){
-                tiles[start_x + i, start_y + j] = "n";
-            }
-        }
-
-        start_x = Normalize(start_x, -width/2 + r_width, width/2 - r_width);
-        start_y = Normalize(start_y, -height/2 + r_height, height/2 - r_height);
-
-        Vector3 center = (Walls.CellToWorld(new Vector3Int(start_x, start_y, 0)));
-        Instantiate(generator, 
-            center + new Vector3(-r_width/2, -r_height/2, 0),
-            Quaternion.identity);
-        
-        player.transform.position = center;
-        //Camera.main.GetComponent<CameraController>().cameraTarget = player.transform;
-
-       // Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
-    }
-
-    void SecondPassCustom(String[,] tileset){
-        
-        start_x = rand.Next(r_width, width - r_width);
-        start_y = rand.Next(r_height, height - r_height);
-        for(int i = -3 * r_width/4; i < 3 * r_width/4; i += 2){
-            for(int j = -3 * r_height/4; j < 3 * r_height/4; j += 1){
-                tileset[start_x + i, start_y + j] = "n";
-            }
-        }
-        Vector3 center =(Walls.CellToWorld(new Vector3Int(start_x, start_y, 0)));
-        Instantiate(generator, 
-            center + new Vector3(-r_width/2, -r_height/2, 0),
-            Quaternion.identity);
-        
-        player.transform.position = center;
-
-        Camera.main.GetComponent<CameraController>().cameraTarget = local_player.transform;
-        //Camera.main.GetComponent<Place_PowerPole_Furnace>().player = local_player;
-    }
-
-
-
-    /**public void DisplayCustom(String[,] map){
-        SecondPassCustom(map);
-        Ground.FloodFill(new Vector3Int(-width/2, -height/2, 0), sprites[1]);
-                
-        TileBase[] wallset = new TileBase[width * height];
-
-        for(int x = 0; x < map.GetLength(0); x += 1){
-            for(int y = 0; y < map.GetLength(1); y += 1){
-                String specifier, referent;
-                try{
-                    referent = map[x,y];
-                    mapping.TryGetValue(referent, out specifier);
-                }catch(Exception e){
-                    String error = "[5]: Failed to get mapping for word at (" + x + ", " + y + ")"+
-                    "\nValue of tile array was: '" + tiles[x,y] + "'";
-                    print(error + "\n" + e); 
-                    specifier = null;
-                }
-                if(specifier == "Walls"){
-                    wallset[(Math.Min(width, height) * x) + y] = sprites[0];
-                }
-            }
-        }
-
-        BoundsInt area = new BoundsInt(
-            new Vector3Int(0,0, 0), 
-            new Vector3Int(width, height, 0));
-        
-        Walls.SetTilesBlock(area, wallset);
-        int startx = rand.Next(0, width-1);
-        int starty = rand.Next(0, height-1);
-        for(int i = -r_width/2; i < r_width/2; i += 2){
-            for(int j = -r_height/2; j < r_height/2; j += 1){
-                Walls.SetTile(new Vector3Int(startx + i, starty + j, 0), null);
-            }
-        }
-        Instantiate(player, Camera.main.ScreenToWorldPoint(new Vector3(startx, starty, 1)), Quaternion.identity);
-        Instantiate(generator, Camera.main.ScreenToWorldPoint(new Vector3(startx - r_width/2, starty - r_height/2, 1)), Quaternion.identity);
-
-    }**/
 
 
 
@@ -211,9 +98,11 @@ public class Generator : MonoBehaviour{
         }
         
         Walls.SetTilesBlock(area, wallset);
-
+        
+        TileBase[] boundry = new TileBase[width * height];
         for(int i = 0; i < width * height; i += 1){
             wallset[i] = sprites[0];
+            boundry[i] = sprites[2];
         }
 
         Walls.SetTilesBlock(
@@ -224,7 +113,14 @@ public class Generator : MonoBehaviour{
             wallset
         ); // left bounding wall block
 
-        Walls.SetTilesBlock(
+        Boundries.SetTilesBlock(
+            new BoundsInt(
+                new Vector3Int(-width - 1, -height - 1, 0),
+                new Vector3Int(2, (2*height) + 1, 1)),
+                boundry
+        );
+
+       Walls.SetTilesBlock(
             new BoundsInt(
                 new Vector3Int(-width, -height, 0),
                 new Vector3Int(2*width, height/2, 1)
@@ -232,13 +128,26 @@ public class Generator : MonoBehaviour{
             wallset
         ); // bottom bounding wall block
 
+        Boundries.SetTilesBlock(new BoundsInt(
+            new Vector3Int(-width - 1, -height - 1, 0),
+            new Vector3Int((2*width)+1, 2, 1)),
+            boundry
+        );
+
+
         Walls.SetTilesBlock(
             new BoundsInt(
-                new Vector3Int(-width, height/2, 0),
-                new Vector3Int(2*width, height/2, 1)
+                new Vector3Int(-width - 1, height/2 + 1, 0),
+                new Vector3Int((2*width) + 1, 2, 1)
             ),
             wallset
         ); // top bounding wall block
+
+        Boundries.SetTilesBlock(new BoundsInt(
+            new Vector3Int(-width - 1, height - 1, 0),
+            new Vector3Int((2*width) + 2, 2, 1)),
+            boundry
+        );
 
         Walls.SetTilesBlock(
             new BoundsInt(
@@ -246,7 +155,12 @@ public class Generator : MonoBehaviour{
                 new Vector3Int(width/2, 2*height, 1)
             ),
             wallset
-        ); // right bounding wall block
+        ); //right bounding wall block
+        Boundries.SetTilesBlock(new BoundsInt(
+            new Vector3Int(width-1, -height - 1, 0),
+            new Vector3Int(2, (2*height) + 1, 1)),
+            boundry
+        );
 
         Ground.FloodFill(new Vector3Int(-width, -height, 0), sprites[1]);
         Ground.FloodFill(new Vector3Int(-width, height, 0), sprites[1]);
@@ -258,89 +172,7 @@ public class Generator : MonoBehaviour{
                 Walls.SetTile(new Vector3Int(i + start_x, j + start_y, 0), null);
             }
         }
-
-        PlaceKeys();
-        PlaceEnemies();
-        PlaceLift();
         
-    }
-
-
-    private void PlaceKeys(){
-        for(int i = 0; i < rand.Next(1, MaxKeys); i +=1){
-            
-            int center_x = rand.Next(r_width, width - r_width);
-            int center_y = rand.Next(r_height, height - r_height);
-            while(center_x == player.transform.position.x & center_y == player.transform.position.y){
-                center_x = rand.Next(r_width, width - r_width);
-                center_y = rand.Next(r_height, height - r_height);
-            }
-            Vector3Int location = new Vector3Int(
-                Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-                Normalize(center_y, -height/2 + r_height, height/2 - r_height),
-                0
-            );
-
-            Vector3 position = Walls.CellToWorld(location);
-            Walls.SetTile(location, null);
-            Instantiate(key, position, Quaternion.identity);
-        }
-    }
-
-    private void PlaceEnemies(){
-        for(int i = 0; i < rand.Next(2, MaxStartingEnemies); i += 1){
-            
-            int center_x = rand.Next(r_width, width - r_width);
-            int center_y = rand.Next(r_height, height - r_height);
-            
-            Vector3Int location = new Vector3Int(
-                Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-                Normalize(center_y, -height/2 + r_height, height/2 - r_height),
-                0
-            );
-
-            Vector3Int player_position = new Vector3Int(
-                (int)player.transform.position.x,
-                (int)player.transform.position.y,
-                (int)player.transform.position.z
-            );
-
-            while(Vector3Int.Distance(location, player_position) < 5){
-                center_x = rand.Next(r_width, width - r_width);
-                center_y = rand.Next(r_height, height - r_height);
-                location = new Vector3Int(
-                    Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-                    Normalize(center_y, -height/2 + r_height, height/2 - r_height),
-                    0
-                );
-            }
-
-            Vector3 position = Walls.CellToWorld(location);
-            Walls.SetTile(location, null);
-            Instantiate(enemy, position, Quaternion.identity);
-        }
-    }
-
-
-    private void PlaceLift(){
-        int center_x = rand.Next(r_width, width - r_width);
-        int center_y = rand.Next(r_height, height - r_height);
-
-        Vector3Int player_position = new Vector3Int(
-                (int)player.transform.position.x,
-                (int)player.transform.position.y,
-                (int)player.transform.position.z
-            );
-
-        Vector3Int location = new Vector3Int(
-            Normalize(center_x, -width/2 + r_width, height/2 - r_width),
-            Normalize(center_y, -height/2 + r_height, height/2 - r_height),
-            0
-        );
-
-        Vector3 position = Walls.CellToWorld(location);
-        Walls.SetTile(location, null);
-        Instantiate(lift, position, Quaternion.identity);
     }
 
 
@@ -445,12 +277,26 @@ public class Generator : MonoBehaviour{
     }
 
 
-
-    public String[,] GenerateNewMap(){
-        Array.Clear(tiles, 0, tiles.Length);
-        map_generator.Clear();
+    public void Generate(){
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand));
-        return map_generator.getMap();
+        tiles = map_generator.getMap();
+        Walls.ClearAllTiles();
+        Display();
+    }
+
+
+    public void GenerateNewMap(){
+        if(tiles != null){
+            Array.Clear(tiles, 0, tiles.Length);
+        }
+        try{
+            map_generator.Clear();
+        }
+        catch(Exception e){}
+        
+        map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand)); 
+        tiles = map_generator.getMap();
+        Display();
         
     }
 
@@ -593,8 +439,10 @@ public class Tree{
 
     public void Clear(){
         if(children != null){
-            foreach(Tree child in children){
-                child.Clear();
+            for(int i = 0; i < children.Length; i += 1){
+                if(children[i] != null){
+                    children[i].Clear();
+                }
             }
         }
         map = new String[width, height];

@@ -15,11 +15,14 @@ public class HeadLamp : MonoBehaviour
     public float headLampTimer;
     public bool headLampIsOn = false;
 
+    public LampBar lampBar;
+
 
 	private void Start()
 	{
         headLampTimer = timer;
         headLampIsOn = true;
+        lampBar.SetMaxHealth((int)headLampTimer);
 	}
 
 	// Update is called once per frame
@@ -29,15 +32,19 @@ public class HeadLamp : MonoBehaviour
 		{
             if(headLampTimer > 0)
 			{
+                lampBar.SetHealth((int)(headLampTimer+0.5));
                 headLampTimer -= Time.deltaTime;
                 headLamp.intensity -= Mathf.Lerp(0.0f,1.0f,Time.deltaTime/timer);
+                
 			}
 			else
 			{
+                lampBar.SetHealth((int)headLampTimer);
                 headLampTimer = 0;
                 headLampIsOn = false;
                 headLamp.intensity = 0;
-			}
+                
+            }
 		}
     }
 
