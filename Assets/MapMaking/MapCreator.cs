@@ -33,7 +33,7 @@ public class MapCreator : MonoBehaviour
     [Range(1,10)]
     [SerializeField] private int MaxKeys;
 
-    [SerializeField] private Tilemap Walls, Ground;
+    [SerializeField] private Tilemap Walls, Ground, Boundries;
     [SerializeField] private TileBase[] sprites;
 
     private Vector2 sampleRegionSize;
@@ -47,6 +47,7 @@ public class MapCreator : MonoBehaviour
         genny.rules_file_path = this.rules_file_path;
         genny.Walls = this.Walls;
         genny.Ground = this.Ground;
+        genny.Boundries = this.Boundries;
         genny.sprites = this.sprites;
         genny.init();
         sampleRegionSize = new Vector2(width, height);

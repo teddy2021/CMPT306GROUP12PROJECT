@@ -23,7 +23,7 @@ public class Generator : MonoBehaviour{
     public string seed;
     public String rules_file_path;
 
-    public Tilemap Walls, Ground;
+    public Tilemap Walls, Ground, Boundries;
     public TileBase[] sprites;
 
     // values used for displaying in unity
@@ -98,9 +98,11 @@ public class Generator : MonoBehaviour{
         }
         
         Walls.SetTilesBlock(area, wallset);
-
+        
+        TileBase[] boundry = new TileBase[width * height];
         for(int i = 0; i < width * height; i += 1){
             wallset[i] = sprites[0];
+            boundry[i] = sprites[2];
         }
 
         Walls.SetTilesBlock(
@@ -111,7 +113,14 @@ public class Generator : MonoBehaviour{
             wallset
         ); // left bounding wall block
 
-        Walls.SetTilesBlock(
+        Boundries.SetTilesBlock(
+            new BoundsInt(
+                new Vector3Int(-width - 1, -height - 1, 0),
+                new Vector3Int(2, (2*height) + 1, 1)),
+                boundry
+        );
+
+       Walls.SetTilesBlock(
             new BoundsInt(
                 new Vector3Int(-width, -height, 0),
                 new Vector3Int(2*width, height/2, 1)
@@ -119,13 +128,26 @@ public class Generator : MonoBehaviour{
             wallset
         ); // bottom bounding wall block
 
+        Boundries.SetTilesBlock(new BoundsInt(
+            new Vector3Int(-width - 1, -height - 1, 0),
+            new Vector3Int((2*width)+1, 2, 1)),
+            boundry
+        );
+
+
         Walls.SetTilesBlock(
             new BoundsInt(
-                new Vector3Int(-width, height/2, 0),
-                new Vector3Int(2*width, height/2, 1)
+                new Vector3Int(-width - 1, height/2 + 1, 0),
+                new Vector3Int((2*width) + 1, 2, 1)
             ),
             wallset
         ); // top bounding wall block
+
+        Boundries.SetTilesBlock(new BoundsInt(
+            new Vector3Int(-width - 1, height - 1, 0),
+            new Vector3Int((2*width) + 2, 2, 1)),
+            boundry
+        );
 
         Walls.SetTilesBlock(
             new BoundsInt(
@@ -133,7 +155,12 @@ public class Generator : MonoBehaviour{
                 new Vector3Int(width/2, 2*height, 1)
             ),
             wallset
-        ); // right bounding wall block
+        ); //right bounding wall block
+        Boundries.SetTilesBlock(new BoundsInt(
+            new Vector3Int(width-1, -height - 1, 0),
+            new Vector3Int(2, (2*height) + 1, 1)),
+            boundry
+        );
 
         Ground.FloodFill(new Vector3Int(-width, -height, 0), sprites[1]);
         Ground.FloodFill(new Vector3Int(-width, height, 0), sprites[1]);
