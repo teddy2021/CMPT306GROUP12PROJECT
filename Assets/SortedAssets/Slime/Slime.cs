@@ -16,6 +16,14 @@ public class Slime : MonoBehaviour
     private GameObject roamDest;
     public HealthBar hb;
 
+    public AudioSource damageSound;
+    public AudioSource idleSound;
+    public AudioSource deathSound;
+
+    public AudioClip[] slimeDamageSounds;
+    public AudioClip[] slimeIdleSounds;
+    public AudioClip[] slimeDeathSounds;
+
     [Tooltip("When the slime is damged.")]
     public UnityEvent OnDamaged;
 
@@ -106,6 +114,12 @@ public class Slime : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
             hb.transform.localScale = new Vector3(-0.01f, 0.01f, 1);
         }
+
+        if (!idleSound.isPlaying)
+        {
+            idleSound.clip = slimeIdleSounds[Random.Range(0, slimeIdleSounds.Length)];
+            idleSound.Play(0);
+        }
     }
 
     void OnDeathAnimComplete()
@@ -127,6 +141,9 @@ public class Slime : MonoBehaviour
 
         OnDeath.Invoke();
 
+        deathSound.clip = slimeDeathSounds[Random.Range(0, slimeDeathSounds.Length)];
+        deathSound.Play(0);
+
         animator.Play("Slime_Death");
     }
 
@@ -139,6 +156,9 @@ public class Slime : MonoBehaviour
         animator.Play("Slime_Damage");
 
         rb.AddForce(knockback);
+
+        damageSound.clip = slimeDamageSounds[Random.Range(0, slimeDamageSounds.Length)];
+        damageSound.Play(0);
 
         OnDamaged.Invoke();
 
