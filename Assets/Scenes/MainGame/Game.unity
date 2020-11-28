@@ -2054,9 +2054,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 454567012}
-  - component: {fileID: 454567011}
   - component: {fileID: 454567013}
   - component: {fileID: 454567014}
+  - component: {fileID: 454567015}
+  - component: {fileID: 454567011}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -2076,18 +2077,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaf71a1b465be54a8d87937d422be44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 40
-  height: 40
+  width: 10
+  height: 10
   useSeed: 0
   seed: 
   rules_file_path: Assets/MapMaking/Rules.txt
-  generator: {fileID: 5195457028904378885, guid: 0aa683ffd0fc91e4e84b199aa1e94e47, type: 3}
-  player: {fileID: 1223606215}
-  key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
-  enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
-  lift: {fileID: 1675469000179335404, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
-  MaxStartingEnemies: 75
-  MaxKeys: 5
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
   sprites:
@@ -2174,6 +2168,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fe8e579df862d48a11836b0ed4534f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &454567015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454567010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566cfebda340f894ea1e9d2164457631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  genny: {fileID: 454567011}
+  maxSamples: 100
+  radius: 1
+  width: 10
+  height: 10
+  useSeed: 0
+  seed: 
+  rules_file_path: Assets/MapMaking/Rules.txt
+  generator: {fileID: 0}
+  player: {fileID: 1223606215}
+  key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
+  enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+  lift: {fileID: 1298538223}
+  MaxStartingEnemies: 40
+  MaxKeys: 1
+  Walls: {fileID: 297144414}
+  Ground: {fileID: 1481711975}
+  sprites:
+  - {fileID: 11400000, guid: be07efb6cb71cd341927dd383920615e, type: 2}
+  - {fileID: 11400000, guid: ad74be0d038b2e94e90310aff7b4f4d5, type: 2}
 --- !u!114 &498179210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4970,6 +4996,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1591493012977983818, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
   m_PrefabInstance: {fileID: 1840897243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1298538223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1675469000179335404, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+  m_PrefabInstance: {fileID: 1344494548}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1329590238
 GameObject:
