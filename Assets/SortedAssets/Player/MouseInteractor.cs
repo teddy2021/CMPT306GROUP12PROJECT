@@ -26,6 +26,8 @@ public class MouseInteractor : MonoBehaviour
 
     public LayerMask enemiesLayer;
 
+
+    private Animator animator; // for changing players swing animations
     IEnumerator Delete()
     {
         if (!GameController.GameIsPaused)
@@ -63,6 +65,7 @@ public class MouseInteractor : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         camera = Camera.main;
         Cursor.SetCursor(cursor_circle[17], new Vector2(16, 16), CursorMode.Auto);
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -70,6 +73,7 @@ public class MouseInteractor : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            animator.SetBool("action", true);   // set player animation to action
             // get the interact point
             Vector2 mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
             Vector2 playerPos = player.transform.position;
@@ -116,6 +120,7 @@ public class MouseInteractor : MonoBehaviour
         }
         else
         {
+            animator.SetBool("action", false);  // stop player animation
             if (destroying)
             { // Cancel destruction of a tile
                 StopCoroutine(deletion);
@@ -128,6 +133,7 @@ public class MouseInteractor : MonoBehaviour
             camera.ScreenToWorldPoint(
                 Input.mousePosition)), location) >= 1)
         {
+            animator.SetBool("action", false); // stop player animation
             StopCoroutine(deletion);
             location = tilemap.WorldToCell(camera.ScreenToWorldPoint(Input.mousePosition));
             if (tilemap.HasTile(location))

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class PowerSourceUnit : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class PowerSourceUnit : MonoBehaviour
     public Vector2 hotSpot = Vector2.zero;
     private SpriteRenderer sprite;
 
+    //safe zone components
+    private Light2D safeZoneLight;
+    private CircleCollider2D safeZoneCollider;
+    public GameObject GloabalLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +41,12 @@ public class PowerSourceUnit : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         inventory = player.GetComponent<Inventory>();
+
+        //safe zone components
+        safeZoneLight = GetComponentInChildren<Light2D>();
+        safeZoneCollider = GetComponentInChildren<CircleCollider2D>();
+        safeZoneLight.intensity = GloabalLight.GetComponent<Light2D>().intensity;
+        safeZoneCollider.enabled = false;
 
     }
 
@@ -59,7 +71,24 @@ public class PowerSourceUnit : MonoBehaviour
             power = false;
 		}
         furnaceAnimations();
+        safeLight();
     }
+
+
+    private void safeLight()
+    {
+        if (power)
+        {
+            safeZoneLight.intensity = 0.6f;
+            safeZoneCollider.enabled = true;
+        }
+        else
+        {
+            safeZoneLight.intensity = GloabalLight.GetComponent<Light2D>().intensity;
+            safeZoneCollider.enabled = false;
+        }
+    }
+
 
     private void furnaceAnimations()
 	{

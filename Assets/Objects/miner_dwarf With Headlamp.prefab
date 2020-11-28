@@ -86,7 +86,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.78125, y: 1}
+  m_Size: {x: 1, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   invisibilityTime: 1
   OnDamaged:
     m_PersistentCalls:
@@ -280,6 +281,7 @@ MonoBehaviour:
           m_StringArgument: Death
           m_BoolArgument: 0
         m_CallState: 2
+  hb: {fileID: 0}
 --- !u!58 &5080305451744698942
 CircleCollider2D:
   m_ObjectHideFlags: 0
