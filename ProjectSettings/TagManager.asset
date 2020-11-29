@@ -15,6 +15,7 @@ TagManager:
   - Coal
   - Key_Ratio
   - Key_Panel
+  - Floor_Num
   layers:
   - Default
   - TransparentFX
