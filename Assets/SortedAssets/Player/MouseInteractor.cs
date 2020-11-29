@@ -26,6 +26,9 @@ public class MouseInteractor : MonoBehaviour
 
     public LayerMask enemiesLayer;
 
+    public AudioClip[] mineSounds;
+    public AudioSource soundSource;
+
 
     private Animator animator; // for changing players swing animations
     IEnumerator Delete()
@@ -79,7 +82,9 @@ public class MouseInteractor : MonoBehaviour
 
             Vector2 worldPnt = mousePos;
             if (Vector2.Distance(worldPnt, playerPos) > interactRange) // check if the we clicked outside our range
-                worldPnt = (mousePos - playerPos).normalized * interactRange; // then limit the point we can interact at
+                worldPnt = playerPos + (mousePos - playerPos).normalized * interactRange; // then limit the point we can interact at
+
+            Debug.DrawLine(playerPos, worldPnt);
 
             bool didAttack = false;
 
@@ -134,15 +139,7 @@ public class MouseInteractor : MonoBehaviour
         {
             animator.SetBool("action", false); // stop player animation
             StopCoroutine(deletion);
-            location = tilemap.WorldToCell(camera.ScreenToWorldPoint(Input.mousePosition));
-            if (tilemap.HasTile(location))
-            {
-                deletion = StartCoroutine(Delete());
-            }
-            else
-            {
-                destroying = false;
-            }
+            destroying = false;
         }
     }
 
