@@ -138,13 +138,13 @@ public class Generator : MonoBehaviour{
         Walls.SetTilesBlock(
             new BoundsInt(
                 new Vector3Int(-width - 1, height/2 + 1, 0),
-                new Vector3Int((2*width) + 1, 2, 1)
+                new Vector3Int(2*width, height/2, 1)
             ),
             wallset
         ); // top bounding wall block
 
         Boundries.SetTilesBlock(new BoundsInt(
-            new Vector3Int(-width - 1, height - 1, 0),
+            new Vector3Int(-width - 1, height + 1, 0),
             new Vector3Int((2*width) + 2, 2, 1)),
             boundry
         );
