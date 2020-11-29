@@ -6,6 +6,10 @@ using TMPro;
 
 public class Key : MonoBehaviour
 {
+    public AudioSource keyGrab;
+
+    public AudioClip[] keyGrabSounds;
+
     void Start ()
     {
         //GameObject.FindGameObjectsWithTag("Key_Panel")[0].SetActive(false);
@@ -30,6 +34,9 @@ public class Key : MonoBehaviour
             GameController.SetKeyText();
             // play the grab animation
             anim.Play("Key_Grab");
+
+            keyGrab.clip = keyGrabSounds[Random.Range(0, keyGrabSounds.Length)];
+            keyGrab.Play(0);
         }
     }
 }
