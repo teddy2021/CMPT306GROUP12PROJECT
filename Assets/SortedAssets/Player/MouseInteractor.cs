@@ -91,7 +91,7 @@ public class MouseInteractor : MonoBehaviour
 
             Debug.DrawLine(playerPos, worldPnt);
 
-            if (Time.time - swingSoundTime > 2)
+            if (Time.time - swingSoundTime > 1)
             {
                 swingSound.clip = swingSounds[Random.Range(0, swingSounds.Length)];
                 swingSound.Play(0);
