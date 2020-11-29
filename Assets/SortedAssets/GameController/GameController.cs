@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(GameController.FloorLevel.ToString());
     }
 
     public static void EndGame(string reason)
