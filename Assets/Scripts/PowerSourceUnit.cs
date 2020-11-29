@@ -29,6 +29,8 @@ public class PowerSourceUnit : MonoBehaviour
     private CircleCollider2D safeZoneCollider;
     public GameObject GloabalLight;
 
+    public FurnaceBar fb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +55,8 @@ public class PowerSourceUnit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(coal[0].quantity > 0)
+        fb.SetCurrentCoal(coal[0].quantity, coalTimer/timer);
+        if (coal[0].quantity > 0)
 		{
             if (coalTimer > 0)
             {
