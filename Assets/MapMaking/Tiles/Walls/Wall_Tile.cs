@@ -11,6 +11,9 @@ public class Wall_Tile : Scriptable_Tile {
 
 	[SerializeField] private GameObject[] drops;
 
+	private AudioSource dropSound;
+	public AudioClip[] dropSounds;
+
 	public override int GetIndex(byte mask){
 		switch(mask){
 			case 0: return 0; // 0 neighbours
@@ -41,6 +44,10 @@ public class Wall_Tile : Scriptable_Tile {
 		for(int i = 0; i < Random.Range(0,3); i += 1){
 			Vector3 position = new Vector3(Random.Range(location.x-.5f, location.x+.5f), Random.Range(location.y-.5f, location.y+.5f), 1);
 			Instantiate(drops[Random.Range(0, drops.Length)], position , Quaternion.identity);
+
+			dropSound = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
+			dropSound.clip = dropSounds[Random.Range(0, dropSounds.Length)];
+			dropSound.Play(0);
 		}
 	}
 
