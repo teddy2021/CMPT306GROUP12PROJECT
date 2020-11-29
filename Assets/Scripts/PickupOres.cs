@@ -5,8 +5,9 @@ using UnityEngine;
 public class PickupOres : MonoBehaviour
 {
 
-    private GameObject player;                   // player
+    private GameObject player;        
     private Inventory inventory;                // player inventory
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,10 +17,14 @@ public class PickupOres : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-	private void OnTriggerStay2D(Collider2D collision)
+   
+
+
+    //Object pickup
+    private void OnTriggerStay2D(Collider2D collision)
 	{
 		if(collision.tag == "Player")
 		{

@@ -2183,7 +2183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   genny: {fileID: 454567011}
   maxSamples: 8
-  radius: 21.4
+  radius: 8
   width: 50
   height: 50
   useSeed: 0
