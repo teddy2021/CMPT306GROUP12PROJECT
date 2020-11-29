@@ -125,6 +125,6 @@ public class HeadLamp : MonoBehaviour
     public void IncreaseTimer(float amount = 0)
     {
         headLampTimer += amount;
-        GameController.StartGame("next floor");
+        GameController.StartGame("next floor", GameController.FloorLevel++);
     }
 }

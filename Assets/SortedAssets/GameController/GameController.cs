@@ -4,21 +4,30 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    public static int FloorLevel = 0;
+    public static int FloorLevel;
     public static bool GameIsPaused = false;
     public static int TotalKeys;
     public static int KeysCollected;
 
-    public static void StartGame(string reason)
+    public static void StartGame(string reason, int newFloor = 1)
     {
-        FloorLevel++;
+        SceneManager.LoadScene("Scenes/MainGame/Game");
+        GameController.FloorLevel = newFloor;
+        SetFloorText();
         KeysCollected = 0;
         //GameObject.Find("Key_Panel").SetActive(false);
-        SceneManager.LoadScene("Scenes/MainGame/Game");
+    }
+    void Update()
+    {
+        Debug.Log(GameController.FloorLevel.ToString());
     }
 
     public static void EndGame(string reason)
     {
+        if (reason == "Death")
+        {
+            Debug.Log("Player Died");
+        }
         SceneManager.LoadScene("Scenes/MainGame/EndMenu");
     }
 
@@ -44,5 +53,12 @@ public class GameController : MonoBehaviour
         GameController.TotalKeys = allKeys;
         TextMeshProUGUI keysRatio = GameObject.FindGameObjectsWithTag("Key_Ratio")[0].GetComponent<TextMeshProUGUI>();
         keysRatio.text = GameController.KeysCollected.ToString() + "/" + GameController.TotalKeys.ToString();
+    }
+
+    public static void SetFloorText()
+    {
+        TextMeshProUGUI floor = GameObject.FindGameObjectsWithTag("Floor_Num")[0].GetComponent<TextMeshProUGUI>();
+        floor.text = ""+GameController.FloorLevel.ToString();
+        Debug.Log("Floor Incremented "+floor.text);
     }
 }
