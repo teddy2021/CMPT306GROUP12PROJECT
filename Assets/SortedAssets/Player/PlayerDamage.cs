@@ -22,6 +22,10 @@ public class PlayerDamage : MonoBehaviour
 
     public HealthBar hb;
 
+    public AudioSource playerSound;
+    public AudioClip[] playerHurtSounds;
+    public AudioClip[] playerDeathSounds;
+
     private void Start()
     {
         if (OnDamaged == null)
@@ -60,6 +64,9 @@ public class PlayerDamage : MonoBehaviour
 
         OnDeath.Invoke();
 
+        playerSound.clip = playerDeathSounds[Random.Range(0, playerDeathSounds.Length)];
+        playerSound.Play(0);
+
         GetComponent<Animator>().Play("Player_Death");
     }
 
@@ -75,6 +82,11 @@ public class PlayerDamage : MonoBehaviour
 
         if (health <= 0)
             doDeath();
+        else
+        {
+            playerSound.clip = playerHurtSounds[Random.Range(0, playerHurtSounds.Length)];
+            playerSound.Play(0);
+        }
     }
 
     public void tryDoDamage(int amount, Vector2 knockback)
@@ -92,6 +104,6 @@ public class PlayerDamage : MonoBehaviour
         health += amount;
         maxHealth += amount;
 
-        GameController.StartGame("next floor");
+        GameController.StartGame("next floor", GameController.FloorLevel++);
     }
 }

@@ -12,7 +12,7 @@ public class MapCreator : MonoBehaviour
 
     [Range(1,100)]
     [SerializeField] private int maxSamples;
-    [Range(1,100)]
+    [Range(0.01f,8.0f)]
     [SerializeField] private float radius;
 
         // handed in values from unity
@@ -114,7 +114,7 @@ public class MapCreator : MonoBehaviour
     }
 
     private void placeObjects(List<Vector2> locations){
-        if(locations.Count > 3){
+        if(locations.Count > 4){
             
             int player_location = 0;
             Vector2 position = locations[player_location];
@@ -132,8 +132,13 @@ public class MapCreator : MonoBehaviour
             campfire.transform.position = campfire_location;
             locations.RemoveAt(player_location);
 
+            int index = Random.Range(0, locations.Count - 1);
+            position = locations[index];
+            lift.transform.position = new Vector3(position.x, position.y, 0); 
+            locations.RemoveAt(index);
+
             for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                int index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
                 spawnedItems.Add(obj);
@@ -141,11 +146,13 @@ public class MapCreator : MonoBehaviour
             }
 
             for(int i = 0; i < Random.Range(1, MaxStartingEnemies + 1); i += 1){
-                int index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 spawnedItems.Add(Instantiate(enemy, new Vector3(position.x, position.y, 0), Quaternion.identity));
                 locations.RemoveAt(index);
             }
+
+
         }
     }
 
