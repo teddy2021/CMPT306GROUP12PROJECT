@@ -8,33 +8,30 @@ using UnityEngine.Tilemaps;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField] private Generator genny;
+    public Generator genny;
 
-    [Range(1,100)]
-    [SerializeField] private int maxSamples;
-    [Range(0.01f,8.0f)]
-    [SerializeField] private float radius;
+    public int maxSamples;
+    public float radius;
 
         // handed in values from unity
-    [Range(10,500)]
-    [SerializeField] private int width, height;
-    [SerializeField] private bool useSeed;
-    [SerializeField] private string seed;
-    [SerializeField] private string rules_file_path;
+    public int width, height;
+    public bool useSeed;
+    public string seed;
+    public string rules_file_path;
     
     
-    [SerializeField] public GameObject campfire;
-    [SerializeField] public GameObject player;
-    [SerializeField] public GameObject key;
-    [SerializeField] public GameObject enemy;
-    [SerializeField] public GameObject lift;
-    [Range(2,100)]
-    [SerializeField] private int MaxStartingEnemies;
-    [Range(1,10)]
-    [SerializeField] private int MaxKeys;
+     public GameObject campfire;
+     public GameObject player;
+     public GameObject key;
+     public GameObject enemy;
+     public GameObject lift;
+    
+    public int MaxStartingEnemies;
+    
+    public int MaxKeys;
 
-    [SerializeField] private Tilemap Walls, Ground, Boundries;
-    [SerializeField] private TileBase[] sprites;
+    public Tilemap Walls, Ground, Boundries;
+    public TileBase[] sprites;
 
     private Vector2 sampleRegionSize;
     private List<GameObject> spawnedItems;

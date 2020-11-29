@@ -829,7 +829,8 @@ GameObject:
   - component: {fileID: 186448499}
   - component: {fileID: 186448501}
   - component: {fileID: 186448500}
-  m_Layer: 0
+  - component: {fileID: 186448502}
+  m_Layer: 10
   m_Name: Boundries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,6 +937,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &186448502
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186448498}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &297144410
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,7 +1000,7 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
+  m_MaximumTileChangeCount: 1000000
   m_ExtrusionFactor: 0.00001
 --- !u!483693784 &297144413
 TilemapRenderer:
@@ -2058,6 +2075,7 @@ GameObject:
   - component: {fileID: 454567014}
   - component: {fileID: 454567015}
   - component: {fileID: 454567011}
+  - component: {fileID: 454567016}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -2077,8 +2095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaf71a1b465be54a8d87937d422be44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 50
-  height: 50
+  width: 0
+  height: 0
   useSeed: 0
   seed: 
   rules_file_path: Assets/MapMaking/Rules.txt
@@ -2116,7 +2134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACQn+voz9VQWAIAAP4EAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzk3GkAClt9YhpId8TGgnF18WaY01yJJHkgMkw3/vSraxS6cnxO7b1XtvV/5kUrsKuTd2ZaV4NALZtxELZ/Zl1Ccf8ABbo9fyAzvMmxS+CCCImFfw0lB8HMqcKdFbyb/rrQrghIK1lrmx5VJsMTXOOwrnoBxSyhofqjWFPkfsQD9Xi1BypNNkHk4fdFokoxMdOWqPdgBNrqcttj0GcIOtNVdQVigC8b5k0hVMphGmSVKLaDpwo5R0LSPmj1VUnELlatJDACGBFEYayfWCAgXKbeFDy2H5c5479K0BFo530pJVTV/2wzT+leB2Dbd3UHW4aZxMbiOxpuvjP4CrcUzn1pQP3cXjJFziC8l3r3Dk4PzA4WH4ruc+jh7tQe1go/CtQP1kVtbUWlDS2zqU1g4nd/3fs7a0QL7r4w3Vi2Bd9aZ3A+3GGTScovxDqmS5iVbeNoG1MtHyuAVoaTw/iXDcEde2oGhg8dvhL9gOl6lN3EvrPKValTrQ25jaBihbRs+Cmtqnxmq0ww4ValD++EJ9/OUQL3L/r7qH8G7a29tc9xwuSmK4xyfJRerF7M/TcoXZP6IrnmuvpMbe6pB4IqNSo3WzY0NJXdm6tjnwQdm2luLv3WKQC9gg3ExuZvP5LBFXsykfw3RxO5t93fB8MWdx+aQmnaBeGqKtPTQ23TfXtGjd52S0slDFfRcW9iv5URrXI6XOzZpbRP3cdDgTR0uX0NsUSyHJoDV6L3UcOPvMmDJ8hyI7N8qi0uXBW8j6Lhmr5LvxIZKxNH4/MnZipz9QSwMEFAAACAgAAJCf6y9qfdNtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tFJiWkpiUmqisZGxmbm5mUGKrplpsmGiqaWJmZlFUnKapblSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJCf6+jP1VBYAgAA/gQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJCf6y9qfdNtAAAAeAAAAAkAJAAAAAAAAAAAAAAApQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABdAwAAAAA=
+    dataString: UEsDBBQAAAgIAACQn+t7Yy+INQAAAD4AAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgDilmSkgdnQskFNSWZDql5ibChGoBQBQSwECLQAUAAAICAAAkJ/re2MviDUAAAA+AAAACQAkAAAAAAAAAAAAAAAAAAAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAABAAEAWwAAAIAAAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -2176,11 +2194,46 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 454567010}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 566cfebda340f894ea1e9d2164457631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  genny: {fileID: 0}
+  maxSamples: 0
+  radius: 0
+  width: 0
+  height: 0
+  useSeed: 0
+  seed: 
+  rules_file_path: 
+  campfire: {fileID: 1476331377}
+  player: {fileID: 1223606215}
+  key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
+  enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+  lift: {fileID: 1298538223}
+  MaxStartingEnemies: 15
+  MaxKeys: 1
+  Walls: {fileID: 297144414}
+  Ground: {fileID: 1481711975}
+  Boundries: {fileID: 186448501}
+  sprites:
+  - {fileID: 11400000, guid: be07efb6cb71cd341927dd383920615e, type: 2}
+  - {fileID: 11400000, guid: ad74be0d038b2e94e90310aff7b4f4d5, type: 2}
+  - {fileID: 11400000, guid: a9dba27c58789c54eb663520074c01bc, type: 2}
+--- !u!114 &454567016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454567010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e12da576ae8e24381f61fdbc2d7e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: {fileID: 454567015}
   genny: {fileID: 454567011}
   maxSamples: 8
   radius: 8
@@ -2194,7 +2247,7 @@ MonoBehaviour:
   key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
   enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
   lift: {fileID: 1298538223}
-  MaxStartingEnemies: 15
+  MaxStartingEnemies: 50
   MaxKeys: 1
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
@@ -5663,11 +5716,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5195457028904378887, guid: 0aa683ffd0fc91e4e84b199aa1e94e47, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.518839
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5195457028904378887, guid: 0aa683ffd0fc91e4e84b199aa1e94e47, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.825697
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5195457028904378887, guid: 0aa683ffd0fc91e4e84b199aa1e94e47, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5866,11 +5919,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.25
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5910,11 +5963,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.99999994
+      value: 0.27849126
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.27849126
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675469000179335400, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.52849126
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335401, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_Sprite
@@ -5974,11 +6031,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335407, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 2.61
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1675469000179335407, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 3.12
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
@@ -8378,11 +8435,11 @@ PrefabInstance:
       objectReference: {fileID: 1458465409}
     - target: {fileID: 1591493012977983818, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.184929
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1591493012977983818, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.665867
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1591493012977983818, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: m_LocalPosition.z
