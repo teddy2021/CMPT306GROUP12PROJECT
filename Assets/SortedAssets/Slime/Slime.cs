@@ -157,13 +157,15 @@ public class Slime : MonoBehaviour
 
         rb.AddForce(knockback);
 
-        damageSound.clip = slimeDamageSounds[Random.Range(0, slimeDamageSounds.Length)];
-        damageSound.Play(0);
-
         OnDamaged.Invoke();
 
         if (health <= 0)
             Death();
+        else
+        {
+            damageSound.clip = slimeDamageSounds[Random.Range(0, slimeDamageSounds.Length)];
+            damageSound.Play(0);
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)

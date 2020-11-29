@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7227352107618959837}
   - component: {fileID: 8093779721161273256}
   - component: {fileID: 1399841819456046446}
-  - component: {fileID: 3589811682940179849}
   - component: {fileID: -1204047827638799765}
+  - component: {fileID: 2871412308806517418}
   m_Layer: 0
   m_Name: Iron
   m_TagString: Iron
@@ -112,18 +112,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!114 &3589811682940179849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7951073366528039751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7258bb72b539f428ea52306bed6aa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &-1204047827638799765
 Rigidbody2D:
   serializedVersion: 4
@@ -145,6 +133,20 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2871412308806517418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951073366528039751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7258bb72b539f428ea52306bed6aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupSounds:
+  - {fileID: 8300000, guid: 9477a2aa190b08344a9c11efb29be2af, type: 3}
 --- !u!1 &8425389128513095671
 GameObject:
   m_ObjectHideFlags: 0
