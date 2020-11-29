@@ -27,7 +27,12 @@ public class MouseInteractor : MonoBehaviour
     public LayerMask enemiesLayer;
 
     public AudioClip[] mineSounds;
-    public AudioSource soundSource;
+    public AudioSource mineSound;
+    private float mineSoundTime = -1;
+
+    public AudioClip[] swingSounds;
+    public AudioSource swingSound;
+    private float swingSoundTime = -1;
 
 
     private Animator animator; // for changing players swing animations
@@ -86,6 +91,14 @@ public class MouseInteractor : MonoBehaviour
 
             Debug.DrawLine(playerPos, worldPnt);
 
+            if (Time.time - swingSoundTime > 2)
+            {
+                swingSound.clip = swingSounds[Random.Range(0, swingSounds.Length)];
+                swingSound.Play(0);
+
+                swingSoundTime = Time.time;
+            }
+
             bool didAttack = false;
 
             // check if can attack
@@ -112,14 +125,24 @@ public class MouseInteractor : MonoBehaviour
                 }
             }
 
-            if (!destroying)
+            location = tilemap.WorldToCell(worldPnt);
+            if (tilemap.HasTile(location))
             {
-                location = tilemap.WorldToCell(worldPnt);
-                if (tilemap.HasTile(location))
+                if (!destroying)
                 {
                     deletion = StartCoroutine(Delete());
                     destroying = true;
                 }
+            }
+            else
+                destroying = false;
+
+            if (destroying && Time.time - mineSoundTime > 0.25)
+            {
+                mineSound.clip = mineSounds[Random.Range(0, mineSounds.Length)];
+                mineSound.Play(0);
+
+                mineSoundTime = Time.time;
             }
         }
         else
