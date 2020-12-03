@@ -2134,7 +2134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACQn+t7Yy+INQAAAD4AAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgDilmSkgdnQskFNSWZDql5ibChGoBQBQSwECLQAUAAAICAAAkJ/re2MviDUAAAA+AAAACQAkAAAAAAAAAAAAAAAAAAAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAABAAEAWwAAAIAAAAAAAA==
+    dataString: UEsDBBQAAAgIAACQn+sVPH/YUQIAAPMEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VEtz2jAQ/iuMzqWDSVKgt9YQ0kMSJrSTiy9CWmMNsuTRI7yG/96VbGOHTk8s3367++1DPhOhbAXMabM0gj9rDuT7gASbfBl0zic40K1Wa3GClvMuuCsCiUbOG3VCI56EMKtLcEawH2orA3mEoFci16Zc8C2k2jqLcE6lBXQZ7UK0Qug8IAf8Gc5CyBGt8SRYJ7Rmo8EFTQbKgelRHxpmyxs+RJ5XTNKyAh5Ed/SkYSeRpLCZxh8cTEspbKOEuGMVO01pZT32gQQuKHYWywd+AWJbuKCyH/ya5xZco8jQ41wYHFCdlfzU9dRKane1qg8qfRQwGt9HUXXW538Iw1pzbnT51BZORqGIKwTbvdEjo9b15tqH55+Ve7Wnckc3Et4LUC96abRXHJ3O+BDqLYzn3d9rb2kBbNfhtdQb0FfduNs1Js1ycIeX2P0hlaLcBOTrfQ2spY7zjqsHg5v5hXrjYdgmE6JBxB8Lv+m2f0GN41EY69DVFFRB3UZ7E6hkEUcWmvEu1UaB6WeoQFHpjivM4253eOP7f9QjDY+lqd742jdwExLhjj8a3bhWen9dli30/hls8eqdFAq6SQfHCw4q1UrVJ9ZvqQ1be5NT1gvbesE/nxZhLJ+NJ/lskicwvt/Q4SznDyyZ8gm7m07vxt9IvD2hsE8qV7XQZjy4NtUlV3hn7TdksDS0iufODd0vxanUtmMKles1MwDqtc5wFQ4Gi+Cz5AsucEBrcE6ouHByzojUbAc8uybKYqeLgzM067JkpBIf2gUkI2n8aGTkQi5/AVBLAwQUAAAICAAAkJ/r8gHtQ20AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0UnJymqWReZqleZphqpFJUqKuZVqKabKhRYp5srGFhbGRmVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAkJ/rFTx/2FECAADzBAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAkJ/r8gHtQ20AAAB4AAAACQAkAAAAAAAAAAAAAACeAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAFYDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -2154,7 +2154,7 @@ MonoBehaviour:
   prioritizeGraphs: 0
   prioritizeGraphsLimit: 1
   colorSettings:
-    _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.9}
+    _SolidColor: {r: 0.5459406, g: 0.7882353, b: 0.11764706, a: 0.9}
     _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
     _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
     _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
@@ -2236,7 +2236,7 @@ MonoBehaviour:
   creator: {fileID: 454567015}
   genny: {fileID: 454567011}
   maxSamples: 8
-  radius: 8
+  radius: 4
   width: 50
   height: 50
   useSeed: 0
@@ -2247,7 +2247,7 @@ MonoBehaviour:
   key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
   enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
   lift: {fileID: 1298538223}
-  MaxStartingEnemies: 50
+  MaxStartingEnemies: 25
   MaxKeys: 1
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
@@ -6576,7 +6576,7 @@ GameObject:
   - component: {fileID: 1481711977}
   - component: {fileID: 1481711975}
   - component: {fileID: 1481711976}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

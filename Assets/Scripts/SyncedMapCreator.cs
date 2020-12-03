@@ -45,7 +45,7 @@ public class SyncedMapCreator : MonoBehaviour
 
     void init(){
         AstarPath astar = GetComponent<AstarPath>();
-        graph = astar.data.AddGraph(typeof(GridGraph)) as GridGraph;
+        graph = AstarPath.active.astarData.gridGraph;
        // graph.
         graph.center = new Vector3(-0.5f, -0.5f, 0);
         graph.SetDimensions(4*width, 4*height, 0.5f);

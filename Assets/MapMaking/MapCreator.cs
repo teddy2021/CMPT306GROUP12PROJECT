@@ -111,7 +111,7 @@ public class MapCreator : MonoBehaviour
     }
 
     private void placeObjects(List<Vector2> locations){
-        if(locations.Count > 4){
+        if(locations.Count >= 4 + MaxKeys + MaxStartingEnemies + 1){
             
             int player_location = 0;
             Vector2 position = locations[player_location];
