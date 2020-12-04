@@ -8,8 +8,11 @@ public class PlayerDamage : MonoBehaviour
     public int health = 100;
     public int maxHealth;
     public float invisibilityTime = 1.0f;
-
+    
     private float lastDamagedTime = 0f;
+
+    private float healDelay = 1.0f;
+    private float lastHealTime = 0f;
 
     [Tooltip("When the player is damged.")]
     public UnityEvent OnDamaged;
@@ -97,6 +100,32 @@ public class PlayerDamage : MonoBehaviour
         lastDamagedTime = Time.time;
 
         doDamage(amount, knockback);
+    }
+
+
+    public void doHeal(int amount)
+    {
+        if ((health + amount) >= maxHealth)
+        {
+            health = maxHealth;
+            hb.SetHealth(maxHealth);
+        }
+        else
+        {
+            health += amount;
+            hb.SetHealth(health + amount); 
+        }
+            
+    }
+
+    public void tryDoHeal(int amount)
+    {
+        if (Time.time - lastHealTime < healDelay)
+            return;
+
+        lastHealTime = Time.time;
+
+        doHeal(amount);
     }
 
     public void IncreaseHealth(int amount = 0)
