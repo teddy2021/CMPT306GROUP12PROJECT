@@ -4821,6 +4821,7 @@ MonoBehaviour:
   furnaceCursor: {fileID: 2800000, guid: 4319d9558bf100b43b5b940ad41ab77f, type: 3}
   cursorMode: 0
   hotSpot: {x: 0, y: 0}
+  walls: {fileID: 297144412}
 --- !u!82 &1062507340
 AudioSource:
   m_ObjectHideFlags: 0
