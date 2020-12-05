@@ -33,6 +33,11 @@ public class PlayerHeadlampCollider : MonoBehaviour
             headLampObject.headLampIsOn = true;
             headLampObject.headLampTimer = headLampObject.timer;
             headLampLight.intensity = 1;
+            if (collision.ToString().Contains("CampFire"))
+            {
+                damage.tryDoHeal(5);
+            }
         }
+        
     }
 }

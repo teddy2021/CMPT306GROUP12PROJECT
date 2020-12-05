@@ -51,6 +51,8 @@ public class Slime : MonoBehaviour
     public int damageAmount = 20;
     public float knockBackAmount = 1000f;
 
+    private Vector3 startScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +77,8 @@ public class Slime : MonoBehaviour
         InvokeRepeating("UpdateRoamDest", 0f, roamChangeRate);
 
         hb.SetMaxHealth(health);
+
+        startScale = transform.localScale;
     }
 
     void UpdateRoamDest()
@@ -106,12 +110,12 @@ public class Slime : MonoBehaviour
         // check if we need to flip the enemie's sprite depending on which way it wants to move
         if (aIPath.desiredVelocity.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(startScale.x, startScale.y, startScale.z);
             hb.transform.localScale = new Vector3(0.01f, 0.01f, 1);
         }
         else
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
             hb.transform.localScale = new Vector3(-0.01f, 0.01f, 1);
         }
 

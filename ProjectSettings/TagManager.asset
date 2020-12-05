@@ -16,6 +16,7 @@ TagManager:
   - Key_Ratio
   - Key_Panel
   - Floor_Num
+  - MapMaking
   layers:
   - Default
   - TransparentFX

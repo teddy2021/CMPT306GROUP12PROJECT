@@ -8,8 +8,11 @@ public class PlayerDamage : MonoBehaviour
     public int health = 100;
     public int maxHealth;
     public float invisibilityTime = 1.0f;
-
+    
     private float lastDamagedTime = 0f;
+
+    private float healDelay = 1.0f;
+    private float lastHealTime = 0f;
 
     [Tooltip("When the player is damged.")]
     public UnityEvent OnDamaged;
@@ -21,6 +24,10 @@ public class PlayerDamage : MonoBehaviour
     public UnityEvent OnDeathAnimComplete;
 
     public HealthBar hb;
+
+    public AudioSource playerSound;
+    public AudioClip[] playerHurtSounds;
+    public AudioClip[] playerDeathSounds;
 
     private void Start()
     {
@@ -60,6 +67,9 @@ public class PlayerDamage : MonoBehaviour
 
         OnDeath.Invoke();
 
+        playerSound.clip = playerDeathSounds[Random.Range(0, playerDeathSounds.Length)];
+        playerSound.Play(0);
+
         GetComponent<Animator>().Play("Player_Death");
     }
 
@@ -75,6 +85,11 @@ public class PlayerDamage : MonoBehaviour
 
         if (health <= 0)
             doDeath();
+        else
+        {
+            playerSound.clip = playerHurtSounds[Random.Range(0, playerHurtSounds.Length)];
+            playerSound.Play(0);
+        }
     }
 
     public void tryDoDamage(int amount, Vector2 knockback)
@@ -85,6 +100,32 @@ public class PlayerDamage : MonoBehaviour
         lastDamagedTime = Time.time;
 
         doDamage(amount, knockback);
+    }
+
+
+    public void doHeal(int amount)
+    {
+        if ((health + amount) >= maxHealth)
+        {
+            health = maxHealth;
+            hb.SetHealth(maxHealth);
+        }
+        else
+        {
+            health += amount;
+            hb.SetHealth(health + amount); 
+        }
+            
+    }
+
+    public void tryDoHeal(int amount)
+    {
+        if (Time.time - lastHealTime < healDelay)
+            return;
+
+        lastHealTime = Time.time;
+
+        doHeal(amount);
     }
 
     public void IncreaseHealth(int amount = 0)

@@ -11,7 +11,16 @@ public class GameController : MonoBehaviour
 
     public static void StartGame(string reason, int newFloor = 1)
     {
-        SceneManager.LoadScene("Scenes/MainGame/Game");
+       
+        Place_PowerPole_Furnace objects = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Place_PowerPole_Furnace>();
+        objects.clear_objects();
+
+        SyncedMapCreator mapmaker = GameObject.FindGameObjectWithTag("MapMaking").GetComponent<SyncedMapCreator>();
+        mapmaker.MaxStartingEnemies += 2;
+        mapmaker.fixedSizeIncrease();
+        mapmaker.reinit();
+
+
         GameController.FloorLevel = newFloor;
         SetFloorText();
         KeysCollected = 0;
@@ -19,7 +28,6 @@ public class GameController : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(GameController.FloorLevel.ToString());
     }
 
     public static void EndGame(string reason)
@@ -28,6 +36,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Player Died");
         }
+        Debug.Log(reason);
         SceneManager.LoadScene("Scenes/MainGame/EndMenu");
     }
 

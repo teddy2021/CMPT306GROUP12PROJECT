@@ -8,33 +8,30 @@ using UnityEngine.Tilemaps;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField] private Generator genny;
+    public Generator genny;
 
-    [Range(1,100)]
-    [SerializeField] private int maxSamples;
-    [Range(1,100)]
-    [SerializeField] private float radius;
+    public int maxSamples;
+    public float radius;
 
         // handed in values from unity
-    [Range(10,500)]
-    [SerializeField] private int width, height;
-    [SerializeField] private bool useSeed;
-    [SerializeField] private string seed;
-    [SerializeField] private string rules_file_path;
+    public int width, height;
+    public bool useSeed;
+    public string seed;
+    public string rules_file_path;
     
     
-    [SerializeField] public GameObject campfire;
-    [SerializeField] public GameObject player;
-    [SerializeField] public GameObject key;
-    [SerializeField] public GameObject enemy;
-    [SerializeField] public GameObject lift;
-    [Range(2,100)]
-    [SerializeField] private int MaxStartingEnemies;
-    [Range(1,10)]
-    [SerializeField] private int MaxKeys;
+     public GameObject campfire;
+     public GameObject player;
+     public GameObject key;
+     public GameObject enemy;
+     public GameObject lift;
+    
+    public int MaxStartingEnemies;
+    
+    public int MaxKeys;
 
-    [SerializeField] private Tilemap Walls, Ground, Boundries;
-    [SerializeField] private TileBase[] sprites;
+    public Tilemap Walls, Ground, Boundries;
+    public TileBase[] sprites;
 
     private Vector2 sampleRegionSize;
     private List<GameObject> spawnedItems;
@@ -66,6 +63,7 @@ public class MapCreator : MonoBehaviour
         genny.useSeed = this.useSeed;
         genny.seed = this.seed;
         sampleRegionSize = new Vector2(width, height);
+        regenerate();
     }
 
     private void OnApplicationQuit() {
@@ -114,7 +112,7 @@ public class MapCreator : MonoBehaviour
     }
 
     private void placeObjects(List<Vector2> locations){
-        if(locations.Count > 3){
+        if(locations.Count >= MaxKeys + MaxStartingEnemies + 1){
             
             int player_location = 0;
             Vector2 position = locations[player_location];
@@ -132,8 +130,20 @@ public class MapCreator : MonoBehaviour
             campfire.transform.position = campfire_location;
             locations.RemoveAt(player_location);
 
+            int index = Random.Range(0, locations.Count - 1);
+            position = locations[index];
+            float dist = Vector3.Magnitude(new Vector3(position.x, position.y, 0) - player.transform.position);
+            while( dist < 2){
+                Debug.Log(dist);
+                index = Random.Range(0, locations.Count - 1);
+                position = locations[index];
+                dist = Vector3.Magnitude(new Vector3(position.x, position.y, 0) - player.transform.position);
+            }
+            lift.transform.position = new Vector3(position.x, position.y, 0); 
+            locations.RemoveAt(index);
+
             for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                int index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
                 spawnedItems.Add(obj);
@@ -141,11 +151,13 @@ public class MapCreator : MonoBehaviour
             }
 
             for(int i = 0; i < Random.Range(1, MaxStartingEnemies + 1); i += 1){
-                int index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 spawnedItems.Add(Instantiate(enemy, new Vector3(position.x, position.y, 0), Quaternion.identity));
                 locations.RemoveAt(index);
             }
+
+
         }
     }
 
@@ -155,6 +167,7 @@ public class MapCreator : MonoBehaviour
             Destroy(spawnedItems[0]);
             spawnedItems.RemoveAt(0);
         }
+        Boundries.ClearAllTiles();
         Walls.ClearAllTiles();
         Ground.ClearAllTiles();
     }
