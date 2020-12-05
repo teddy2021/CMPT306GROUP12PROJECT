@@ -2210,9 +2210,17 @@ MonoBehaviour:
   campfire: {fileID: 1476331377}
   player: {fileID: 1223606215}
   key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
-  enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+  RegSlime: {fileID: 0}
+  BigSlime: {fileID: 0}
+  PassiveSlime: {fileID: 0}
+  MinSlimes: 0
+  MaxSlimes: 0
+  MinBigSlimes: 0
+  MaxBigSlimes: 0
+  MinPassiveSlimes: 0
+  MaxPassiveSlimes: 0
   lift: {fileID: 1298538223}
-  MaxStartingEnemies: 15
+  MinKeys: 0
   MaxKeys: 1
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
@@ -2236,7 +2244,7 @@ MonoBehaviour:
   creator: {fileID: 454567015}
   genny: {fileID: 454567011}
   maxSamples: 8
-  radius: 4
+  radius: 2
   width: 25
   height: 25
   useSeed: 0
@@ -2245,9 +2253,17 @@ MonoBehaviour:
   campfire: {fileID: 1476331377}
   player: {fileID: 1223606215}
   key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
-  enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+  RegSlime: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
+  BigSlime: {fileID: 1340050310535724159, guid: dbd8fee298c7e4e4a99774fd87ba85c9, type: 3}
+  PassiveSlime: {fileID: 2974217170131721525, guid: a0ac1b840373de3498bc2eccb371092d, type: 3}
   lift: {fileID: 1298538223}
-  MaxStartingEnemies: 10
+  MinSlimes: 2
+  MaxSlimes: 10
+  MinBigSlimes: 1
+  MaxBigSlimes: 2
+  MinPassiveSlimes: 1
+  MaxPassiveSlimes: 10
+  MinKeys: 1
   MaxKeys: 1
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
