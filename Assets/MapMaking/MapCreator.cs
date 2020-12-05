@@ -143,7 +143,7 @@ public class MapCreator : MonoBehaviour
             locations.RemoveAt(index);
 
             for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(1, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
                 spawnedItems.Add(obj);
@@ -151,7 +151,7 @@ public class MapCreator : MonoBehaviour
             }
 
             for(int i = 0; i < Random.Range(1, MaxStartingEnemies + 1); i += 1){
-                index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(1, locations.Count - 1);
                 position = locations[index];
                 spawnedItems.Add(Instantiate(enemy, new Vector3(position.x, position.y, 0), Quaternion.identity));
                 locations.RemoveAt(index);
