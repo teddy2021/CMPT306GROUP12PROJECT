@@ -167,6 +167,7 @@ public class MapCreator : MonoBehaviour
             Destroy(spawnedItems[0]);
             spawnedItems.RemoveAt(0);
         }
+        Boundries.ClearAllTiles();
         Walls.ClearAllTiles();
         Ground.ClearAllTiles();
     }

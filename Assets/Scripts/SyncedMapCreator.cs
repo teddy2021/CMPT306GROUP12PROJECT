@@ -79,12 +79,12 @@ public class SyncedMapCreator : MonoBehaviour
     public void reinit(){
         AstarPath astar = GetComponent<AstarPath>();
         graph.SetDimensions(4*width, 4*height, 0.5f);
-        creator.width = width;
-        creator.height = height;
-        creator.seed = seed;
-        creator.useSeed = useSeed;
-        creator.MaxStartingEnemies = MaxStartingEnemies;
-        creator.MaxKeys = MaxKeys;
+        creator.width = this.width;
+        creator.height = this.height;
+        creator.seed = this.seed;
+        creator.useSeed = this.useSeed;
+        creator.MaxStartingEnemies = this.MaxStartingEnemies;
+        creator.MaxKeys = this.MaxKeys;
         creator.reinit();
         creator.regenerate();
         astar.Scan();
