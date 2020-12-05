@@ -294,6 +294,7 @@ public class Generator : MonoBehaviour{
         }
         catch(Exception e){}
         
+        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(r_width*r_height)), true, r_width, r_height);
         map_generator.GenerateMap(new ThreadArgs(alphabet, words, rand)); 
         tiles = map_generator.getMap();
         Display();

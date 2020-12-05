@@ -32,7 +32,7 @@ public class SyncedMapCreator : MonoBehaviour
     [Range(2,100)]
     [SerializeField] public int MaxStartingEnemies;
     [Range(1,10)]
-    [SerializeField] private int MaxKeys;
+    [SerializeField] public int MaxKeys;
 
     [SerializeField] private Tilemap Walls, Ground, Boundries;
     [SerializeField] private TileBase[] sprites;
@@ -79,12 +79,13 @@ public class SyncedMapCreator : MonoBehaviour
     public void reinit(){
         AstarPath astar = GetComponent<AstarPath>();
         graph.SetDimensions(4*width, 4*height, 0.5f);
-        creator.width = width;
-        creator.height = height;
-        creator.seed = seed;
-        creator.useSeed = useSeed;
-        creator.MaxStartingEnemies = MaxStartingEnemies;
-        creator.MaxKeys = MaxKeys;
+        creator.width = this.width;
+        creator.height = this.height;
+        creator.seed = this.seed;
+        creator.useSeed = this.useSeed;
+        MaxStartingEnemies += Random.Range(1, 10);
+        creator.MaxStartingEnemies = this.MaxStartingEnemies;
+        creator.MaxKeys = this.MaxKeys;
         creator.reinit();
         creator.regenerate();
         astar.Scan();

@@ -135,7 +135,7 @@ public class MapCreator : MonoBehaviour
             float dist = Vector3.Magnitude(new Vector3(position.x, position.y, 0) - player.transform.position);
             while( dist < 2){
                 Debug.Log(dist);
-                index = Random.Range(1, locations.Count - 1);
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 dist = Vector3.Magnitude(new Vector3(position.x, position.y, 0) - player.transform.position);
             }
@@ -143,7 +143,7 @@ public class MapCreator : MonoBehaviour
             locations.RemoveAt(index);
 
             for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                index = Random.Range(1, locations.Count - 1);
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
                 spawnedItems.Add(obj);
@@ -167,6 +167,7 @@ public class MapCreator : MonoBehaviour
             Destroy(spawnedItems[0]);
             spawnedItems.RemoveAt(0);
         }
+        Boundries.ClearAllTiles();
         Walls.ClearAllTiles();
         Ground.ClearAllTiles();
     }

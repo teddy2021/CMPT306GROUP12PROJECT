@@ -25,6 +25,8 @@ public class Place_PowerPole_Furnace : MonoBehaviour
     private bool buildModeFlag = false;
     public TilemapCollider2D walls;
 
+    private List<GameObject> placed_objects;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,7 @@ public class Place_PowerPole_Furnace : MonoBehaviour
         itemSelected = "PowerPoles";
         camera = Camera.main;
         inventory = player.GetComponent<Inventory>();
+        placed_objects = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -78,7 +81,12 @@ public class Place_PowerPole_Furnace : MonoBehaviour
         }
     }
 
-
+    public void clear_objects(){
+        while(placed_objects.Count > 0){
+            Destroy(placed_objects[0]);
+            placed_objects.RemoveAt(0);
+        }
+    }
 
     private void place()
 	{
@@ -92,7 +100,7 @@ public class Place_PowerPole_Furnace : MonoBehaviour
                     mousePos.y = camera.ScreenToWorldPoint(Input.mousePosition).y;
                     mousePos.z = 0;
                     Vector3 cellPostion = grid.LocalToCell(mousePos);
-                    Instantiate(powergrid, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity);
+                    placed_objects.Add(Instantiate(powergrid, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity));
                     inventory.items[3].quantity -= 1;
                     inventory.UpdateUI();
                 }
@@ -106,7 +114,7 @@ public class Place_PowerPole_Furnace : MonoBehaviour
                     mousePos.y = camera.ScreenToWorldPoint(Input.mousePosition).y;
                     mousePos.z = 0;
                     Vector3 cellPostion = grid.LocalToCell(mousePos);
-                    Instantiate(furnace, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity);
+                    placed_objects.Add(Instantiate(furnace, grid.CellToLocalInterpolated(cellPostion), Quaternion.identity));
                     inventory.items[4].quantity -= 1;
                     inventory.UpdateUI();
                 }

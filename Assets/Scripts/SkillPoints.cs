@@ -13,4 +13,8 @@ public class SkillPoints : MonoBehaviour
         skillPointsUI.SetActive(true);
     }
 
+    public void CloseMenu(){
+        skillPointsUI.SetActive(false);
+    }
+
 }
