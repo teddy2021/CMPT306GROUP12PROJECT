@@ -2237,8 +2237,8 @@ MonoBehaviour:
   genny: {fileID: 454567011}
   maxSamples: 8
   radius: 4
-  width: 50
-  height: 50
+  width: 25
+  height: 25
   useSeed: 0
   seed: 
   rules_file_path: Assets/MapMaking/Rules.txt
@@ -2247,7 +2247,7 @@ MonoBehaviour:
   key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
   enemy: {fileID: 8491618857169892186, guid: cddbc265e001f4b4a961b34f378b68da, type: 3}
   lift: {fileID: 1298538223}
-  MaxStartingEnemies: 25
+  MaxStartingEnemies: 10
   MaxKeys: 1
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
@@ -2256,6 +2256,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be07efb6cb71cd341927dd383920615e, type: 2}
   - {fileID: 11400000, guid: ad74be0d038b2e94e90310aff7b4f4d5, type: 2}
   - {fileID: 11400000, guid: a9dba27c58789c54eb663520074c01bc, type: 2}
+  incr: 10
 --- !u!1 &525088095
 GameObject:
   m_ObjectHideFlags: 0

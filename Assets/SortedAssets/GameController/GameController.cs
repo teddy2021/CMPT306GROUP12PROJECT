@@ -11,7 +11,11 @@ public class GameController : MonoBehaviour
 
     public static void StartGame(string reason, int newFloor = 1)
     {
-        SceneManager.LoadScene("Scenes/MainGame/Game");
+       // if(reason != )
+        SyncedMapCreator mapmaker = GameObject.FindGameObjectWithTag("MapMaking").GetComponent<SyncedMapCreator>();
+        mapmaker.MaxStartingEnemies += 2;
+        mapmaker.fixedSizeIncrease();
+        mapmaker.reinit();
         GameController.FloorLevel = newFloor;
         SetFloorText();
         KeysCollected = 0;
@@ -27,6 +31,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Player Died");
         }
+        Debug.Log(reason);
         SceneManager.LoadScene("Scenes/MainGame/EndMenu");
     }
 

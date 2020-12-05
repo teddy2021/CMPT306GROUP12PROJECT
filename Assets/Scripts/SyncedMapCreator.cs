@@ -30,12 +30,15 @@ public class SyncedMapCreator : MonoBehaviour
     [SerializeField] public GameObject enemy;
     [SerializeField] public GameObject lift;
     [Range(2,100)]
-    [SerializeField] private int MaxStartingEnemies;
+    [SerializeField] public int MaxStartingEnemies;
     [Range(1,10)]
     [SerializeField] private int MaxKeys;
 
     [SerializeField] private Tilemap Walls, Ground, Boundries;
     [SerializeField] private TileBase[] sprites;
+    
+    [Range(10,100)]
+    [SerializeField] private int incr;
 
     private GridGraph graph;
     void Start()
@@ -43,7 +46,7 @@ public class SyncedMapCreator : MonoBehaviour
         init();
     }
 
-    void init(){
+    public void init(){
         AstarPath astar = GetComponent<AstarPath>();
         graph = AstarPath.active.astarData.gridGraph;
        // graph.
@@ -73,7 +76,7 @@ public class SyncedMapCreator : MonoBehaviour
         astar.Scan();
     }
 
-    void reinit(){
+    public void reinit(){
         AstarPath astar = GetComponent<AstarPath>();
         graph.SetDimensions(4*width, 4*height, 0.5f);
         creator.width = width;
@@ -85,5 +88,10 @@ public class SyncedMapCreator : MonoBehaviour
         creator.reinit();
         creator.regenerate();
         astar.Scan();
+    }
+
+    public void fixedSizeIncrease(){
+        width += incr;
+        height += incr;
     }
 }

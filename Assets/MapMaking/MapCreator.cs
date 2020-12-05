@@ -63,6 +63,7 @@ public class MapCreator : MonoBehaviour
         genny.useSeed = this.useSeed;
         genny.seed = this.seed;
         sampleRegionSize = new Vector2(width, height);
+        regenerate();
     }
 
     private void OnApplicationQuit() {
@@ -111,7 +112,7 @@ public class MapCreator : MonoBehaviour
     }
 
     private void placeObjects(List<Vector2> locations){
-        if(locations.Count >= 4 + MaxKeys + MaxStartingEnemies + 1){
+        if(locations.Count >= MaxKeys + MaxStartingEnemies + 1){
             
             int player_location = 0;
             Vector2 position = locations[player_location];
@@ -131,11 +132,18 @@ public class MapCreator : MonoBehaviour
 
             int index = Random.Range(0, locations.Count - 1);
             position = locations[index];
+            float dist = Vector3.Magnitude(new Vector3(position.x, position.y, 0) - player.transform.position);
+            while( dist < 2){
+                Debug.Log(dist);
+                index = Random.Range(1, locations.Count - 1);
+                position = locations[index];
+                dist = Vector3.Magnitude(new Vector3(position.x, position.y, 0) - player.transform.position);
+            }
             lift.transform.position = new Vector3(position.x, position.y, 0); 
             locations.RemoveAt(index);
 
             for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                index = Random.Range(0, locations.Count - 1);
+                index = Random.Range(1, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
                 spawnedItems.Add(obj);
