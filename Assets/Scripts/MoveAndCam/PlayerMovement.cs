@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
     // handles the players inputs
     void Inputs()
 	{
+        if (GetComponent<PlayerDamage>().health <= 0)
+            return;
+
         float X = Input.GetAxisRaw("Horizontal");           // reads left and right inputs
         float Y = Input.GetAxisRaw("Vertical");             // reads up and down inputs
         moveDir = new Vector2(X, Y).normalized;             // calculates the desired postion of the players inputs and noramlizes it (making the directional magnitude 1)
