@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/ArtWork/Sprites/EndTitle.png.meta
 guid: d30a6fdbff11be247bc9d256799e0ead
+=======
+guid: 111e7be3657b38340aa31d640aab8e33
+>>>>>>> 4c5d0fa6ffaa20f77b87baff0b9449ae8b070e7e:Assets/ArtWork/Sprites/air_slash.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
