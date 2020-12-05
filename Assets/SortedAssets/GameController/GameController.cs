@@ -11,17 +11,18 @@ public class GameController : MonoBehaviour
 
     public static void StartGame(string reason, int newFloor = 1)
     {
-       
+        FloorLevel = newFloor;
+
         Place_PowerPole_Furnace objects = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Place_PowerPole_Furnace>();
         objects.clear_objects();
 
         SyncedMapCreator mapmaker = GameObject.FindGameObjectWithTag("MapMaking").GetComponent<SyncedMapCreator>();
         mapmaker.MaxStartingEnemies += 2;
         mapmaker.fixedSizeIncrease();
+        mapmaker.MaxKeys = Mathf.Max(1,FloorLevel/4);
         mapmaker.reinit();
 
 
-        GameController.FloorLevel = newFloor;
         SetFloorText();
         KeysCollected = 0;
         //GameObject.Find("Key_Panel").SetActive(false);

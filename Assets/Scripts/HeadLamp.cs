@@ -22,7 +22,7 @@ public class HeadLamp : MonoBehaviour
 	{
         headLampTimer = timer;
         headLampIsOn = true;
-        lampBar.SetMaxHealth((int)headLampTimer);
+        lampBar.SetMaxHealth((int)timer);
 	}
 
 	// Update is called once per frame
@@ -122,9 +122,10 @@ public class HeadLamp : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
     }
 
-    public void IncreaseTimer(float amount = 0)
+    public void IncreaseTimer(float amount = 10)
     {
-        headLampTimer += amount;
+        timer += amount;
+        lampBar.SetMaxHealth((int)timer);
         GameController.StartGame("next floor", GameController.FloorLevel++);
     }
 }
