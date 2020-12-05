@@ -27,12 +27,16 @@ public class SyncedMapCreator : MonoBehaviour
     [SerializeField] public GameObject campfire;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject key;
-    [SerializeField] public GameObject enemy;
+    [SerializeField] public GameObject RegSlime, BigSlime, PassiveSlime;
     [SerializeField] public GameObject lift;
     [Range(2,100)]
-    [SerializeField] public int MaxStartingEnemies;
+    [SerializeField] public int MinSlimes, MaxSlimes;
+    [Range(1,100)]
+    [SerializeField] public int MinBigSlimes, MaxBigSlimes;
+    [Range(1,100)]
+    [SerializeField] public int MinPassiveSlimes, MaxPassiveSlimes;
     [Range(1,10)]
-    [SerializeField] public int MaxKeys;
+    [SerializeField] public int MinKeys, MaxKeys;
 
     [SerializeField] private Tilemap Walls, Ground, Boundries;
     [SerializeField] private TileBase[] sprites;
@@ -52,6 +56,7 @@ public class SyncedMapCreator : MonoBehaviour
        // graph.
         graph.center = new Vector3(-0.5f, -0.5f, 0);
         graph.SetDimensions(4*width, 4*height, 0.5f);
+
         creator.genny = genny;
         creator.maxSamples = maxSamples;
         creator.radius = radius;
@@ -60,13 +65,29 @@ public class SyncedMapCreator : MonoBehaviour
         creator.useSeed = useSeed;
         creator.seed = seed;
         creator.rules_file_path = rules_file_path;
+
         creator.campfire = campfire;
         creator.player = player;
         creator.key = key;
-        creator.enemy = enemy;
+
+        creator.RegSlime = this.RegSlime;
+        creator.MinSlimes = this.MinSlimes;
+        creator.MaxSlimes = this.MaxSlimes;
+
+        creator.BigSlime = this.BigSlime;
+        creator.MinBigSlimes = this.MinBigSlimes;
+        creator.MaxBigSlimes = this.MaxBigSlimes;
+
+        creator.PassiveSlime = this.PassiveSlime;
+        creator.MinPassiveSlimes = this.MinPassiveSlimes;
+        creator.MaxPassiveSlimes = this.MaxPassiveSlimes;
+
+
         creator.lift = lift;
-        creator.MaxStartingEnemies = MaxStartingEnemies;
+        
+        creator.MinKeys = MinKeys;
         creator.MaxKeys = MaxKeys;
+
         creator.Walls = Walls;
         creator.Ground = Ground;
         creator.Boundries = Boundries;
@@ -83,9 +104,23 @@ public class SyncedMapCreator : MonoBehaviour
         creator.height = this.height;
         creator.seed = this.seed;
         creator.useSeed = this.useSeed;
-        MaxStartingEnemies += Random.Range(1, 10);
-        creator.MaxStartingEnemies = this.MaxStartingEnemies;
-        creator.MaxKeys = this.MaxKeys;
+        
+        int delta = Random.Range(1,10);
+        creator.MinSlimes += delta;
+        creator.MaxSlimes += delta;
+
+        delta = Random.Range(1,10);
+        creator.MinBigSlimes += delta;
+        creator.MaxBigSlimes += delta;
+
+        delta = Random.Range(1,10);
+        creator.MinPassiveSlimes += delta;
+        creator.MaxPassiveSlimes += delta;
+
+
+        creator.lift = lift;
+
+        creator.MaxKeys = MaxKeys;
         creator.reinit();
         creator.regenerate();
         astar.Scan();
@@ -94,5 +129,11 @@ public class SyncedMapCreator : MonoBehaviour
     public void fixedSizeIncrease(){
         width += incr;
         height += incr;
+    }
+
+    private void FixedUpdate() {
+        if(Time.deltaTime >= (float)Random.Range(45,75)){
+            creator.placeNewSlimes();
+        }
     }
 }

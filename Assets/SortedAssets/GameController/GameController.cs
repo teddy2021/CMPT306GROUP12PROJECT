@@ -17,7 +17,6 @@ public class GameController : MonoBehaviour
         objects.clear_objects();
 
         SyncedMapCreator mapmaker = GameObject.FindGameObjectWithTag("MapMaking").GetComponent<SyncedMapCreator>();
-        mapmaker.MaxStartingEnemies += 2;
         mapmaker.fixedSizeIncrease();
         mapmaker.MaxKeys = Mathf.Max(1,FloorLevel/4);
         mapmaker.reinit();

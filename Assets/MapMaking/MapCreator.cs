@@ -23,12 +23,14 @@ public class MapCreator : MonoBehaviour
      public GameObject campfire;
      public GameObject player;
      public GameObject key;
-     public GameObject enemy;
+     public GameObject RegSlime, BigSlime, PassiveSlime;
+     public int MinSlimes, MaxSlimes;
+     public int MinBigSlimes, MaxBigSlimes;
+     public int MinPassiveSlimes, MaxPassiveSlimes;
      public GameObject lift;
     
-    public int MaxStartingEnemies;
     
-    public int MaxKeys;
+    public int MinKeys, MaxKeys;
 
     public Tilemap Walls, Ground, Boundries;
     public TileBase[] sprites;
@@ -112,7 +114,7 @@ public class MapCreator : MonoBehaviour
     }
 
     private void placeObjects(List<Vector2> locations){
-        if(locations.Count >= MaxKeys + MaxStartingEnemies + 1){
+        if(locations.Count >= MaxKeys + 3){
             
             int player_location = 0;
             Vector2 position = locations[player_location];
@@ -142,23 +144,15 @@ public class MapCreator : MonoBehaviour
             lift.transform.position = new Vector3(position.x, position.y, 0); 
             locations.RemoveAt(index);
 
-            for(int i = 0; i < Random.Range(1, MaxKeys + 1); i += 1){
-                index = Random.Range(1, locations.Count - 1);
+            for(int i = 0; i < Random.Range(MinKeys, MaxKeys + 1); i += 1){
+                index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
                 spawnedItems.Add(obj);
                 locations.RemoveAt(index);
             }
-
-            for(int i = 0; i < Random.Range(1, MaxStartingEnemies + 1); i += 1){
-                index = Random.Range(1, locations.Count - 1);
-                position = locations[index];
-                spawnedItems.Add(Instantiate(enemy, new Vector3(position.x, position.y, 0), Quaternion.identity));
-                locations.RemoveAt(index);
-            }
-
-
         }
+        placeSlimes();
     }
 
 
@@ -170,6 +164,82 @@ public class MapCreator : MonoBehaviour
         Boundries.ClearAllTiles();
         Walls.ClearAllTiles();
         Ground.ClearAllTiles();
+    }
+
+
+    public void placeSlimes(){
+        List<Vector2> locations = ObjectPlacer.GeneratePoints(radius, sampleRegionSize, maxSamples);
+        locations = VerifyLocations(locations);
+        if(MinSlimes + MinBigSlimes + MinPassiveSlimes < locations.Count &
+        locations.Count >= MaxSlimes + MaxBigSlimes + MaxPassiveSlimes + 1){
+            // Place Regular Slimes
+            int index;
+            Vector2 position;
+            for(int i = 0; i < Random.Range(MinSlimes, MaxSlimes); i += 1){
+                index = Random.Range(1, locations.Count - 1);
+                position = locations[index];
+                spawnedItems.Add(Instantiate(RegSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
+                locations.RemoveAt(index);
+            }
+            
+            for(int i = 0; i < Random.Range(MinBigSlimes, MaxBigSlimes); i += 1){
+                index = Random.Range(1, locations.Count - 1);
+                position = locations[index];
+                spawnedItems.Add(Instantiate(BigSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
+                locations.RemoveAt(index);
+            }
+
+            
+            for(int i = 0; i < Random.Range(MinPassiveSlimes, MaxPassiveSlimes); i += 1){
+                index = Random.Range(1, locations.Count - 1);
+                position = locations[index];
+                spawnedItems.Add(Instantiate(PassiveSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
+                locations.RemoveAt(index);
+            }
+        }
+    }
+
+    public void placeNewSlimes(){
+        
+        List<Vector2> locations = ObjectPlacer.GeneratePoints(radius, sampleRegionSize, maxSamples);
+        locations = VerifyLocations(locations);
+        
+        int min_reg = Random.Range(0, MinSlimes);
+        int max_reg = Random.Range(min_reg, MaxSlimes);
+
+        int min_big = Random.Range(0, MinBigSlimes);
+        int max_big = Random.Range(min_big, MaxBigSlimes);
+
+        int min_pas = Random.Range(0, MinPassiveSlimes);
+        int max_pas = Random.Range(min_pas, MaxPassiveSlimes);
+
+        if(min_reg + min_big + min_pas + 1 < locations.Count &
+        locations.Count <= max_reg + max_big + max_pas + 1){
+            // Place Regular Slimes
+            int index;
+            Vector2 position;
+            for(int i = 0; i < Random.Range(min_reg, max_reg); i += 1){
+                index = Random.Range(0, locations.Count - 1);
+                position = locations[index];
+                spawnedItems.Add(Instantiate(RegSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
+                locations.RemoveAt(index);
+            }
+            
+            for(int i = 0; i < Random.Range(min_big, max_big); i += 1){
+                index = Random.Range(0, locations.Count - 1);
+                position = locations[index];
+                spawnedItems.Add(Instantiate(BigSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
+                locations.RemoveAt(index);
+            }
+
+            
+            for(int i = 0; i < Random.Range(min_pas, max_pas); i += 1){
+                index = Random.Range(0, locations.Count - 1);
+                position = locations[index];
+                spawnedItems.Add(Instantiate(PassiveSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
+                locations.RemoveAt(index);
+            }
+        }        
     }
 
 }
