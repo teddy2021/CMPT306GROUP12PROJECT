@@ -15,6 +15,8 @@ public class HighLightPowerArea : MonoBehaviour
     private Vector3 size;
     private LineRenderer lineArea;
 
+    private bool buildModeFlag = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +43,19 @@ public class HighLightPowerArea : MonoBehaviour
     void Update()
     {
         CalcPositions();
-        DrawArea();
+        if (Input.GetKeyDown("space"))
+        {
+            buildModeFlag = !buildModeFlag;
+        }
+		if (buildModeFlag)
+		{
+            DrawArea();
+		}
+		if (!buildModeFlag)
+		{
+            lineArea.positionCount = 0;
+        }
+        
     }
 
 	void CalcPositions()
@@ -56,20 +70,13 @@ public class HighLightPowerArea : MonoBehaviour
 
     void DrawArea()
 	{
-        if (Input.GetKey("space"))
-		{
-            lineArea.positionCount = 5;
-            lineArea.SetPosition(0, TopLeft);
-            lineArea.SetPosition(1, TopRight);
-            lineArea.SetPosition(2, BottomRight);
-            lineArea.SetPosition(3, BottomLeft);
-            TopLeft = new Vector3(center.x - size.x, center.y + size.y + 0.025f, center.z); // to adjust for small error on final line position
-            lineArea.SetPosition(4, TopLeft);
-        }
-		else
-		{
-            lineArea.positionCount = 0;
-        }
+        lineArea.positionCount = 5;
+        lineArea.SetPosition(0, TopLeft);
+        lineArea.SetPosition(1, TopRight);
+        lineArea.SetPosition(2, BottomRight);
+        lineArea.SetPosition(3, BottomLeft);
+        TopLeft = new Vector3(center.x - size.x, center.y + size.y + 0.025f, center.z); // to adjust for small error on final line position
+        lineArea.SetPosition(4, TopLeft);
 	}
 
 

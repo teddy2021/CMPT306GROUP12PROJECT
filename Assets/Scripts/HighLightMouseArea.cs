@@ -17,6 +17,8 @@ public class HighLightMouseArea : MonoBehaviour
     private Vector3 center;
     private Vector3 size;
 
+    private bool buildModeFlag = false;
+
     public GridLayout grid;
 
     // Start is called before the first frame update
@@ -51,7 +53,12 @@ public class HighLightMouseArea : MonoBehaviour
         BottomLeft = new Vector3(mousePos.x + (center.x - size.x), mousePos.y + (center.y - size.y), mousePos.z);
         BottomRight = new Vector3(mousePos.x + (center.x + size.x), mousePos.y + (center.y - size.y), mousePos.z);
 
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown("space"))
+		{
+            buildModeFlag = !buildModeFlag;
+		}
+
+        if (buildModeFlag)
         {
             lineArea.positionCount = 5;
             lineArea.SetPosition(0, TopLeft);
