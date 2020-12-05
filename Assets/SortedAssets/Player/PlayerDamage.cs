@@ -79,7 +79,7 @@ public class PlayerDamage : MonoBehaviour
         hb.SetHealth(health);
 
         GetComponent<Rigidbody2D>().AddForce(knockback);
-        GetComponent<Animator>().Play("Player_Damage");
+        GetComponent<Animator>().Play("Damage");
 
         OnDamaged.Invoke();
 
