@@ -11,11 +11,16 @@ public class GameController : MonoBehaviour
 
     public static void StartGame(string reason, int newFloor = 1)
     {
-       // if(reason != )
+       
+        Place_PowerPole_Furnace objects = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Place_PowerPole_Furnace>();
+        objects.clear_objects();
+
         SyncedMapCreator mapmaker = GameObject.FindGameObjectWithTag("MapMaking").GetComponent<SyncedMapCreator>();
         mapmaker.MaxStartingEnemies += 2;
         mapmaker.fixedSizeIncrease();
         mapmaker.reinit();
+
+
         GameController.FloorLevel = newFloor;
         SetFloorText();
         KeysCollected = 0;
