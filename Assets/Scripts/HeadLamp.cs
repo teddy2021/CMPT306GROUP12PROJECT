@@ -28,7 +28,14 @@ public class HeadLamp : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		if (headLampIsOn)
+        if (GetComponentInParent<PlayerDamage>().health <= 0)
+        {
+            headLamp.intensity = 0;
+            return;
+        }
+            
+
+        if (headLampIsOn)
 		{
             if(headLampTimer > 0)
 			{
