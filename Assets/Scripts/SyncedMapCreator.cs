@@ -135,9 +135,12 @@ public class SyncedMapCreator : MonoBehaviour
         height += incr;
     }
 
+    private float time = 0;
     private void FixedUpdate() {
-        if(Time.deltaTime >= (float)Random.Range(45,75)){
+        time += Time.deltaTime;
+        if(time >= (float)Random.Range(45,75)){
             creator.placeNewSlimes();
+            time = 0;
         }
     }
 }

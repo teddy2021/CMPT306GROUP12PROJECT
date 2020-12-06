@@ -59,6 +59,11 @@ public class Generator : MonoBehaviour{
         map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(r_width*r_height)), true, r_width, r_height);
     }
 
+    public void Clear(){
+        Array.Clear(tiles, 0, tiles.Length);
+        map_generator.Clear();
+        map_generator = new Tree(0, width, 0, height, (int)(0.25f * (float)(r_width*r_height)), true, r_width, r_height);
+    }
 
 
     int Normalize(int initial, int min, int max){
