@@ -5016,10 +5016,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf2dcb5277e6914d91ccf32324ff5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 1
-  smoothSpeed: 2
-  minZoom: 1
-  maxZoom: 20
+  zoomSpeed: 2
+  smoothSpeed: 8
+  minZoom: 2
+  maxZoom: 8
 --- !u!82 &1062507342
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8612,6 +8612,18 @@ PrefabInstance:
     - target: {fileID: 3699431856255803629, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402019577648046343, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: timer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402019577648046393, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402019577648046393, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: tilemap
