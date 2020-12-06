@@ -2162,39 +2162,7 @@ MonoBehaviour:
     _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
     _AreaColors:
     - {r: 0, g: 0, b: 0, a: 0}
-  tagNames:
-  - Basic Ground
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
-  - 11
-  - 12
-  - 13
-  - 14
-  - 15
-  - 16
-  - 17
-  - 18
-  - 19
-  - 20
-  - 21
-  - 22
-  - 23
-  - 24
-  - 25
-  - 26
-  - 27
-  - 28
-  - 29
-  - 30
-  - 31
+  tagNames: []
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
@@ -2307,12 +2275,16 @@ MonoBehaviour:
   incr: 10
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   fairy: {fileID: 0}
 =======
   fairy: {fileID: 4393952173853912769, guid: 117880ad2f6d83c49955692756e5a4f2, type: 3}
 >>>>>>> 2df23af24c463b9b42d32853ba31628cac02c4ff
 =======
 >>>>>>> parent of 219e6fd... Balanced camea zoom
+=======
+  fairy: {fileID: 0}
+>>>>>>> parent of cd8d8e1... Merge branch 'Alpha2' of https://github.com/teddy2021/CMPT306GROUP12PROJECT into Alpha2
 --- !u!1 &525088095
 GameObject:
   m_ObjectHideFlags: 0

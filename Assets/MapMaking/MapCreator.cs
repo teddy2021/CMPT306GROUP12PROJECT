@@ -231,7 +231,6 @@ public class MapCreator : MonoBehaviour
                 index = Random.Range(1, locations.Count - 1);
                 position = locations[index];
                 spawnedItems.Add(Instantiate(RegSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
-                spawnedItems.Add(Instantiate(Fairy, new Vector3(position.x, position.y, 0), Quaternion.identity));
                 locations.RemoveAt(index);
             }
             
