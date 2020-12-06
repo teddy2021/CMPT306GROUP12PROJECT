@@ -44,6 +44,8 @@ public class SyncedMapCreator : MonoBehaviour
     [Range(10,100)]
     [SerializeField] private int incr;
 
+    [SerializeField] private GameObject fairy;
+
     private GridGraph graph;
     void Start()
     {
@@ -81,6 +83,8 @@ public class SyncedMapCreator : MonoBehaviour
         creator.PassiveSlime = this.PassiveSlime;
         creator.MinPassiveSlimes = this.MinPassiveSlimes;
         creator.MaxPassiveSlimes = this.MaxPassiveSlimes;
+
+        creator.Fairy = fairy;
 
 
         creator.lift = lift;
