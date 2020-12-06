@@ -17,6 +17,7 @@ TagManager:
   - Key_Panel
   - Floor_Num
   - MapMaking
+  - PassiveSlime
   layers:
   - Default
   - TransparentFX

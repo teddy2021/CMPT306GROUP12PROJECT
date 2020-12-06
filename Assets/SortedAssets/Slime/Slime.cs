@@ -53,6 +53,7 @@ public class Slime : MonoBehaviour
 
     private Vector3 startScale;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -130,6 +131,7 @@ public class Slime : MonoBehaviour
     {
         // when the death anim completes, delete this object.
         Destroy(gameObject); // remove us
+
     }
 
     public void Death()
@@ -148,7 +150,15 @@ public class Slime : MonoBehaviour
         deathSound.clip = slimeDeathSounds[Random.Range(0, slimeDeathSounds.Length)];
         deathSound.Play(0);
 
-        animator.Play("Slime_Death");
+        if (this.name == "SlimePassive(Clone)")
+        {
+            animator.Play("Slime_neutral_death");
+        }
+		else
+		{
+            animator.Play("Slime_Death");
+		}
+        
     }
 
     public void doDamage(int amount, Vector2 knockback)
@@ -157,7 +167,10 @@ public class Slime : MonoBehaviour
         health -= amount;
         hb.SetHealth(health);
 
-        animator.Play("Slime_Damage");
+	
+       animator.Play("Slime_Damage");
+	
+        
 
         rb.AddForce(knockback);
 
