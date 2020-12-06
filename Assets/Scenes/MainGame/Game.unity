@@ -3426,7 +3426,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1591493012977983823, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      - m_Target: {fileID: 1223606227}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: IncreaseSpeed
         m_Mode: 4
@@ -3488,6 +3488,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714090403}
   m_CullTransparentMesh: 0
+--- !u!114 &723653813 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5402019577648046343, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+  m_PrefabInstance: {fileID: 1840897243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab2875ed53646f44959a3d1b40045c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &831557936
 GameObject:
   m_ObjectHideFlags: 0
@@ -4537,7 +4548,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6816928410710986803, guid: e62c9fc72f5b4754db311a72343e674c, type: 3}
+      - m_Target: {fileID: 723653813}
         m_TargetAssemblyTypeName: HeadLamp, Assembly-CSharp
         m_MethodName: IncreaseTimer
         m_Mode: 4
@@ -5601,11 +5612,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1aeee883d924eedbd7052a6c47b6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1223606221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -100827718851656843, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+  m_PrefabInstance: {fileID: 1840897243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223606215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1aabf23da5596446a52866163d50ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1223606222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+  m_PrefabInstance: {fileID: 1840897243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223606215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d3a0ca82f54c843b3cb3f541f7158a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1223606226 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1591493012977983818, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
   m_PrefabInstance: {fileID: 1840897243}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1223606227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1591493012977983823, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+  m_PrefabInstance: {fileID: 1840897243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223606215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88257e74221f424796968fd538e0446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1298538223 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1675469000179335404, guid: df4265c727e75f44e956aefc9ba6dd48, type: 3}
@@ -7916,7 +7960,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -100827718851656843, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      - m_Target: {fileID: 1223606221}
         m_TargetAssemblyTypeName: PlayerDamage, Assembly-CSharp
         m_MethodName: IncreaseHealth
         m_Mode: 3
@@ -8515,6 +8559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: miner_dwarf With Headlamp
       objectReference: {fileID: 0}
+    - target: {fileID: 1591493012977983823, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3699431855421694976, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -8620,7 +8668,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      - m_Target: {fileID: 1223606222}
         m_TargetAssemblyTypeName: MouseInteractor, Assembly-CSharp
         m_MethodName: IncreaseDamage
         m_Mode: 3

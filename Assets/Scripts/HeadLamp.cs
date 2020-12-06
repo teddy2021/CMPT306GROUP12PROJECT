@@ -39,6 +39,7 @@ public class HeadLamp : MonoBehaviour
 		{
             if(headLampTimer > 0)
 			{
+                lampBar.SetMaxHealth((int)timer);
                 lampBar.SetHealth((int)(headLampTimer+0.5));
                 headLampTimer -= Time.deltaTime;
                 headLamp.intensity -= Mathf.Lerp(0.0f,1.0f,Time.deltaTime/timer);
@@ -52,6 +53,10 @@ public class HeadLamp : MonoBehaviour
                 headLamp.intensity = 0;
                 
             }
+		}
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+            IncreaseTimer();
 		}
     }
 
@@ -132,7 +137,6 @@ public class HeadLamp : MonoBehaviour
     public void IncreaseTimer(float amount = 10)
     {
         timer += amount;
-        lampBar.SetMaxHealth((int)timer);
         GameController.StartGame("next floor", GameController.FloorLevel++);
     }
 }

@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     {
         sprite.sortingOrder = -Mathf.RoundToInt(transform.position.y);
         Inputs();
-        
     }
 
     // FixedUpdate called every fixed-rate frame
