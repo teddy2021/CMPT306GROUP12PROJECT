@@ -68,7 +68,6 @@ public class MapCreator : MonoBehaviour
         genny.seed = this.seed;
         sampleRegionSize = new Vector2(width, height);
         regenerate();
-        GameController.SetKeyText();
     }
 
     private void OnApplicationQuit() {
@@ -238,7 +237,6 @@ public class MapCreator : MonoBehaviour
                 index = Random.Range(1, locations.Count - 1);
                 position = locations[index];
                 spawnedItems.Add(Instantiate(BigSlime, new Vector3(position.x, position.y, 0), Quaternion.identity));
-                spawnedItems[spawnedItems.Count - 1].GetComponent<Slime>().chaseDist = 7 + ((float)width/7.0f);
                 locations.RemoveAt(index);
             }
 

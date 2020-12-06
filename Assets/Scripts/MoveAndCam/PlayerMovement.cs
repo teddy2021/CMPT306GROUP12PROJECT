@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
     public void IncreaseSpeed (float percentIncrease = 1)
     {
         moveSpeed = moveSpeed * percentIncrease;
-        int new_floor = GameController.FloorLevel + 1;
+        int new_floor = GameController.FloorLevel++;
         GameController.StartGame("next floor", new_floor);
     }
 }
