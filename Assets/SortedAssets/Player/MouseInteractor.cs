@@ -36,6 +36,7 @@ public class MouseInteractor : MonoBehaviour
 
 
     private Animator animator; // for changing players swing animations
+    public GameObject tileDestroy;
     IEnumerator Delete()
     {
         if (!GameController.GameIsPaused)
@@ -47,12 +48,12 @@ public class MouseInteractor : MonoBehaviour
                 yield return new WaitForSeconds(DeleteTime / 17.0f); // Pause for 1/17th of desletion time
 
             }
-
             try
             {
                 Wall_Tile tile = (Wall_Tile)tilemap.GetTile(location);
                 tile.DropItems(location);
                 tilemap.SetTile(location, null);
+                Instantiate(tileDestroy, new Vector3(location.x+0.5F,location.y+.5F,location.z), Quaternion.identity);
                 tilemap.RefreshTile(location + new Vector3Int(-1, 0, 0));
                 tilemap.RefreshTile(location + new Vector3Int(0, -1, 0));
                 tilemap.RefreshTile(location + new Vector3Int(1, 0, 0));

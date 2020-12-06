@@ -8617,6 +8617,10 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 297144414}
+    - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: tileDestroy
+      value: 
+      objectReference: {fileID: 6218957197164752666, guid: b889839d6affa814a8e2258212731e66, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
 --- !u!1 &1861382190
