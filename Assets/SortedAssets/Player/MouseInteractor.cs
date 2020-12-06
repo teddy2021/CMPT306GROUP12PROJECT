@@ -170,6 +170,6 @@ public class MouseInteractor : MonoBehaviour
     public void IncreaseDamage (int amount = 0)
     {
         damageAmount += amount;
-        GameController.StartGame("next floor", GameController.FloorLevel++);
+        GameController.StartGame("next floor", GameController.FloorLevel + 1);
     }
 }

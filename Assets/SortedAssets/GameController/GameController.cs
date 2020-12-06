@@ -4,7 +4,7 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    public static int FloorLevel;
+    public static int FloorLevel = 1;
     public static bool GameIsPaused = false;
     public static int TotalKeys;
     public static int KeysCollected;
@@ -68,6 +68,7 @@ public class GameController : MonoBehaviour
     {
         TextMeshProUGUI floor = GameObject.FindGameObjectsWithTag("Floor_Num")[0].GetComponent<TextMeshProUGUI>();
         floor.text = ""+GameController.FloorLevel.ToString();
+        KeysCollected = 0;
         Debug.Log("Floor Incremented "+floor.text);
     }
 }
