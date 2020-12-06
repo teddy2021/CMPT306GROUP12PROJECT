@@ -2261,6 +2261,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be07efb6cb71cd341927dd383920615e, type: 2}
   - {fileID: 11400000, guid: ad74be0d038b2e94e90310aff7b4f4d5, type: 2}
   - {fileID: 11400000, guid: a9dba27c58789c54eb663520074c01bc, type: 2}
+  Fairy: {fileID: 0}
 --- !u!114 &454567016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2306,13 +2307,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a9dba27c58789c54eb663520074c01bc, type: 2}
   incr: 10
 <<<<<<< HEAD
-<<<<<<< HEAD
   fairy: {fileID: 0}
 =======
   fairy: {fileID: 4393952173853912769, guid: 117880ad2f6d83c49955692756e5a4f2, type: 3}
 >>>>>>> 2df23af24c463b9b42d32853ba31628cac02c4ff
-=======
->>>>>>> parent of 219e6fd... Balanced camea zoom
 --- !u!1 &525088095
 GameObject:
   m_ObjectHideFlags: 0
@@ -5022,10 +5020,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf2dcb5277e6914d91ccf32324ff5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 1
-  smoothSpeed: 2
-  minZoom: 1
-  maxZoom: 20
+  zoomSpeed: 4
+  smoothSpeed: 40
+  minZoom: 4
+  maxZoom: 8
 --- !u!82 &1062507342
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8618,6 +8616,18 @@ PrefabInstance:
     - target: {fileID: 3699431856255803629, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402019577648046343, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: timer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402019577648046393, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402019577648046393, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: tilemap
