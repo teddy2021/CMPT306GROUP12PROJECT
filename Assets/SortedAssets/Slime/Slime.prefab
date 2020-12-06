@@ -256,7 +256,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   health: 100
-  chaseDist: 20
+  chaseDist: 7
   roamDist: 5
   roamChangeRate: 10
   chaseSpeed: 5
