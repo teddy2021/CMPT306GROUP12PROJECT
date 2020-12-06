@@ -38,6 +38,8 @@ public class MapCreator : MonoBehaviour
     private Vector2 sampleRegionSize;
     private List<GameObject> spawnedItems;
 
+    public GameObject Fairy;
+
     public void init(){
         genny.width = this.width;
         genny.height = this.height;
@@ -119,6 +121,8 @@ public class MapCreator : MonoBehaviour
             int player_location = 0;
             Vector2 position = locations[player_location];
             Vector3 world_position = new Vector3(position.x, position.y, 0);
+
+
             Vector3 campfire_location = FindGoodLocation(world_position);
             while(campfire_location == world_position){
                 player_location = Mathf.Min(player_location + 1, locations.Count - 1);
@@ -128,6 +132,53 @@ public class MapCreator : MonoBehaviour
                     break;
                 }
             }
+
+
+            for(int x = -2; x <= 2; x += 1){ // iterate from 1 to the left, and 1 up to 1 right and 1 down
+                for(int y = -2; y <= 2; y += 1){
+                    Vector3 point = new Vector3(
+                        world_position.x + x, // 
+                        world_position.y + y, // 
+                        world_position.z
+                    );
+                    Vector3Int cell_point = Walls.WorldToCell(point);
+                    Walls.SetTile(cell_point, null);
+                }
+                Walls.SetTile(
+                    Walls.WorldToCell(
+                    new Vector3(
+                        world_position.x - 3, 
+                        world_position.y + x, 
+                        world_position.z)), 
+                    sprites[0]
+                );
+                Walls.SetTile(
+                    Walls.WorldToCell(
+                    new Vector3(
+                        world_position.x + 3, 
+                        world_position.y + x, 
+                        world_position.z)), 
+                    sprites[0]
+                );
+                Walls.SetTile(
+                    Walls.WorldToCell(
+                    new Vector3(
+                        world_position.x + x, 
+                        world_position.y - 2, 
+                        world_position.z)), 
+                    sprites[0]
+                );
+                Walls.SetTile(
+                    Walls.WorldToCell(
+                    new Vector3(
+                        world_position.x + x, 
+                        world_position.y + 3, 
+                        world_position.z)), 
+                    sprites[0]
+                );
+
+            }
+            Walls.RefreshAllTiles();
             player.transform.position = world_position;
             campfire.transform.position = campfire_location;
             locations.RemoveAt(player_location);
