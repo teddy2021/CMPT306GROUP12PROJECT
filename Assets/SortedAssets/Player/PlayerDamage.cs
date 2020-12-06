@@ -132,7 +132,6 @@ public class PlayerDamage : MonoBehaviour
     {
         health += amount;
         maxHealth += amount;
-        hb.SetMaxHealth(maxHealth);
 
         GameController.StartGame("next floor", GameController.FloorLevel + 1);
     }
