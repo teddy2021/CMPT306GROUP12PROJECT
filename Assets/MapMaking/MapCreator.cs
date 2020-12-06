@@ -68,7 +68,6 @@ public class MapCreator : MonoBehaviour
         genny.seed = this.seed;
         sampleRegionSize = new Vector2(width, height);
         regenerate();
-        GameController.SetKeyText();
     }
 
     private void OnApplicationQuit() {
@@ -200,6 +199,7 @@ public class MapCreator : MonoBehaviour
                 index = Random.Range(0, locations.Count - 1);
                 position = locations[index];
                 GameObject obj = Instantiate(key, new Vector3(position.x, position.y, 0), Quaternion.identity);
+                obj.GetComponent<Key>().grabbed = false;
                 spawnedItems.Add(obj);
                 locations.RemoveAt(index);
             }
@@ -210,12 +210,12 @@ public class MapCreator : MonoBehaviour
 
     void clear(){
         while(spawnedItems.Count > 0){
+
             Destroy(spawnedItems[0]);
             spawnedItems.RemoveAt(0);
         }
-        Boundries.ClearAllTiles();
-        Walls.ClearAllTiles();
-        Ground.ClearAllTiles();
+        genny.Clear();
+        GameController.KeysCollected = 0;
     }
 
 
@@ -251,6 +251,7 @@ public class MapCreator : MonoBehaviour
                 locations.RemoveAt(index);
             }
         }
+        GameController.SetKeyText();
     }
 
     public void placeNewSlimes(){
