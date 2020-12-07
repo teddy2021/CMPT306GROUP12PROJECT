@@ -63,6 +63,9 @@ MonoBehaviour:
   pickupSounds:
   - {fileID: 8300000, guid: ac2b51a2228addd4aa0f8ab8e0bb54c4, type: 3}
   parent: {fileID: 4393952173853912769}
+  roamDist: 5
+  roamChangeRate: 10
+  roamSpeed: 2.5
 --- !u!1 &4393952173853912769
 GameObject:
   m_ObjectHideFlags: 0
