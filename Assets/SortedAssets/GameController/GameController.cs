@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public static int TotalKeys;
     public static int KeysCollected;
 
+
     public static void StartGame(string reason, int newFloor = 1)
     {
         FloorLevel = newFloor;
@@ -70,5 +71,15 @@ public class GameController : MonoBehaviour
         floor.text = ""+GameController.FloorLevel.ToString();
         KeysCollected = 0;
         Debug.Log("Floor Incremented "+floor.text);
+    }
+
+    public static void ShowHint(GameObject panel)
+    {
+        panel.SetActive(true);
+    }
+
+    public static void HideHint(GameObject panel)
+    {
+        panel.SetActive(false);
     }
 }
