@@ -2099,7 +2099,7 @@ MonoBehaviour:
   height: 0
   useSeed: 0
   seed: 
-  rules_file_path: Assets/MapMaking/Rules.txt
+  rules_file_path: Assets/Rules.txt
   Walls: {fileID: 297144414}
   Ground: {fileID: 1481711975}
   Boundries: {fileID: 0}
@@ -2282,7 +2282,7 @@ MonoBehaviour:
   height: 25
   useSeed: 0
   seed: 
-  rules_file_path: Assets/MapMaking/Rules.txt
+  rules_file_path: Assets/Rules.txt
   campfire: {fileID: 1476331377}
   player: {fileID: 1223606215}
   key: {fileID: 4667833865845570075, guid: 0b10e0d91dd408049a6123e06f40abe3, type: 3}
@@ -3622,7 +3622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 516690277265278860, guid: bd703cb28cd4efc43b53b95fe0ffd458, type: 3}
       propertyPath: m_TagString
-      value: Key_Ratio
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 563773444579843482, guid: bd703cb28cd4efc43b53b95fe0ffd458, type: 3}
       propertyPath: m_text
@@ -4903,7 +4903,7 @@ MonoBehaviour:
   grid: {fileID: 1140193719}
   player: {fileID: 1223606215}
   defaultCursor: {fileID: 2800000, guid: df751fbfdd5dc7748bdda9ebd2ca92b5, type: 3}
-  powerPoleCursor: {fileID: 2800000, guid: 65e191af6fb12e9448c193022c1df693, type: 3}
+  powerPoleCursor: {fileID: 2800000, guid: a3594f82a8fa7a141ac40da4344ca356, type: 3}
   furnaceCursor: {fileID: 2800000, guid: 4319d9558bf100b43b5b940ad41ab77f, type: 3}
   cursorMode: 0
   hotSpot: {x: 0, y: 0}
@@ -5521,7 +5521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 516690277265278860, guid: bd703cb28cd4efc43b53b95fe0ffd458, type: 3}
       propertyPath: m_TagString
-      value: Key_Ratio
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 563773444579843482, guid: bd703cb28cd4efc43b53b95fe0ffd458, type: 3}
       propertyPath: m_text
@@ -9508,7 +9508,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

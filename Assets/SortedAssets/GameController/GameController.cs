@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
 
         SyncedMapCreator mapmaker = GameObject.FindGameObjectWithTag("MapMaking").GetComponent<SyncedMapCreator>();
         mapmaker.fixedSizeIncrease();
-        mapmaker.MaxKeys = Mathf.Max(1,FloorLevel/4);
+        //mapmaker.MaxKeys = Mathf.Max(1,FloorLevel/4);
         mapmaker.reinit();
 
 
