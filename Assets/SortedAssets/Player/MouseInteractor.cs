@@ -34,6 +34,8 @@ public class MouseInteractor : MonoBehaviour
     public AudioSource swingSound;
     private float swingSoundTime = -1;
 
+    public AudioClip[] rockSounds;
+    public AudioSource rockSound;
 
     private Animator animator; // for changing players swing animations
     public GameObject tileDestroy;
@@ -50,6 +52,8 @@ public class MouseInteractor : MonoBehaviour
             }
             try
             {
+                rockSound.clip = rockSounds[Random.Range(0, rockSounds.Length)];
+                rockSound.Play(0);
                 Wall_Tile tile = (Wall_Tile)tilemap.GetTile(location);
                 tile.DropItems(location);
                 tilemap.SetTile(location, null);

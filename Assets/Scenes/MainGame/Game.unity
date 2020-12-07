@@ -5646,6 +5646,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1aeee883d924eedbd7052a6c47b6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1223606219 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8532230325717247155, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+  m_PrefabInstance: {fileID: 1840897243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1223606221 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -100827718851656843, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
@@ -9031,6 +9036,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: rockSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 297144414}
@@ -9038,6 +9047,14 @@ PrefabInstance:
       propertyPath: tileDestroy
       value: 
       objectReference: {fileID: 6218957197164752666, guid: b889839d6affa814a8e2258212731e66, type: 3}
+    - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: rockSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 290c22a6812df4843b04bd297f9e288f, type: 3}
+    - target: {fileID: 6259188135160773363, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
+      propertyPath: rockSound
+      value: 
+      objectReference: {fileID: 1223606219}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22f6525558f651f459fdf7a58a99797f, type: 3}
 --- !u!1 &1861382190
