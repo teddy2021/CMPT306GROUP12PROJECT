@@ -108,12 +108,12 @@ public class PlayerDamage : MonoBehaviour
         if ((health + amount) >= maxHealth)
         {
             health = maxHealth;
-            hb.SetHealth(maxHealth);
+            hb.SetHealth(health);
         }
         else
         {
             health += amount;
-            hb.SetHealth(health + amount); 
+            hb.SetHealth(health); 
         }
             
     }

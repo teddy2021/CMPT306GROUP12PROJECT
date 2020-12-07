@@ -54,12 +54,24 @@ public class HeadLamp : MonoBehaviour
                 
             }
 		}
-		if (Input.GetKeyDown(KeyCode.Z))
-		{
-            IncreaseTimer();
-		}
     }
 
+    public void doPower(float amount)
+	{
+        if(amount + headLampTimer > timer)
+		{
+            headLampIsOn = true;
+            headLampTimer = timer;
+            headLamp.intensity = 1;
+        }
+		else
+		{
+            headLampIsOn = true;
+            headLampTimer += amount;
+            headLamp.intensity += Mathf.Lerp(0.0f, 1.0f, (Time.deltaTime + amount) / timer);
+		}
+        
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
