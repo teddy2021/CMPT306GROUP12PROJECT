@@ -44,8 +44,8 @@ public class Fairy : MonoBehaviour
     {
         roamDest.transform.Translate(
             new Vector2(
-                transform.position.x + Random.Range(-roamDist, roamDist),
-                transform.position.y + Random.Range(-roamDist, roamDist)
+                Random.Range(-roamDist, roamDist),
+                Random.Range(-roamDist, roamDist)
             )
         );
     }
