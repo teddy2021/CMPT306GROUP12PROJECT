@@ -149,7 +149,7 @@ public class Generator : MonoBehaviour{
         ); // top bounding wall block
 
         Boundries.SetTilesBlock(new BoundsInt(
-            new Vector3Int(-width - 1, height + 1, 0),
+            new Vector3Int(-width - 1, height - 1, 0),
             new Vector3Int((2*width) + 2, 2, 1)),
             boundry
         );

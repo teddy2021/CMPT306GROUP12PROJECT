@@ -82,6 +82,7 @@ public class MapCreator : MonoBehaviour
     }
 
     public void regenerate(){
+        Boundries.ClearAllTiles();
         clear();
         genny.GenerateNewMap();
         List<Vector2> locations = ObjectPlacer.GeneratePoints(radius, new Vector2(width, height), maxSamples);

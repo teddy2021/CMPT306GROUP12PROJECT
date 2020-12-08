@@ -45,20 +45,20 @@ public class GameController : MonoBehaviour
     {
         int keysFound = 0;
         int allKeys = 0;
-        foreach (var keyObj in GameObject.FindGameObjectsWithTag("Objective_Key"))
-        {
-            var keyComp = keyObj.GetComponent<Key>();
+        var keyObj = GameObject.FindGameObjectsWithTag("Objective_Key");
 
-            if (keyComp.grabbed)
-            {
-                keysFound++;
-            }
-            allKeys++;
-            if (keysFound > 0)
-            {
-                //GameObject.Find("Key_Panel").SetActive(true);
-            }
+        var keyComp = keyObj[0].GetComponent<Key>();
+
+        if (keyComp.enabled && keyComp.grabbed)
+        {
+            keysFound++;
         }
+        allKeys = 1;
+        if (keysFound > 0)
+        {
+            //GameObject.Find("Key_Panel").SetActive(true);
+        }
+       
         GameController.KeysCollected = keysFound;
         GameController.TotalKeys = allKeys;
         TextMeshProUGUI keysRatio = GameObject.FindGameObjectsWithTag("Key_Ratio")[0].GetComponent<TextMeshProUGUI>();
